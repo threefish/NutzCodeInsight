@@ -12,6 +12,7 @@ import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiUtilBase;
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -104,17 +105,7 @@ public class NutzLineUtil {
      */
     public static void checkError(PsiElement psiElement, List<VirtualFile> fileList) {
         if (fileList == null || fileList.size() <= 0) {
-            Editor editor = PsiUtilBase.findEditor(psiElement);
-            TextRange textRange = psiElement.getTextRange();
-            TextAttributes attributes = new TextAttributes();
-            attributes.setEffectColor(Color.RED);
-            MarkupModel model = editor.getMarkupModel();
-            model.addRangeHighlighter(
-                    textRange.getStartOffset() + 5,
-                    textRange.getEndOffset() - 1,
-                    HighlighterLayer.SYNTAX + 1,
-                    attributes, HighlighterTargetArea.EXACT_RANGE);
-
+            JOptionPane.showMessageDialog(null, "没有找到这个模版文件，请检查！", "错误提示", JOptionPane.ERROR_MESSAGE, null);
         }
     }
 

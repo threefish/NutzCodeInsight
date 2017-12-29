@@ -2,7 +2,7 @@
   <id>com.sgaop.idea.codeinsight.plugin</id>
   <name>NutzCodeInsight</name>
   <version>1.1</version>
-  <vendor email="306955302@qq.com" url="https://github.com/threefish">306955302@qq.com</vendor>
+  <vendor email="306955302@qq.com" url="https://github.com/threefish/NutzCodeInsight">306955302@qq.com</vendor>
 
   <description><![CDATA[
      Nutz Action Module 代码快速定位至jsp文件
