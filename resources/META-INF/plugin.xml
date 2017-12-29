@@ -1,0 +1,34 @@
+<idea-plugin>
+  <id>com.sgaop.idea.codeinsight.plugin</id>
+  <name>NutzCodeInsight</name>
+  <version>1.1</version>
+  <vendor email="306955302@qq.com" url="https://github.com/threefish">306955302@qq.com</vendor>
+
+  <description><![CDATA[
+     Nutz Action Module 代码快速定位至jsp文件
+    ]]></description>
+
+  <change-notes><![CDATA[
+     在 Nutz Action Module 中点击 @Ok 前面的jsp图标即可快速打开或切换至已经打开的jsp文件
+    ]]>
+  </change-notes>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+  <idea-version since-build="145.0"/>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+       on how to target different products -->
+  <!-- uncomment to enable plugin in all products
+  <depends>com.intellij.modules.lang</depends>
+  -->
+
+  <extensions defaultExtensionNs="com.intellij">
+    <!-- Add your extensions here -->
+    <codeInsight.lineMarkerProvider language="JAVA" implementationClass="com.sgaop.idea.codeinsight.JavaNutzLineMarkerProvider"/>
+  </extensions>
+
+  <actions>
+    <!-- Add your actions here -->
+  </actions>
+
+</idea-plugin>
