@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>com.sgaop.idea.codeinsight.plugin</id>
   <name>NutzCodeInsight</name>
-  <version>1.1</version>
+  <version>1.2</version>
   <vendor email="306955302@qq.com" url="https://github.com/threefish/NutzCodeInsight">306955302@qq.com</vendor>
 
   <description><![CDATA[
@@ -24,6 +24,9 @@
 
   <extensions defaultExtensionNs="com.intellij">
     <!-- Add your extensions here -->
+    <applicationConfigurable instance="com.sgaop.project.ToolConfigurable"/>
+    <applicationService serviceInterface="com.sgaop.project.ToolCfiguration"
+                        serviceImplementation="com.sgaop.project.ToolCfiguration"/>
     <codeInsight.lineMarkerProvider language="JAVA" implementationClass="com.sgaop.idea.codeinsight.JavaNutzLineMarkerProvider"/>
   </extensions>
 
