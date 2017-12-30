@@ -29,6 +29,11 @@
 
   <actions>
     <!-- Add your actions here -->
+    <action id="GoToRequestMapping" class="com.sgaop.idea.actions.GoToRequestMappingAction"
+            text="Go to request mapping" description="Go to request mapping">
+      <add-to-group group-id="GoToTargetEx" anchor="first"/>
+      <keyboard-shortcut keymap="$default" first-keystroke="shift ctrl BACK_SLASH"/>
+    </action>
   </actions>
 
 </idea-plugin>
