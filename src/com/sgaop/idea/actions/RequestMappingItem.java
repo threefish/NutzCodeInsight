@@ -25,8 +25,8 @@ public class RequestMappingItem implements NavigationItem {
 
     public RequestMappingItem(PsiElement psiElement, String urlPath, String requestMethod) {
         this.psiElement = psiElement;
-        this.urlPath = urlPath;
         this.requestMethod = requestMethod;
+        this.urlPath = urlPath;
         this.navigatable= (Navigatable) psiElement;
     }
 
@@ -66,8 +66,7 @@ public class RequestMappingItem implements NavigationItem {
             @Nullable
             @Override
             public String getLocationString() {
-                String fileName = psiElement.getContainingFile().getName();
-                return fileName;
+                return psiElement.getContainingFile().getName();
             }
 
             @Nullable
