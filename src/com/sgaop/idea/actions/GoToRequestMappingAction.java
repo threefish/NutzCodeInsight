@@ -16,9 +16,7 @@ import com.intellij.openapi.project.Project;
 public class GoToRequestMappingAction extends GotoActionBase implements DumbAware {
     @Override
     protected void gotoActionPerformed(AnActionEvent anActionEvent) {
-
         Project project = anActionEvent.getData(CommonDataKeys.PROJECT);
-
         RequestMappingModel model = new RequestMappingModel(project);
         showNavigationPopup(anActionEvent, model, new GoToRequestMappingActionCallback(), false);
     }

@@ -36,17 +36,17 @@ public class RequestMappingModel extends FilteringGotoByModel<FileType> implemen
 
     @Override
     public String getPromptText() {
-        return null;
+        return "Enter mapping url";
     }
 
     @Override
     public String getNotInMessage() {
-        return null;
+        return "No matches found";
     }
 
     @Override
     public String getNotFoundMessage() {
-        return null;
+        return "Mapping not found";
     }
 
     @Nullable
@@ -78,8 +78,8 @@ public class RequestMappingModel extends FilteringGotoByModel<FileType> implemen
 
     @Nullable
     @Override
-    public String getFullName(Object o) {
-        return null;
+    public String getFullName(Object element) {
+        return getElementName(element);
     }
 
     @Override
@@ -88,7 +88,23 @@ public class RequestMappingModel extends FilteringGotoByModel<FileType> implemen
     }
 
     @Override
-    public boolean matches(@NotNull String s, @NotNull String s1) {
-        return false;
+    public boolean matches(@NotNull String popupItem, @NotNull String userPattern) {
+        if (userPattern == "/") {
+            return true;
+        } else if (!userPattern.contains("/")) {
+            return userPattern.indexOf(popupItem) > -1;
+        } else {
+            return isSimilarUrlPaths(popupItem, userPattern);
+        }
+    }
+
+    private boolean isSimilarUrlPaths(@NotNull String popupItem, @NotNull String userPattern) {
+//        String[] popupItemList = popupItem
+//                .split("/");
+//                .drop(1) //drop method name
+//        String[] userPatternList = userPattern
+//                .split("/");
+//                .dropFirstEmptyStringIfExists()
+        return true;
     }
 }
