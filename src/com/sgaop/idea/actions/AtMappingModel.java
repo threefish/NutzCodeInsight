@@ -18,14 +18,10 @@ import java.util.Arrays;
  * @author 306955302@qq.com
  * @date 2017/12/30 0030 23:48
  */
-public class RequestMappingModel extends FilteringGotoByModel<FileType> implements DumbAware, CustomMatcherModel {
+public class AtMappingModel extends FilteringGotoByModel<FileType> implements DumbAware, CustomMatcherModel {
 
-    public RequestMappingModel(@NotNull Project project) {
-        super(project, Arrays.asList(new RequestMappingContributor()).toArray(new ChooseByNameContributor[0]));
-    }
-
-    protected RequestMappingModel(@NotNull Project project, @NotNull ChooseByNameContributor[] chooseByNameContributors) {
-        super(project, chooseByNameContributors);
+    public AtMappingModel(@NotNull Project project) {
+        super(project, Arrays.asList(new AtMappingContributor()).toArray(new ChooseByNameContributor[0]));
     }
 
     @Nullable
@@ -84,18 +80,13 @@ public class RequestMappingModel extends FilteringGotoByModel<FileType> implemen
 
     @Override
     public boolean willOpenEditor() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean matches(@NotNull String popupItem, @NotNull String userPattern) {
-        if (userPattern == "/") {
-            return true;
-        } else if (!userPattern.contains("/")) {
-            return userPattern.indexOf(popupItem) > -1;
-        } else {
-            return isSimilarUrlPaths(popupItem, userPattern);
-        }
+        System.out.println(popupItem+" >>> "+ userPattern);
+        return true;
     }
 
     private boolean isSimilarUrlPaths(@NotNull String popupItem, @NotNull String userPattern) {

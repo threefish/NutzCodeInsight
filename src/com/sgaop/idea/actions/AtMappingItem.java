@@ -5,7 +5,6 @@ import com.intellij.navigation.ItemPresentation;
 import com.intellij.navigation.NavigationItem;
 import com.intellij.pom.Navigatable;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -16,24 +15,24 @@ import javax.swing.*;
  * @author 306955302@qq.com
  * @date 2017/12/30 0030 23:53
  */
-public class RequestMappingItem implements NavigationItem {
+public class AtMappingItem implements NavigationItem {
 
     private PsiElement psiElement;
     private Navigatable navigatable;
     private String urlPath;
     private String requestMethod;
 
-    public RequestMappingItem(PsiElement psiElement, String urlPath, String requestMethod) {
+    public AtMappingItem(PsiElement psiElement, String urlPath, String requestMethod) {
         this.psiElement = psiElement;
         this.requestMethod = requestMethod;
         this.urlPath = urlPath;
-        this.navigatable= (Navigatable) psiElement;
+        this.navigatable = (Navigatable) psiElement;
     }
 
     @Nullable
     @Override
     public String getName() {
-        return this.requestMethod + " " + this.urlPath;
+        return this.urlPath + " " + this.requestMethod;
     }
 
 
@@ -60,7 +59,7 @@ public class RequestMappingItem implements NavigationItem {
             @Nullable
             @Override
             public String getPresentableText() {
-                return requestMethod + " " + urlPath;
+                return urlPath + " " + requestMethod;
             }
 
             @Nullable

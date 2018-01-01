@@ -13,19 +13,19 @@ import com.intellij.openapi.project.Project;
  * @author 306955302@qq.com
  * @date 2017/12/30 0030
  */
-public class GoToRequestMappingAction extends GotoActionBase implements DumbAware {
+public class GoToNutzAtMappingAction extends GotoActionBase implements DumbAware {
     @Override
     protected void gotoActionPerformed(AnActionEvent anActionEvent) {
         Project project = anActionEvent.getData(CommonDataKeys.PROJECT);
-        RequestMappingModel model = new RequestMappingModel(project);
+        AtMappingModel model = new AtMappingModel(project);
         showNavigationPopup(anActionEvent, model, new GoToRequestMappingActionCallback(), false);
     }
 
     private class GoToRequestMappingActionCallback extends GotoActionBase.GotoActionCallback<String> {
         @Override
         public void elementChosen(ChooseByNamePopup popup, Object element) {
-            if (element instanceof RequestMappingItem) {
-                RequestMappingItem el = (RequestMappingItem) element;
+            if (element instanceof AtMappingItem) {
+                AtMappingItem el = (AtMappingItem) element;
                 if (el.canNavigate()) {
                     el.navigate(true);
                 }
