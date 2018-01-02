@@ -1,9 +1,10 @@
 package com.sgaop.project.ui;
 
 import javax.swing.*;
+import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created with IntelliJ IDEA.
@@ -32,14 +33,40 @@ public class SettingConfigUi {
                 return false;
             }
         };
+        model.addTableModelListener(e -> {
+            if (e.getType() == TableModelEvent.UPDATE && e.getColumn() == 0) {
+                String newvalue = model.getValueAt(e.getLastRow(), 0).toString().trim();
+                Set<String> names = new HashSet<>();
+                for (int i = 0, l = model.getRowCount(); i < l; i++) {
+                    if (i == e.getLastRow()) {
+                        continue;
+                    }
+                    names.add(model.getValueAt(i, 0).toString());
+                }
+                if (names.contains(newvalue)) {
+                    JOptionPane.showMessageDialog(null, "模版前缀已经存在，请使用其他名称！", "错误提示", JOptionPane.ERROR_MESSAGE, null);
+                    model.setValueAt("", e.getLastRow(), 0);
+                }
+            }
+        });
         templateTable.getTableHeader().setReorderingAllowed(false);
         templateTable.setModel(model);
-        btnAddTemplte.addActionListener(e->model.addRow(new String[]{"",""}));
+        btnAddTemplte.addActionListener(e -> {
+            for (int i = 0, l = model.getRowCount(); i < l; i++) {
+                String val = model.getValueAt(i, 0).toString().trim();
+                if (val.length() > 0) {
+                    JOptionPane.showMessageDialog(null, "请填写完整后再添加！", "错误提示", JOptionPane.ERROR_MESSAGE, null);
+                    return;
+                }
+            }
+            model.addRow(new String[]{"", ""});
+        });
     }
 
     public JTable getTemplateTable() {
         return templateTable;
     }
+
     public JPanel getRootPanel() {
 
         return root;

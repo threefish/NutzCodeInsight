@@ -50,9 +50,9 @@ public class ToolConfigurable implements Configurable {
         int len = ui.getTemplateTable().getRowCount() - 1;
         HashMap<String, String> nameVal = new HashMap(len);
         for (int i = len; i >= 0; i--) {
-            String name = String.valueOf(ui.getTemplateTable().getValueAt(i, 0));
-            String value = String.valueOf(ui.getTemplateTable().getValueAt(i, 1));
-            if (name.trim().length() > 0 && value.trim().length() > 0) {
+            String name = String.valueOf(ui.getTemplateTable().getValueAt(i, 0)).trim();
+            String value = String.valueOf(ui.getTemplateTable().getValueAt(i, 1)).trim();
+            if (name.length() > 0 && value.length() > 0) {
                 nameVal.put(name, value);
             }
         }
