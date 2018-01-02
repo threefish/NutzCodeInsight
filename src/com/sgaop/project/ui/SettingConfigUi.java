@@ -54,7 +54,7 @@ public class SettingConfigUi {
         btnAddTemplte.addActionListener(e -> {
             for (int i = 0, l = model.getRowCount(); i < l; i++) {
                 String val = model.getValueAt(i, 0).toString().trim();
-                if (val.length() > 0) {
+                if (val.length() == 0) {
                     JOptionPane.showMessageDialog(null, "请填写完整后再添加！", "错误提示", JOptionPane.ERROR_MESSAGE, null);
                     return;
                 }

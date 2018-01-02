@@ -1,5 +1,6 @@
 package com.sgaop.project;
 
+import com.google.gson.Gson;
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;
 import com.sgaop.project.ui.SettingConfigUi;
@@ -42,21 +43,14 @@ public class ToolConfigurable implements Configurable {
 
     @Override
     public boolean isModified() {
-        return true;
+        String oldData = new Gson().toJson(configuration.getData());
+        String newData = new Gson().toJson(getTableListData());
+        return !oldData.equals(newData);
     }
 
     @Override
     public void apply() throws ConfigurationException {
-        int len = ui.getTemplateTable().getRowCount() - 1;
-        HashMap<String, String> nameVal = new HashMap(len);
-        for (int i = len; i >= 0; i--) {
-            String name = String.valueOf(ui.getTemplateTable().getValueAt(i, 0)).trim();
-            String value = String.valueOf(ui.getTemplateTable().getValueAt(i, 1)).trim();
-            if (name.length() > 0 && value.length() > 0) {
-                nameVal.put(name, value);
-            }
-        }
-        configuration.setData(nameVal);
+        configuration.setData(getTableListData());
     }
 
     @Override
@@ -67,10 +61,24 @@ public class ToolConfigurable implements Configurable {
         model.addRow(new String[]{"btl:", ".html"});
         model.addRow(new String[]{"beetl:", ".html"});
         for (Map.Entry<String, String> entry : configuration.getData().entrySet()) {
-            if (entry.getKey().equals("jsp:") || entry.getKey().equals("btl:")|| entry.getKey().equals("beetl:")) {
+            if (entry.getKey().equals("jsp:") || entry.getKey().equals("btl:") || entry.getKey().equals("beetl:")) {
                 continue;
             }
             model.addRow(new String[]{entry.getKey(), entry.getValue()});
         }
+    }
+
+    private HashMap<String, String> getTableListData() {
+        DefaultTableModel model = (DefaultTableModel) ui.getTemplateTable().getModel();
+        int len = model.getRowCount();
+        HashMap<String, String> nameVal = new HashMap(len);
+        for (int i = 0; i < len; i++) {
+            String name = String.valueOf(ui.getTemplateTable().getValueAt(i, 0)).trim();
+            String value = String.valueOf(ui.getTemplateTable().getValueAt(i, 1)).trim();
+            if (name.length() > 0 && value.length() > 0) {
+                nameVal.put(name, value);
+            }
+        }
+        return nameVal;
     }
 }
