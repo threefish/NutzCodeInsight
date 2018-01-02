@@ -1,5 +1,6 @@
 package com.sgaop.idea.codeinsight;
 
+import com.intellij.icons.AllIcons;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.psi.search.FilenameIndex;
@@ -65,7 +66,7 @@ public class NutzLineUtil {
         List<VirtualFile> fileList = new ArrayList<>();
         String tempNutzFileName = nutzTemplate.getTemplatePath();
         //兼容绝对路径模式
-        if (tempNutzFileName.endsWith(nutzTemplate.getFileExtension())&&tempNutzFileName.indexOf("/")>-1) {
+        if (tempNutzFileName.endsWith(nutzTemplate.getFileExtension()) && tempNutzFileName.indexOf("/") > -1) {
             tempNutzFileName = tempNutzFileName.substring(0, tempNutzFileName.length() - nutzTemplate.getFileExtension().length());
         }
         //去除前缀
@@ -98,16 +99,31 @@ public class NutzLineUtil {
     }
 
 
+
+
     /**
-     * 设置错误信息
+     * 取得模版图标
      *
-     * @param psiElement
+     * @param fileExtension
      * @return
      */
-    public static void checkError(PsiElement psiElement, List<VirtualFile> fileList) {
-        if (fileList == null || fileList.size() <= 0) {
-            JOptionPane.showMessageDialog(null, "没有找到这个模版文件，请检查！", "错误提示", JOptionPane.ERROR_MESSAGE, null);
+    public static Icon getTemplateIcon(String fileExtension) {
+        Icon icon;
+        switch (fileExtension) {
+            case ".jsp":
+            case "jsp":
+                icon = AllIcons.FileTypes.Jsp;
+                break;
+            case ".html":
+            case "html":
+                icon = AllIcons.FileTypes.Html;
+                break;
+            default:
+                icon = AllIcons.FileTypes.Xml;
+                break;
         }
+        return icon;
     }
+
 
 }

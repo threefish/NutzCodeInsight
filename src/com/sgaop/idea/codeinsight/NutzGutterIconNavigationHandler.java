@@ -1,7 +1,6 @@
 package com.sgaop.idea.codeinsight;
 
 import com.intellij.codeInsight.daemon.GutterIconNavigationHandler;
-import com.intellij.icons.AllIcons;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
@@ -42,7 +41,7 @@ public class NutzGutterIconNavigationHandler implements GutterIconNavigationHand
                 list.installCellRenderer(vfile -> {
                     if (vfile instanceof VirtualFile) {
                         VirtualFile tempVfile = (VirtualFile) vfile;
-                        Icon icon = AllIcons.FileTypes.Jsp;
+                        Icon icon = NutzLineUtil.getTemplateIcon(tempVfile.getExtension());
                         final String name = tempVfile.getName();
                         final String path = tempVfile.getCanonicalPath()
                                 .replace(project.getBasePath(), "")
@@ -59,7 +58,9 @@ public class NutzGutterIconNavigationHandler implements GutterIconNavigationHand
                     FileEditorManager.getInstance(project).openFile(value, true);
                 }).createPopup().show(new RelativePoint(mouseEvent));
             } else {
-                NutzLineUtil.checkError(psiElement, fileList);
+                if (fileList == null || fileList.size() <= 0) {
+                    JOptionPane.showMessageDialog(null, "没有找到这个模版文件，请检查！", "错误提示", JOptionPane.ERROR_MESSAGE, null);
+                }
             }
         }
     }

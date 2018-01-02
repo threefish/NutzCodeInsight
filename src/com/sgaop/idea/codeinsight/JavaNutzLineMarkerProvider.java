@@ -3,7 +3,6 @@ package com.sgaop.idea.codeinsight;
 import com.intellij.codeHighlighting.Pass;
 import com.intellij.codeInsight.daemon.LineMarkerInfo;
 import com.intellij.codeInsight.daemon.LineMarkerProviderDescriptor;
-import com.intellij.icons.AllIcons;
 import com.intellij.openapi.editor.markup.GutterIconRenderer;
 import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
@@ -25,18 +24,7 @@ public class JavaNutzLineMarkerProvider extends LineMarkerProviderDescriptor {
     public LineMarkerInfo getLineMarkerInfo(@NotNull PsiElement bindingElement) {
         if (NutzLineUtil.isAtOk(bindingElement)) {
             TemplateVO vo = NutzLineUtil.getTemplateFilePathAndName(bindingElement);
-            Icon icon;
-            switch (vo.getFileExtension()) {
-                case ".jsp":
-                    icon = AllIcons.FileTypes.Jsp;
-                    break;
-                case ".html":
-                    icon = AllIcons.FileTypes.Html;
-                    break;
-                default:
-                    icon = AllIcons.FileTypes.Xml;
-                    break;
-            }
+            Icon icon = NutzLineUtil.getTemplateIcon(vo.getFileExtension());
             return new LineMarkerInfo<>(bindingElement, bindingElement.getTextRange(), icon,
                     Pass.LINE_MARKERS, null, new NutzGutterIconNavigationHandler(),
                     GutterIconRenderer.Alignment.LEFT);
