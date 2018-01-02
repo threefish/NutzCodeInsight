@@ -9,7 +9,7 @@
   @Ok("jsp:btl.demo.manager")
   //模式2  beetl模版 需要在配置界面添加配置
   @Ok("btl:btl.demo.manager")
-  //模式3 （适用于改造后得视图返回器，我自己使用的） 
+  //模式4 （适用于改造后得视图返回器，我自己使用的） 
   @Ok("btl:WEB-INF/btl/demo/manager.html")
 ```
 # 示例

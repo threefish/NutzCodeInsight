@@ -64,8 +64,10 @@ public class ToolConfigurable implements Configurable {
         DefaultTableModel model = (DefaultTableModel) ui.getTemplateTable().getModel();
         model.setRowCount(0);
         model.addRow(new String[]{"jsp:", ".jsp"});
+        model.addRow(new String[]{"btl:", ".html"});
+        model.addRow(new String[]{"beetl:", ".html"});
         for (Map.Entry<String, String> entry : configuration.getData().entrySet()) {
-            if (entry.getKey().equals("jsp:")) {
+            if (entry.getKey().equals("jsp:") || entry.getKey().equals("btl:")|| entry.getKey().equals("beetl:")) {
                 continue;
             }
             model.addRow(new String[]{entry.getKey(), entry.getValue()});

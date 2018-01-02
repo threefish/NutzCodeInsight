@@ -26,7 +26,7 @@ public class SettingConfigUi {
         DefaultTableModel model = new DefaultTableModel(new String[]{"模版前缀", "文件名后缀",}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                if (row > 0) {
+                if (row > 2) {
                     return true;
                 }
                 return false;

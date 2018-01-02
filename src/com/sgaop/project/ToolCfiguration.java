@@ -25,10 +25,6 @@ public class ToolCfiguration implements PersistentStateComponent<Element> {
 
     HashMap<String, String> data = new HashMap<>();
 
-    public String getConfigString() {
-        return "";
-    }
-
     private final static String ALIAS = "ALIAS_";
 
     @Override
@@ -52,11 +48,22 @@ public class ToolCfiguration implements PersistentStateComponent<Element> {
 
     @Nullable
     public static ToolCfiguration getInstance() {
-        return ServiceManager.getService(ToolCfiguration.class);
+        ToolCfiguration cfiguration = ServiceManager.getService(ToolCfiguration.class);
+        //初始化数据
+        HashMap<String, String> initData = new HashMap<>(3);
+        initData.put("jsp:", ".jsp");
+        initData.put("btl:", ".html");
+        initData.put("beetl:", ".html");
+        for (Map.Entry<String, String> entry : cfiguration.getData().entrySet()) {
+            initData.put(entry.getKey(), entry.getValue());
+        }
+        cfiguration.setData(initData);
+        return cfiguration;
     }
 
     /**
      * 取得模版
+     *
      * @param urlReg
      * @return
      */

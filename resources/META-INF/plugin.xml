@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>com.sgaop.idea.codeinsight.plugin</id>
   <name>NutzCodeInsight</name>
-  <version>1.2</version>
+  <version>1.3</version>
   <vendor email="306955302@qq.com" url="https://github.com/threefish/NutzCodeInsight">306955302@qq.com</vendor>
 
   <description><![CDATA[
@@ -32,10 +32,10 @@
 
     <actions>
         <!-- Add your actions here -->
-        <action id="GoToRequestMapping" class="com.sgaop.idea.actions.GoToNutzAtMappingAction"
+        <!--<action id="GoToRequestMapping" class="com.sgaop.idea.actions.GoToNutzAtMappingAction"
                 text="Find At Mapping" description="根据@At值查询">
             <add-to-group group-id="GoToTargetEx" anchor="first"/>
-        </action>
+        </action>-->
     </actions>
 
 </idea-plugin>
