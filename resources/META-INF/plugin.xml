@@ -1,34 +1,47 @@
 <idea-plugin>
-  <id>com.sgaop.idea.codeinsight.plugin</id>
-  <name>NutzCodeInsight</name>
-  <version>1.3</version>
-  <vendor email="306955302@qq.com" url="https://github.com/threefish/NutzCodeInsight">306955302@qq.com</vendor>
+    <id>com.sgaop.idea.codeinsight.plugin</id>
+    <name>NutzCodeInsight</name>
+    <version>1.3</version>
+    <vendor email="306955302@qq.com" url="https://github.com/threefish/NutzCodeInsight">306955302@qq.com</vendor>
 
-  <description><![CDATA[
+    <description><![CDATA[
      Nutz Action Module 代码快速定位至jsp文件
     ]]></description>
 
-  <change-notes><![CDATA[
-     在 Nutz Action Module 中点击 @Ok 前面的jsp图标即可快速打开或切换至已经打开的jsp文件
+    <change-notes><![CDATA[
+     在 Nutz Action Module 中点击 @Ok 前面的jsp图标即可快速打开或切换至已经打开的jsp文件<br>
+       <ul>
+        1.3
+        <li>add 支持配置自定义模版</li>
+       </ul>
+       <ul>
+        1.2
+        <li>add 支持自定义模版</li>
+       </ul>
+        <ul>
+        1.1
+        <li>add 支持Jsp模版</li>
+       </ul>
     ]]>
-  </change-notes>
+    </change-notes>
 
-  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-  <idea-version since-build="145.0"/>
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="145.0"/>
 
-  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
-       on how to target different products -->
-  <!-- uncomment to enable plugin in all products
-  <depends>com.intellij.modules.lang</depends>
-  -->
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
 
-  <extensions defaultExtensionNs="com.intellij">
-    <!-- Add your extensions here -->
-    <applicationConfigurable instance="com.sgaop.project.ToolConfigurable"/>
-    <applicationService serviceInterface="com.sgaop.project.ToolCfiguration"
-                        serviceImplementation="com.sgaop.project.ToolCfiguration"/>
-    <codeInsight.lineMarkerProvider language="JAVA" implementationClass="com.sgaop.idea.codeinsight.JavaNutzLineMarkerProvider"/>
-  </extensions>
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+        <applicationConfigurable instance="com.sgaop.project.ToolConfigurable"/>
+        <applicationService serviceInterface="com.sgaop.project.ToolCfiguration"
+                            serviceImplementation="com.sgaop.project.ToolCfiguration"/>
+        <codeInsight.lineMarkerProvider language="JAVA"
+                                        implementationClass="com.sgaop.idea.codeinsight.JavaNutzLineMarkerProvider"/>
+    </extensions>
 
     <actions>
         <!-- Add your actions here -->
