@@ -56,7 +56,7 @@ public class NutzGutterIconNavigationHandler implements GutterIconNavigationHand
                 });
                 builder.setItemChoosenCallback(() -> {
                     final VirtualFile value = (VirtualFile) list.getSelectedValue();
-                    FileEditorManager.getInstance(psiElement.getProject()).openFile(value, true);
+                    FileEditorManager.getInstance(project).openFile(value, true);
                 }).createPopup().show(new RelativePoint(mouseEvent));
             } else {
                 NutzLineUtil.checkError(psiElement, fileList);

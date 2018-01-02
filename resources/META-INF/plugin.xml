@@ -30,8 +30,12 @@
     <codeInsight.lineMarkerProvider language="JAVA" implementationClass="com.sgaop.idea.codeinsight.JavaNutzLineMarkerProvider"/>
   </extensions>
 
-  <actions>
-    <!-- Add your actions here -->
-  </actions>
+    <actions>
+        <!-- Add your actions here -->
+        <action id="GoToRequestMapping" class="com.sgaop.idea.actions.GoToNutzAtMappingAction"
+                text="Find At Mapping" description="根据@At值查询">
+            <add-to-group group-id="GoToTargetEx" anchor="first"/>
+        </action>
+    </actions>
 
 </idea-plugin>
