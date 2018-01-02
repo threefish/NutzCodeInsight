@@ -9,6 +9,7 @@ import com.intellij.psi.PsiElement;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.swing.*;
 import java.util.Collection;
 import java.util.List;
 
@@ -23,7 +24,20 @@ public class JavaNutzLineMarkerProvider extends LineMarkerProviderDescriptor {
     @Override
     public LineMarkerInfo getLineMarkerInfo(@NotNull PsiElement bindingElement) {
         if (NutzLineUtil.isAtOk(bindingElement)) {
-            return new LineMarkerInfo<>(bindingElement, bindingElement.getTextRange(), AllIcons.FileTypes.Jsp,
+            TemplateVO vo = NutzLineUtil.getTemplateFilePathAndName(bindingElement);
+            Icon icon;
+            switch (vo.getFileExtension()) {
+                case ".jsp":
+                    icon = AllIcons.FileTypes.Jsp;
+                    break;
+                case ".html":
+                    icon = AllIcons.FileTypes.Html;
+                    break;
+                default:
+                    icon = AllIcons.FileTypes.Xml;
+                    break;
+            }
+            return new LineMarkerInfo<>(bindingElement, bindingElement.getTextRange(), icon,
                     Pass.LINE_MARKERS, null, new NutzGutterIconNavigationHandler(),
                     GutterIconRenderer.Alignment.LEFT);
         }

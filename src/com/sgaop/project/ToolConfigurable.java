@@ -47,8 +47,9 @@ public class ToolConfigurable implements Configurable {
 
     @Override
     public void apply() throws ConfigurationException {
-        HashMap<String, String> nameVal = new HashMap();
-        for (int i = ui.getTemplateTable().getRowCount()-1; i >= 0; i--) {
+        int len = ui.getTemplateTable().getRowCount() - 1;
+        HashMap<String, String> nameVal = new HashMap(len);
+        for (int i = len; i >= 0; i--) {
             String name = String.valueOf(ui.getTemplateTable().getValueAt(i, 0));
             String value = String.valueOf(ui.getTemplateTable().getValueAt(i, 1));
             if (name.trim().length() > 0 && value.trim().length() > 0) {
@@ -64,7 +65,7 @@ public class ToolConfigurable implements Configurable {
         model.setRowCount(0);
         model.addRow(new String[]{"jsp:", ".jsp"});
         for (Map.Entry<String, String> entry : configuration.getData().entrySet()) {
-            if(entry.getKey().equals("jsp:")){
+            if (entry.getKey().equals("jsp:")) {
                 continue;
             }
             model.addRow(new String[]{entry.getKey(), entry.getValue()});

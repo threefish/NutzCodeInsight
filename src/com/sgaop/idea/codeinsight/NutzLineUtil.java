@@ -1,19 +1,12 @@
 package com.sgaop.idea.codeinsight;
 
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.markup.HighlighterLayer;
-import com.intellij.openapi.editor.markup.HighlighterTargetArea;
-import com.intellij.openapi.editor.markup.MarkupModel;
-import com.intellij.openapi.editor.markup.TextAttributes;
-import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
-import com.intellij.psi.util.PsiUtilBase;
+import com.sgaop.project.ToolCfiguration;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -25,6 +18,7 @@ import java.util.List;
  * @date 2017/12/29  15:51
  */
 public class NutzLineUtil {
+    private static ToolCfiguration configuration = ToolCfiguration.getInstance();
 
     /**
      * 判断是否是Nutz的@Ok
@@ -66,18 +60,21 @@ public class NutzLineUtil {
      * @return
      */
     public static List<VirtualFile> findTemplteFileList(PsiElement bindingElement) {
-        String nutzFileName = getTemplateFilePathAndName(bindingElement);
-        Collection<VirtualFile> virtualFiles = FilenameIndex.getAllFilesByExt(bindingElement.getProject(), "jsp", GlobalSearchScope.allScope(bindingElement.getProject()));
+        TemplateVO nutzTemplate = getTemplateFilePathAndName(bindingElement);
+        Collection<VirtualFile> virtualFiles = FilenameIndex.getAllFilesByExt(bindingElement.getProject(), nutzTemplate.getFileExtension().replaceAll("\\.", ""), GlobalSearchScope.allScope(bindingElement.getProject()));
         List<VirtualFile> fileList = new ArrayList<>();
-        virtualFiles.stream().filter(virtualFile -> {
-            String path = virtualFile.getCanonicalPath();
-            String tempNutzFileName = nutzFileName.replace(".", "/") + ".jsp";
-            if (path.endsWith(tempNutzFileName)) {
-                return true;
-            } else {
-                return false;
-            }
-        }).forEach(virtualFile -> fileList.add(virtualFile));
+        String tempNutzFileName = nutzTemplate.getTemplatePath();
+        //兼容绝对路径模式
+        if (tempNutzFileName.endsWith(nutzTemplate.getFileExtension())&&tempNutzFileName.indexOf("/")>-1) {
+            tempNutzFileName = tempNutzFileName.substring(0, tempNutzFileName.length() - nutzTemplate.getFileExtension().length());
+        }
+        //去除前缀
+        tempNutzFileName = tempNutzFileName.substring(nutzTemplate.getName().length());
+        //补上文件后缀
+        tempNutzFileName = tempNutzFileName.replace(".", "/") + nutzTemplate.getFileExtension();
+        String finalTempNutzFileName = tempNutzFileName;
+        virtualFiles.stream().filter(virtualFile -> virtualFile.getCanonicalPath().endsWith(finalTempNutzFileName))
+                .forEach(virtualFile -> fileList.add(virtualFile));
         return fileList;
     }
 
@@ -87,15 +84,19 @@ public class NutzLineUtil {
      * @param bindingElement
      * @return
      */
-    private static String getTemplateFilePathAndName(PsiElement bindingElement) {
+    public static TemplateVO getTemplateFilePathAndName(PsiElement bindingElement) {
         PsiLiteralExpression literalExpression = (PsiLiteralExpression) bindingElement;
         String value = literalExpression.getValue() instanceof String ? (String) literalExpression.getValue() : null;
-        if (value != null && value.startsWith("jsp:")) {
-            value = value.substring(4);
-            return value;
+        if (value != null) {
+            TemplateVO templateVO = configuration.getTemplate(value);
+            if (templateVO != null) {
+                templateVO.setTemplatePath(value);
+            }
+            return templateVO;
         }
         return null;
     }
+
 
     /**
      * 设置错误信息

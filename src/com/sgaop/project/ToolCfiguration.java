@@ -4,10 +4,12 @@ import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
+import com.sgaop.idea.codeinsight.TemplateVO;
 import org.jdom.Element;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -43,7 +45,7 @@ public class ToolCfiguration implements PersistentStateComponent<Element> {
     @Override
     public void loadState(Element element) {
         element.getAttributes().forEach(attribute -> {
-            String[] data=attribute.getValue().split("\\$\\$");
+            String[] data = attribute.getValue().split("\\$\\$");
             this.data.put(data[0], data[1]);
         });
     }
@@ -51,6 +53,22 @@ public class ToolCfiguration implements PersistentStateComponent<Element> {
     @Nullable
     public static ToolCfiguration getInstance() {
         return ServiceManager.getService(ToolCfiguration.class);
+    }
+
+    /**
+     * 取得模版
+     * @param urlReg
+     * @return
+     */
+    public TemplateVO getTemplate(String urlReg) {
+        Iterator<String> iterator = data.keySet().iterator();
+        while (iterator.hasNext()) {
+            String name = iterator.next();
+            if (urlReg.startsWith(name)) {
+                return new TemplateVO(name, data.get(name));
+            }
+        }
+        return null;
     }
 
     public void setData(HashMap<String, String> data) {

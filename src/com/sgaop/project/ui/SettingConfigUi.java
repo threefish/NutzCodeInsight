@@ -19,10 +19,11 @@ public class SettingConfigUi {
 
     private JTable templateTable;
     private JButton btnAddTemplte;
+    private JTextField mark;
 
     public SettingConfigUi() {
         templateTable.setRowHeight(25);
-        DefaultTableModel model = new DefaultTableModel(new String[]{"前缀", "后缀",}, 0) {
+        DefaultTableModel model = new DefaultTableModel(new String[]{"模版前缀", "文件名后缀",}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 if (row > 0) {
