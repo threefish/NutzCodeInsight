@@ -19,3 +19,4 @@ idea插件仓库[https://plugins.jetbrains.com/plugin/10311-nutzcodeinsight](htt
 
 # 示例
 ![NutzCodeInsight](image/NutzCodeInsight.gif)
+![htmldemo.png](image/htmldemo.png)
