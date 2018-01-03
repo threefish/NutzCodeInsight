@@ -1,4 +1,4 @@
-package com.sgaop.idea.codeinsight;
+package com.sgaop.idea.codeinsight.navigation;
 
 import com.intellij.codeInsight.daemon.GutterIconNavigationHandler;
 import com.intellij.openapi.fileEditor.FileEditorManager;
@@ -12,6 +12,8 @@ import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBList;
 import com.intellij.util.ui.JBUI;
 import com.intellij.util.ui.UIUtil;
+import com.sgaop.idea.codeinsight.util.HtmlTemplateLineUtil;
+import com.sgaop.idea.codeinsight.util.IconUtil;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
@@ -24,13 +26,13 @@ import java.util.List;
  * @author 306955302@qq.com
  * @date 2017/12/29  11:54
  */
-public class NutzGutterIconNavigationHandler implements GutterIconNavigationHandler {
+public class HtmlTemplateGutterIconNavigationHandler implements GutterIconNavigationHandler {
 
     @Override
     public void navigate(MouseEvent mouseEvent, PsiElement psiElement) {
-        if (NutzLineUtil.isAtOk(psiElement)) {
+        if (HtmlTemplateLineUtil.isRes(psiElement)) {
             final Project project = psiElement.getProject();
-            final List<VirtualFile> fileList = NutzLineUtil.findTemplteFileList(psiElement);
+            final List<VirtualFile> fileList = HtmlTemplateLineUtil.findTemplteFileList(psiElement);
             if (fileList.size() == 1) {
                 FileEditorManager.getInstance(project).openFile(fileList.get(0), true);
             } else if (fileList.size() > 1) {
@@ -41,7 +43,7 @@ public class NutzGutterIconNavigationHandler implements GutterIconNavigationHand
                 list.installCellRenderer(vfile -> {
                     if (vfile instanceof VirtualFile) {
                         VirtualFile tempVfile = (VirtualFile) vfile;
-                        Icon icon = NutzLineUtil.getTemplateIcon(tempVfile.getExtension());
+                        Icon icon = IconUtil.getTemplateIcon(tempVfile.getExtension());
                         final String name = tempVfile.getName();
                         final String path = tempVfile.getCanonicalPath()
                                 .replace(project.getBasePath(), "")
@@ -59,7 +61,7 @@ public class NutzGutterIconNavigationHandler implements GutterIconNavigationHand
                 }).createPopup().show(new RelativePoint(mouseEvent));
             } else {
                 if (fileList == null || fileList.size() <= 0) {
-                    JOptionPane.showMessageDialog(null, "没有找到这个模版文件，请检查！", "错误提示", JOptionPane.ERROR_MESSAGE, null);
+                    JOptionPane.showMessageDialog(null, "没有找到这个资源文件，请检查！", "错误提示", JOptionPane.ERROR_MESSAGE, null);
                 }
             }
         }

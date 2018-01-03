@@ -1,10 +1,10 @@
-package com.sgaop.idea.codeinsight;
+package com.sgaop.idea.codeinsight.util;
 
-import com.intellij.icons.AllIcons;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
+import com.sgaop.idea.codeinsight.JavaNutzTemplateVO;
 import com.sgaop.project.ToolCfiguration;
 
 import javax.swing.*;
@@ -61,7 +61,7 @@ public class NutzLineUtil {
      * @return
      */
     public static List<VirtualFile> findTemplteFileList(PsiElement bindingElement) {
-        TemplateVO nutzTemplate = getTemplateFilePathAndName(bindingElement);
+        JavaNutzTemplateVO nutzTemplate = getTemplateFilePathAndName(bindingElement);
         Collection<VirtualFile> virtualFiles = FilenameIndex.getAllFilesByExt(bindingElement.getProject(), nutzTemplate.getFileExtension().replaceAll("\\.", ""), GlobalSearchScope.allScope(bindingElement.getProject()));
         List<VirtualFile> fileList = new ArrayList<>();
         String tempNutzFileName = nutzTemplate.getTemplatePath();
@@ -85,11 +85,11 @@ public class NutzLineUtil {
      * @param bindingElement
      * @return
      */
-    public static TemplateVO getTemplateFilePathAndName(PsiElement bindingElement) {
+    public static JavaNutzTemplateVO getTemplateFilePathAndName(PsiElement bindingElement) {
         PsiLiteralExpression literalExpression = (PsiLiteralExpression) bindingElement;
         String value = literalExpression.getValue() instanceof String ? (String) literalExpression.getValue() : null;
         if (value != null) {
-            TemplateVO templateVO = configuration.getTemplate(value);
+            JavaNutzTemplateVO templateVO = configuration.getTemplate(value);
             if (templateVO != null) {
                 templateVO.setTemplatePath(value);
             }
@@ -99,8 +99,6 @@ public class NutzLineUtil {
     }
 
 
-
-
     /**
      * 取得模版图标
      *
@@ -108,21 +106,7 @@ public class NutzLineUtil {
      * @return
      */
     public static Icon getTemplateIcon(String fileExtension) {
-        Icon icon;
-        switch (fileExtension) {
-            case ".jsp":
-            case "jsp":
-                icon = AllIcons.FileTypes.Jsp;
-                break;
-            case ".html":
-            case "html":
-                icon = AllIcons.FileTypes.Html;
-                break;
-            default:
-                icon = AllIcons.FileTypes.Xml;
-                break;
-        }
-        return icon;
+        return IconUtil.getTemplateIcon(fileExtension);
     }
 
 

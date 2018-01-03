@@ -5,8 +5,8 @@ import com.intellij.codeInsight.daemon.LineMarkerInfo;
 import com.intellij.codeInsight.daemon.LineMarkerProviderDescriptor;
 import com.intellij.openapi.editor.markup.GutterIconRenderer;
 import com.intellij.psi.PsiElement;
-import com.sgaop.idea.codeinsight.navigation.NutzGutterIconNavigationHandler;
-import com.sgaop.idea.codeinsight.util.NutzLineUtil;
+import com.sgaop.idea.codeinsight.navigation.HtmlTemplateGutterIconNavigationHandler;
+import com.sgaop.idea.codeinsight.util.HtmlTemplateLineUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -18,17 +18,16 @@ import java.util.List;
  * Created with IntelliJ IDEA.
  *
  * @author 306955302@qq.com
- * @date 2017/12/29  11:30
+ * @date 2018/1/3  11:28
  */
-public class JavaNutzLineMarkerProvider extends LineMarkerProviderDescriptor {
+public class HtmlTemplateLineMarkerProvider extends LineMarkerProviderDescriptor {
 
     @Override
     public LineMarkerInfo getLineMarkerInfo(@NotNull PsiElement bindingElement) {
-        if (NutzLineUtil.isAtOk(bindingElement)) {
-            JavaNutzTemplateVO vo = NutzLineUtil.getTemplateFilePathAndName(bindingElement);
-            Icon icon = NutzLineUtil.getTemplateIcon(vo.getFileExtension());
+        if (HtmlTemplateLineUtil.isRes(bindingElement)) {
+            Icon icon = HtmlTemplateLineUtil.getTemplateIcon(bindingElement);
             return new LineMarkerInfo<>(bindingElement, bindingElement.getTextRange(), icon,
-                    Pass.LINE_MARKERS, null, new NutzGutterIconNavigationHandler(),
+                    Pass.LINE_MARKERS, null, new HtmlTemplateGutterIconNavigationHandler(),
                     GutterIconRenderer.Alignment.LEFT);
         }
         return null;
@@ -37,7 +36,7 @@ public class JavaNutzLineMarkerProvider extends LineMarkerProviderDescriptor {
     @Nullable
     @Override
     public String getName() {
-        return "Nutz Ok navigate";
+        return "Template File navigate";
     }
 
     @Override

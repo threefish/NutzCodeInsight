@@ -4,7 +4,7 @@ import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
-import com.sgaop.idea.codeinsight.TemplateVO;
+import com.sgaop.idea.codeinsight.JavaNutzTemplateVO;
 import org.jdom.Element;
 import org.jetbrains.annotations.Nullable;
 
@@ -67,12 +67,12 @@ public class ToolCfiguration implements PersistentStateComponent<Element> {
      * @param urlReg
      * @return
      */
-    public TemplateVO getTemplate(String urlReg) {
+    public JavaNutzTemplateVO getTemplate(String urlReg) {
         Iterator<String> iterator = data.keySet().iterator();
         while (iterator.hasNext()) {
             String name = iterator.next();
             if (urlReg.startsWith(name)) {
-                return new TemplateVO(name, data.get(name));
+                return new JavaNutzTemplateVO(name, data.get(name));
             }
         }
         return null;

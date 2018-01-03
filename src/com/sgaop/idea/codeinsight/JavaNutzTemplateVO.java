@@ -6,7 +6,7 @@ package com.sgaop.idea.codeinsight;
  * @author 306955302@qq.com
  * @date 2018/1/2  10:27
  */
-public class TemplateVO {
+public class JavaNutzTemplateVO {
     private String name;
     private String fileExtension;
     /**
@@ -15,7 +15,7 @@ public class TemplateVO {
      */
     private String templatePath;
 
-    public TemplateVO(String name, String fileExtension) {
+    public JavaNutzTemplateVO(String name, String fileExtension) {
         this.name = name.trim();
         this.fileExtension = fileExtension.trim();
     }
@@ -46,7 +46,7 @@ public class TemplateVO {
 
     @Override
     public String toString() {
-        return "TemplateVO{" +
+        return "JavaNutzTemplateVO{" +
                 "name='" + name + '\'' +
                 ", fileExtension='" + fileExtension + '\'' +
                 ", templatePath='" + templatePath + '\'' +
