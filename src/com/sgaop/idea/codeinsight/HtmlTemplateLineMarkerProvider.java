@@ -5,6 +5,7 @@ import com.intellij.codeInsight.daemon.LineMarkerInfo;
 import com.intellij.codeInsight.daemon.LineMarkerProviderDescriptor;
 import com.intellij.openapi.editor.markup.GutterIconRenderer;
 import com.intellij.psi.PsiElement;
+import com.intellij.util.Function;
 import com.sgaop.idea.codeinsight.navigation.HtmlTemplateGutterIconNavigationHandler;
 import com.sgaop.idea.codeinsight.util.HtmlTemplateLineUtil;
 import org.jetbrains.annotations.NotNull;
@@ -27,7 +28,7 @@ public class HtmlTemplateLineMarkerProvider extends LineMarkerProviderDescriptor
         if (HtmlTemplateLineUtil.isRes(bindingElement)) {
             Icon icon = HtmlTemplateLineUtil.getTemplateIcon(bindingElement);
             return new LineMarkerInfo<>(bindingElement, bindingElement.getTextRange(), icon,
-                    Pass.LINE_MARKERS, null, new HtmlTemplateGutterIconNavigationHandler(),
+                    Pass.LINE_MARKERS, new FunctionTooltip(), new HtmlTemplateGutterIconNavigationHandler(),
                     GutterIconRenderer.Alignment.LEFT);
         }
         return null;

@@ -57,10 +57,10 @@
 
     <actions>
         <!-- Add your actions here -->
-        <!--<action id="GoToRequestMapping" class="com.sgaop.idea.actions.GoToNutzAtMappingAction"
-                text="Find At Mapping" description="根据@At值查询">
+        <action id="GoToRequestMapping" class="com.sgaop.idea.actions.GoToNutzAtMappingAction"
+                text="根据@At值查询" description="根据@At值查询">
             <add-to-group group-id="GoToTargetEx" anchor="first"/>
-        </action>-->
+        </action>
     </actions>
 
 </idea-plugin>

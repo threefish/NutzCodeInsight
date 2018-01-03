@@ -28,7 +28,7 @@ public class JavaNutzLineMarkerProvider extends LineMarkerProviderDescriptor {
             JavaNutzTemplateVO vo = NutzLineUtil.getTemplateFilePathAndName(bindingElement);
             Icon icon = NutzLineUtil.getTemplateIcon(vo.getFileExtension());
             return new LineMarkerInfo<>(bindingElement, bindingElement.getTextRange(), icon,
-                    Pass.LINE_MARKERS, null, new NutzGutterIconNavigationHandler(),
+                    Pass.LINE_MARKERS, new FunctionTooltip(), new NutzGutterIconNavigationHandler(),
                     GutterIconRenderer.Alignment.LEFT);
         }
         return null;

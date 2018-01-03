@@ -5,7 +5,6 @@ import com.intellij.navigation.NavigationItem;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.java.stubs.index.JavaAnnotationIndex;
-import com.intellij.psi.impl.source.PsiModifierListImpl;
 import com.intellij.psi.search.GlobalSearchScope;
 import org.jetbrains.annotations.NotNull;
 
@@ -64,23 +63,25 @@ public class AtMappingContributor implements ChooseByNameContributor {
                                 if (va instanceof PsiLiteralExpression) {
                                     //单个映射值
                                     String requestPath = nameValuePair.getLiteralValue();
-                                    System.out.println("单个");
                                     this.addMappingItem(mappingAnnotation, topReqs, requestPath, annotation);
                                 } else if (va instanceof PsiAnnotationMemberValue) {
                                     //多个映射值
-                                    System.out.println("多个");
-                                    String requestPath = "";
                                     PsiArrayInitializerMemberValue memberValue = (PsiArrayInitializerMemberValue) nameValuePair.getValue();
                                     PsiAnnotationMemberValue[] values = memberValue.getInitializers();
                                     for (PsiAnnotationMemberValue value : values) {
                                         PsiLiteralExpression val = (PsiLiteralExpression) value;
-                                        requestPath = (String) val.getValue();
+                                        String requestPath = (String) val.getValue();
                                         this.addMappingItem(mappingAnnotation, topReqs, requestPath, annotation);
                                     }
                                 }
                             }
-                        } else{
-                            System.out.println("此处应该取方法名作为映射地址");
+                        } else {
+                            PsiElement psiMethod = at.getParent().getParent().getParent();
+                            if (psiMethod instanceof PsiMethod) {
+                                String[] topReqs = this.getTopAt(at);
+                                String requestPath = "/" + ((PsiMethod) psiMethod).getName();
+                                this.addMappingItem(mappingAnnotation, topReqs, requestPath, annotation);
+                            }
                         }
                     }
                 }
@@ -96,6 +97,23 @@ public class AtMappingContributor implements ChooseByNameContributor {
     private String[] getTopAt(PsiElement at) {
         String[] topReqs = new String[1];
         topReqs[0] = "/default";
+        PsiElement psiMethod = at.getParent().getParent().getParent();
+        PsiModifierList psiModifierList = ((PsiMethod) psiMethod).getModifierList();
+        PsiAnnotation[] classAnnotations = psiModifierList.getAnnotations();
+        for (PsiAnnotation classAnnotation : classAnnotations) {
+            System.out.println(classAnnotation.getText());
+            if (classAnnotation.getQualifiedName().equals("org.nutz.mvc.annotation.At")) {
+                PsiNameValuePair[] pairs = classAnnotation.getParameterList().getAttributes();
+                if (pairs.length == 0) {
+                    topReqs[0] = "xxx";
+                } else {
+                    topReqs = new String[pairs.length];
+                    for (int i = 0; i < pairs.length; i++) {
+                        topReqs[i] = pairs[i].getLiteralValue();
+                    }
+                }
+            }
+        }
         //此处取值类的映射地址
         return topReqs;
 //        PsiAnnotation[] classAnnotations = ((PsiModifierListImpl) at.getParent().getParent()).getAnnotations();
