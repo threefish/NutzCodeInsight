@@ -25,7 +25,7 @@ public class AtMappingItem implements NavigationItem {
     public AtMappingItem(PsiElement psiElement, String urlPath, String requestMethod) {
         this.psiElement = psiElement;
         this.requestMethod = requestMethod;
-        this.urlPath = urlPath;
+        this.urlPath = urlPath.replaceAll("//","/");
         this.navigatable = (Navigatable) psiElement;
     }
 

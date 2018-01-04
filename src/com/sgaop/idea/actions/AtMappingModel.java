@@ -85,17 +85,10 @@ public class AtMappingModel extends FilteringGotoByModel<FileType> implements Du
 
     @Override
     public boolean matches(@NotNull String popupItem, @NotNull String userPattern) {
-        System.out.println(popupItem+" >>> "+ userPattern);
-        return true;
-    }
-
-    private boolean isSimilarUrlPaths(@NotNull String popupItem, @NotNull String userPattern) {
-//        String[] popupItemList = popupItem
-//                .split("/");
-//                .drop(1) //drop method name
-//        String[] userPatternList = userPattern
-//                .split("/");
-//                .dropFirstEmptyStringIfExists()
-        return true;
+        if (popupItem.indexOf(userPattern) > -1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
