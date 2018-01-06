@@ -19,9 +19,7 @@ idea插件仓库[https://plugins.jetbrains.com/plugin/10311-nutzcodeinsight](htt
  - File >> Settings >> NutzCodeInsight
  - File >> Settings >> Other Settings >> NutzCodeInsight
 
-# java类中
+# 安装后效果
 
 ![NutzCodeInsight](image/NutzCodeInsight.gif)
 
-# beetl模版中
-![htmldemo.png](image/htmldemo.png)
