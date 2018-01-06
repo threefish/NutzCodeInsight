@@ -20,6 +20,8 @@ import java.util.Arrays;
  */
 public class AtMappingModel extends FilteringGotoByModel<FileType> implements DumbAware, CustomMatcherModel {
 
+
+
     public AtMappingModel(@NotNull Project project) {
         super(project, Arrays.asList(new AtMappingContributor()).toArray(new ChooseByNameContributor[0]));
     }

@@ -22,6 +22,10 @@ public class AtMappingItem implements NavigationItem {
     private String urlPath;
     private String requestMethod;
 
+    public String getUrlPath() {
+        return urlPath;
+    }
+
     public AtMappingItem(PsiElement psiElement, String urlPath, String requestMethod) {
         this.psiElement = psiElement;
         this.requestMethod = requestMethod;
@@ -71,7 +75,7 @@ public class AtMappingItem implements NavigationItem {
             @Nullable
             @Override
             public Icon getIcon(boolean b) {
-                return AllIcons.FileTypes.JavaClass;
+                return AllIcons.FileTypes.Java;
             }
         };
     }

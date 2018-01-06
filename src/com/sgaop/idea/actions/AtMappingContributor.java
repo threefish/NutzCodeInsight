@@ -22,6 +22,7 @@ public class AtMappingContributor implements ChooseByNameContributor {
 
     private List<AtMappingItem> navigationItems = new ArrayList<>();
 
+
     @NotNull
     @Override
     public String[] getNames(Project project, boolean b) {
@@ -33,7 +34,7 @@ public class AtMappingContributor implements ChooseByNameContributor {
     @NotNull
     @Override
     public NavigationItem[] getItemsByName(String name, String pattern, Project project, boolean b) {
-        return navigationItems.stream().filter(it -> !it.getName().equals(pattern)).toArray(NavigationItem[]::new);
+        return navigationItems.stream().filter(it -> it.getUrlPath().indexOf(pattern) > -1).toArray(NavigationItem[]::new);
     }
 
     private List<AtMappingItem> findRequestMappingItems(Project project, String annotationName) {

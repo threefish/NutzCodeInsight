@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.sgaop.idea.codeinsight.plugin</id>
     <name>NutzCodeInsight</name>
-    <version>1.5</version>
+    <version>1.6</version>
     <vendor email="306955302@qq.com" url="https://github.com/threefish/NutzCodeInsight">306955302@qq.com</vendor>
 
     <description><![CDATA[
@@ -9,12 +9,18 @@
     ]]></description>
 
     <change-notes><![CDATA[
-     在 Nutz Action Module 中点击 @Ok 前面的jsp图标即可快速打开或切换至已经打开的jsp文件<br>
+     1、在 Nutz Action Module 中点击 @Ok 前面的jsp图标即可快速打开或切换至已经打开的jsp文件<br>
+     2、支持以HTML、JSP等格式文件作为模版的框架资源文件的快速定位<br>
+     3、Navigate菜单中增加查找@At映射地址快捷方式 <br>
+       <ul>
+       <ul>
+        1.6
+        <li>add Navigate菜单中增加查找@At映射地址快捷方式</li>
+       </ul>
        <ul>
         1.5
         <li>add 支持模版文件中资源文件的快速打开或切换</li>
        </ul>
-       <ul>
       <ul>
         1.4
         <li>add 增加配置界面是否被修改状态的控制</li>
