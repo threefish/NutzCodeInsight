@@ -10,8 +10,12 @@ import java.util.*;
 
 public class NutzLocalUtil {
 
-    private static final List<String> localQualifiedNames = Arrays.asList("Mvcs.getMessage");
-
+    private static final List<String> localQualifiedNames = Arrays.asList(
+            "Mvcs.getMessage",
+            "org.nutz.mvc.Mvcs.getMessage",
+            "Mvcs.getLocaleMessageStr",
+            "org.nutz.mvc.Mvcs.getLocaleMessageStr",
+            "getLocaleMessage");
 
     public static List<String> findProperties(Project project, Collection<VirtualFile> virtualFiles, String localizationPackage, String key) {
         List<String> result = new ArrayList<>();
