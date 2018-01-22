@@ -1,15 +1,20 @@
 <idea-plugin>
     <id>com.sgaop.idea.codeinsight.plugin</id>
     <name>NutzCodeInsight</name>
-    <version>1.6</version>
+    <version>1.7</version>
     <vendor email="306955302@qq.com" url="https://github.com/threefish/NutzCodeInsight">306955302@qq.com</vendor>
     <description><![CDATA[
      1、在 Nutz Action Module 中点击 @Ok 前面的jsp图标即可快速打开或切换至已经打开的jsp文件<br>
      2、支持以HTML、JSP等格式文件作为模版的框架资源文件的快速定位<br>
      3、Navigate菜单中增加查找@At映射地址快捷方式 <br>
+     4、国际化支持 <br>
     ]]></description>
     <change-notes><![CDATA[
        <ul>
+       <ul>
+        1.7
+        <li>add 国际化支持</li>
+       </ul>
        <ul>
         1.6
         <li>add Navigate菜单中增加查找@At映射地址快捷方式</li>
@@ -52,14 +57,18 @@
         <applicationConfigurable instance="com.sgaop.project.ToolConfigurable"/>
         <applicationService serviceInterface="com.sgaop.project.ToolCfiguration"
                             serviceImplementation="com.sgaop.project.ToolCfiguration"/>
+        <!--NutzAction快速跳转模版文件-->
         <codeInsight.lineMarkerProvider language="JAVA"
                                         implementationClass="com.sgaop.idea.codeinsight.JavaNutzLineMarkerProvider"/>
+        <!--模版文件快速跳转资源文件-->
         <codeInsight.lineMarkerProvider language="HTML"
                                         implementationClass="com.sgaop.idea.codeinsight.HtmlTemplateLineMarkerProvider"/>
+        <!--代码折叠生成器-->
+        <lang.foldingBuilder language="JAVA" implementationClass="com.sgaop.idea.codeinsight.NutzLocalizationFoldingBuilder"/>
     </extensions>
 
     <actions>
-        <!-- Add your actions here -->
+        <!--快速定位至NutzAction-->
         <action id="GoToRequestMapping" class="com.sgaop.idea.actions.GoToNutzAtMappingAction"
                 text="Find Nutz @At Mapping Url" description="Find Nutz At Mapping Url">
             <add-to-group group-id="GoToTargetEx" anchor="first"/>

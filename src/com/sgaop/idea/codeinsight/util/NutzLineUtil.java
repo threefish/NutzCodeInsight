@@ -21,6 +21,8 @@ import java.util.List;
 public class NutzLineUtil {
     private static ToolCfiguration configuration = ToolCfiguration.getInstance();
 
+    private static final String NUTZ_OK_ANNOTATION="org.nutz.mvc.annotation.Ok";
+
     /**
      * 判断是否是Nutz的@Ok
      *
@@ -45,7 +47,7 @@ public class NutzLineUtil {
         if (!(psiJavaCodeReferenceElement instanceof PsiJavaCodeReferenceElement)) {
             return false;
         }
-        if (!"org.nutz.mvc.annotation.Ok".equals(((PsiJavaCodeReferenceElement) psiJavaCodeReferenceElement).getQualifiedName())) {
+        if (!NUTZ_OK_ANNOTATION.equals(((PsiJavaCodeReferenceElement) psiJavaCodeReferenceElement).getQualifiedName())) {
             return false;
         }
         if (getTemplateFilePathAndName(bindingElement) == null) {
