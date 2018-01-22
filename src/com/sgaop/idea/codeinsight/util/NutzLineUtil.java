@@ -5,6 +5,7 @@ import com.intellij.psi.*;
 import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.sgaop.idea.codeinsight.JavaNutzTemplateVO;
+import com.sgaop.idea.codeinsight.NutzCons;
 import com.sgaop.project.ToolCfiguration;
 
 import javax.swing.*;
@@ -21,7 +22,6 @@ import java.util.List;
 public class NutzLineUtil {
     private static ToolCfiguration configuration = ToolCfiguration.getInstance();
 
-    private static final String NUTZ_OK_ANNOTATION="org.nutz.mvc.annotation.Ok";
 
     /**
      * 判断是否是Nutz的@Ok
@@ -47,7 +47,7 @@ public class NutzLineUtil {
         if (!(psiJavaCodeReferenceElement instanceof PsiJavaCodeReferenceElement)) {
             return false;
         }
-        if (!NUTZ_OK_ANNOTATION.equals(((PsiJavaCodeReferenceElement) psiJavaCodeReferenceElement).getQualifiedName())) {
+        if (!NutzCons.OK.equals(((PsiJavaCodeReferenceElement) psiJavaCodeReferenceElement).getQualifiedName())) {
             return false;
         }
         if (getTemplateFilePathAndName(bindingElement) == null) {
@@ -64,7 +64,7 @@ public class NutzLineUtil {
      */
     public static List<VirtualFile> findTemplteFileList(PsiElement bindingElement) {
         JavaNutzTemplateVO nutzTemplate = getTemplateFilePathAndName(bindingElement);
-        Collection<VirtualFile> virtualFiles = FilenameIndex.getAllFilesByExt(bindingElement.getProject(), nutzTemplate.getFileExtension().replaceAll("\\.", ""), GlobalSearchScope.allScope(bindingElement.getProject()));
+        Collection<VirtualFile> virtualFiles = FilenameIndex.getAllFilesByExt(bindingElement.getProject(), nutzTemplate.getFileExtension().replaceAll("\\.", ""), GlobalSearchScope.projectScope(bindingElement.getProject()));
         List<VirtualFile> fileList = new ArrayList<>();
         String tempNutzFileName = nutzTemplate.getTemplatePath();
         //兼容绝对路径模式

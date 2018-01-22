@@ -2,21 +2,23 @@ package com.sgaop.idea.codeinsight.util;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiManager;
+import com.intellij.psi.*;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 public class NutzLocalUtil {
 
-    public static List<String> findProperties(Project project, Collection<VirtualFile> virtualFiles, String key) {
+    private static final List<String> localQualifiedNames = Arrays.asList("Mvcs.getMessage");
+
+
+    public static List<String> findProperties(Project project, Collection<VirtualFile> virtualFiles, String localizationPackage, String key) {
         List<String> result = new ArrayList<>();
         for (VirtualFile virtualFile : virtualFiles) {
+            if (virtualFile.toString().indexOf(localizationPackage) == -1) {
+                continue;
+            }
             PsiFile psiFile = PsiManager.getInstance(project).findFile(virtualFile);
             Properties properties = new Properties();
             try (StringReader reader = new StringReader(psiFile.getText())) {
@@ -31,5 +33,24 @@ public class NutzLocalUtil {
             });
         }
         return result;
+    }
+
+
+    public static boolean isLocal(PsiLiteralExpression literalExpression) {
+        if (null == literalExpression.getParent()) {
+            return false;
+        }
+        PsiElement psiMethodCallExpression = literalExpression.getParent().getParent();
+        if (psiMethodCallExpression instanceof PsiMethodCallExpression) {
+            PsiMethodCallExpression methodCallExpression = (PsiMethodCallExpression) psiMethodCallExpression;
+            if (methodCallExpression.getMethodExpression() == null) {
+                return false;
+            }
+            String qualifiedName = methodCallExpression.getMethodExpression().getQualifiedName();
+            if (localQualifiedNames.contains(qualifiedName)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

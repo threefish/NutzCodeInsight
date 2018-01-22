@@ -8,8 +8,12 @@ import com.intellij.openapi.editor.FoldingGroup;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLiteralExpression;
+import com.intellij.psi.PsiNameValuePair;
+import com.intellij.psi.impl.java.stubs.index.JavaAnnotationIndex;
+import com.intellij.psi.impl.source.tree.java.PsiAnnotationParamListImpl;
 import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
@@ -30,19 +34,34 @@ import java.util.List;
  * 描述此类：
  */
 public class NutzLocalizationFoldingBuilder extends FoldingBuilderEx {
+
+    private String localizationPackage;
+    /**
+     * 是否初始化
+     */
+    private boolean isInit = false;
+
+
+    FoldingGroup group = FoldingGroup.newGroup("NutzLocal");
+
+
     @NotNull
     @Override
     public FoldingDescriptor[] buildFoldRegions(@NotNull PsiElement root, @NotNull Document document, boolean quick) {
-        FoldingGroup group = FoldingGroup.newGroup("NutzLocal");
-        List<FoldingDescriptor> descriptors = new ArrayList<>();
         Project project = root.getProject();
-        Collection<VirtualFile> propertiesFiles = FilenameIndex.getAllFilesByExt(project, "properties", GlobalSearchScope.allScope(project));
+        if (!init(project)) {
+            return new FoldingDescriptor[0];
+        }
+        List<FoldingDescriptor> descriptors = new ArrayList<>();
+        Collection<VirtualFile> propertiesFiles = FilenameIndex.getAllFilesByExt(project, "properties", GlobalSearchScope.projectScope(project));
         Collection<PsiLiteralExpression> literalExpressions = PsiTreeUtil.findChildrenOfType(root, PsiLiteralExpression.class);
         for (final PsiLiteralExpression literalExpression : literalExpressions) {
+            if (!NutzLocalUtil.isLocal(literalExpression)) {
+                continue;
+            }
             String key = literalExpression.getValue() instanceof String ? (String) literalExpression.getValue() : null;
             if (key != null) {
-                System.out.println(key);
-                final List<String> properties = NutzLocalUtil.findProperties(project,propertiesFiles,key);
+                final List<String> properties = NutzLocalUtil.findProperties(project, propertiesFiles, localizationPackage, key);
                 if (properties.size() == 1) {
                     descriptors.add(new FoldingDescriptor(literalExpression.getNode(),
                             new TextRange(literalExpression.getTextRange().getStartOffset() + 1,
@@ -71,4 +90,40 @@ public class NutzLocalizationFoldingBuilder extends FoldingBuilderEx {
     public boolean isCollapsedByDefault(@NotNull ASTNode astNode) {
         return true;
     }
+
+    private boolean init(Project project) {
+        if (!isInit) {
+            Collection<PsiAnnotation> psiAnnotations = JavaAnnotationIndex.getInstance().get("Localization", project, GlobalSearchScope.projectScope(project));
+            for (PsiAnnotation annotation : psiAnnotations) {
+                if (!NutzCons.LOCALIZATION.equals(annotation.getQualifiedName())) {
+                    continue;
+                }
+                PsiElement[] list = annotation.getChildren();
+                for (PsiElement element : list) {
+                    if (element instanceof PsiAnnotationParamListImpl) {
+                        PsiNameValuePair[] valuePairs = ((PsiAnnotationParamListImpl) element).getAttributes();
+                        for (PsiNameValuePair nv : valuePairs) {
+                            if ("value".equals(nv.getName())) {
+                                localizationPackage = nv.getLiteralValue();
+                            }
+                        }
+                        for (PsiNameValuePair nv : valuePairs) {
+                            if ("defaultLocalizationKey".equals(nv.getName())) {
+                                String lang = nv.getLiteralValue();
+                                lang = lang.replaceAll("-", "_");
+                                localizationPackage = localizationPackage + lang;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (localizationPackage == null) {
+            return false;
+        } else {
+            isInit = true;
+            return true;
+        }
+    }
 }
+

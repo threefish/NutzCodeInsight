@@ -6,6 +6,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.java.stubs.index.JavaAnnotationIndex;
 import com.intellij.psi.search.GlobalSearchScope;
+import com.sgaop.idea.codeinsight.NutzCons;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -39,10 +40,10 @@ public class AtMappingContributor implements ChooseByNameContributor {
 
     private List<AtMappingItem> findRequestMappingItems(Project project, String annotationName) {
         try {
-            Collection<PsiAnnotation> psiAnnotations = JavaAnnotationIndex.getInstance().get(annotationName, project, GlobalSearchScope.allScope(project));
+            Collection<PsiAnnotation> psiAnnotations = JavaAnnotationIndex.getInstance().get(annotationName, project, GlobalSearchScope.projectScope(project));
             List<AtMappingItem> mappingAnnotation = new ArrayList<>();
             for (PsiAnnotation annotation : psiAnnotations) {
-                if (!"org.nutz.mvc.annotation.At".equals(annotation.getQualifiedName())) {
+                if (!NutzCons.AT.equals(annotation.getQualifiedName())) {
                     continue;
                 }
                 PsiElement psiElement = annotation.getParent();
@@ -95,16 +96,16 @@ public class AtMappingContributor implements ChooseByNameContributor {
         StringBuilder sb = new StringBuilder();
         for (PsiAnnotation annotation : psiAnnotations) {
             String qualifiedName = annotation.getQualifiedName();
-            if ("org.nutz.mvc.annotation.GET".equals(qualifiedName)) {
+            if (NutzCons.GET.equals(qualifiedName)) {
                 sb.append(" GET");
             }
-            if ("org.nutz.mvc.annotation.POST".equals(qualifiedName)) {
+            if (NutzCons.POST.equals(qualifiedName)) {
                 sb.append(" POST");
             }
-            if ("org.nutz.mvc.annotation.DELETE".equals(qualifiedName)) {
+            if (NutzCons.DELETE.equals(qualifiedName)) {
                 sb.append(" DELETE");
             }
-            if ("org.nutz.mvc.annotation.PUT".equals(qualifiedName)) {
+            if (NutzCons.PUT.equals(qualifiedName)) {
                 sb.append(" PUT");
             }
         }
@@ -131,7 +132,7 @@ public class AtMappingContributor implements ChooseByNameContributor {
             PsiModifierList psiModifierList = (PsiModifierList) psiElement;
             PsiAnnotation[] classAnnotations = psiModifierList.getAnnotations();
             for (PsiAnnotation classAnnotation : classAnnotations) {
-                if (classAnnotation.getQualifiedName().equals("org.nutz.mvc.annotation.At")) {
+                if (NutzCons.AT.equals(classAnnotation.getQualifiedName())) {
                     PsiNameValuePair[] pairs = classAnnotation.getParameterList().getAttributes();
                     if (pairs.length == 0) {
                         topReqs[0] = "/" + moduleName;
