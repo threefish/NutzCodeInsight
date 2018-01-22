@@ -42,7 +42,7 @@ public class NutzLocalizationFoldingBuilder extends FoldingBuilderEx {
     private boolean isInit = false;
 
 
-    FoldingGroup group = FoldingGroup.newGroup("NutzLocal");
+//    FoldingGroup group =FoldingGroup.newGroup("NutzLocal") ;
 
 
     @NotNull
@@ -65,8 +65,7 @@ public class NutzLocalizationFoldingBuilder extends FoldingBuilderEx {
                 if (properties.size() == 1) {
                     descriptors.add(new FoldingDescriptor(literalExpression.getNode(),
                             new TextRange(literalExpression.getTextRange().getStartOffset() + 1,
-                                    literalExpression.getTextRange().getEndOffset() - 1),
-                            group) {
+                                    literalExpression.getTextRange().getEndOffset() - 1)) {
                         @Nullable
                         @Override
                         public String getPlaceholderText() {
