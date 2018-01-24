@@ -7,13 +7,13 @@
      1、在 Nutz Action Module 中点击 @Ok 前面的jsp图标即可快速打开或切换至已经打开的jsp文件<br>
      2、支持以HTML、JSP等格式文件作为模版的框架资源文件的快速定位<br>
      3、Navigate菜单中增加查找@At映射地址快捷方式 <br>
-     4、国际化支持 <br>
+     4、Nutz web环境中支持折叠显示国际化配置文件变量值 <br>
     ]]></description>
     <change-notes><![CDATA[
        <ul>
        <ul>
         1.7
-        <li>add 国际化支持</li>
+        <li>add Nutz web环境中支持折叠显示国际化配置文件变量值</li>
        </ul>
        <ul>
         1.6

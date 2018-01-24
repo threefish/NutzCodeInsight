@@ -13,9 +13,12 @@ public class NutzLocalUtil {
     private static final List<String> localQualifiedNames = Arrays.asList(
             "Mvcs.getMessage",
             "org.nutz.mvc.Mvcs.getMessage",
-            "Mvcs.getLocaleMessageStr",
-            "org.nutz.mvc.Mvcs.getLocaleMessageStr",
-            "getLocaleMessage");
+            "MvcI18n.message",
+            "MvcI18n.messageOrDefaultFormat",
+            "MvcI18n.messageOrDefault",
+            "org.nutz.mvc.MvcI18n.message",
+            "org.nutz.mvc.MvcI18n.messageOrDefaultFormat",
+            "org.nutz.mvc.MvcI18n.messageOrDefault");
 
     public static List<String> findProperties(Project project, Collection<VirtualFile> virtualFiles, String localizationPackage, String key) {
         List<String> result = new ArrayList<>();
