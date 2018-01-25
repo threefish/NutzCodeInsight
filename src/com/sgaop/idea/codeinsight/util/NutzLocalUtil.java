@@ -3,10 +3,15 @@ package com.sgaop.idea.codeinsight.util;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
+import com.intellij.psi.impl.java.stubs.index.JavaAnnotationIndex;
+import com.intellij.psi.impl.source.tree.java.PsiAnnotationParamListImpl;
+import com.intellij.psi.search.GlobalSearchScope;
+import com.sgaop.idea.codeinsight.NutzCons;
 
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.*;
+import java.util.regex.Pattern;
 
 public class NutzLocalUtil {
 
@@ -19,6 +24,18 @@ public class NutzLocalUtil {
             "org.nutz.mvc.MvcI18n.message",
             "org.nutz.mvc.MvcI18n.messageOrDefaultFormat",
             "org.nutz.mvc.MvcI18n.messageOrDefault");
+    /**
+     * Nutz默认语言包
+     */
+    private static String localizationPackage;
+    /**
+     * 是否初始化
+     */
+    private static boolean isInit = false;
+    /**
+     * beetl模版中匹配国际化方法得正则表达式
+     */
+    public static final Pattern PATTERN = Pattern.compile("\\$\\{i18n\\((.*?)\\)}");
 
     public static List<String> findProperties(Project project, Collection<VirtualFile> virtualFiles, String localizationPackage, String key) {
         List<String> result = new ArrayList<>();
@@ -59,5 +76,43 @@ public class NutzLocalUtil {
             }
         }
         return false;
+    }
+
+
+
+
+    public static String getLocalizationPackage(Project project) {
+        if (!isInit) {
+            Collection<PsiAnnotation> psiAnnotations = JavaAnnotationIndex.getInstance().get("Localization", project, GlobalSearchScope.projectScope(project));
+            for (PsiAnnotation annotation : psiAnnotations) {
+                if (!NutzCons.LOCALIZATION.equals(annotation.getQualifiedName())) {
+                    continue;
+                }
+                PsiElement[] list = annotation.getChildren();
+                for (PsiElement element : list) {
+                    if (element instanceof PsiAnnotationParamListImpl) {
+                        PsiNameValuePair[] valuePairs = ((PsiAnnotationParamListImpl) element).getAttributes();
+                        for (PsiNameValuePair nv : valuePairs) {
+                            if ("value".equals(nv.getName())) {
+                                localizationPackage = nv.getLiteralValue();
+                            }
+                        }
+                        for (PsiNameValuePair nv : valuePairs) {
+                            if ("defaultLocalizationKey".equals(nv.getName())) {
+                                String lang = nv.getLiteralValue();
+                                lang = lang.replaceAll("-", "_");
+                                localizationPackage = localizationPackage + lang;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (localizationPackage == null) {
+            return null;
+        } else {
+            isInit = true;
+            return localizationPackage;
+        }
     }
 }

@@ -8,13 +8,13 @@
      2、支持以HTML、JSP等格式文件作为模版的框架资源文件的快速定位<br>
      3、Navigate菜单中增加查找@At映射地址快捷方式 <br>
      4、Nutz web环境中支持折叠显示国际化配置文件变量值 <br>
-     5、Beetl模版中也支持国际化配置文件折叠(${i18n("login.sucess")}或者${i18n("login.sucess","测试")} ) <br>
+     5、Beetl模版中也支持国际化配置文件折叠(${i18n("login.sucess")}或者${i18n("login.sucess","参数1","参数N")} ) <br>
     ]]></description>
     <change-notes><![CDATA[
      <ul>
        <ul>
         1.8
-        <li>add Beetl模版中也支持国际化配置文件折叠(${i18n("login.sucess")}或者${i18n("login.sucess","测试")} )</li>
+        <li>add Beetl模版中也支持国际化配置文件折叠(${i18n("login.sucess")}或者${i18n("login.sucess","参数1","参数N")} )</li>
        </ul>
        <ul>
        <ul>
@@ -70,8 +70,8 @@
         <codeInsight.lineMarkerProvider language="HTML"
                                         implementationClass="com.sgaop.idea.codeinsight.HtmlTemplateLineMarkerProvider"/>
         <!--代码折叠生成器-->
-        <lang.foldingBuilder language="JAVA" implementationClass="com.sgaop.idea.codeinsight.NutzLocalizationFoldingBuilder"/>
-        <lang.foldingBuilder language="HTML" implementationClass="com.sgaop.idea.codeinsight.BeetlLocalizationFoldingBuilder"/>
+        <lang.foldingBuilder language="JAVA" implementationClass="com.sgaop.idea.codeinsight.folding.NutzLocalizationFoldingBuilder"/>
+        <lang.foldingBuilder language="HTML" implementationClass="com.sgaop.idea.codeinsight.folding.BeetlLocalizationFoldingBuilder"/>
     </extensions>
 
     <actions>
