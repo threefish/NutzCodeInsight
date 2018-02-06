@@ -79,8 +79,6 @@ public class NutzLocalUtil {
     }
 
 
-
-
     public static String getLocalizationPackage(Project project) {
         if (!isInit) {
             Collection<PsiAnnotation> psiAnnotations = JavaAnnotationIndex.getInstance().get("Localization", project, GlobalSearchScope.projectScope(project));
@@ -94,14 +92,22 @@ public class NutzLocalUtil {
                         PsiNameValuePair[] valuePairs = ((PsiAnnotationParamListImpl) element).getAttributes();
                         for (PsiNameValuePair nv : valuePairs) {
                             if ("value".equals(nv.getName())) {
-                                localizationPackage = nv.getLiteralValue();
+                                if (nv.getLiteralValue() != null) {
+                                    localizationPackage = nv.getLiteralValue();
+                                }
                             }
                         }
                         for (PsiNameValuePair nv : valuePairs) {
                             if ("defaultLocalizationKey".equals(nv.getName())) {
                                 String lang = nv.getLiteralValue();
-                                lang = lang.replaceAll("-", "_");
-                                localizationPackage = localizationPackage + lang;
+                                if (lang != null) {
+                                    localizationPackage=localizationPackage.replace("//","/");
+                                    if (localizationPackage.endsWith("/")) {
+                                        localizationPackage = localizationPackage + lang;
+                                    } else {
+                                        localizationPackage = localizationPackage + "/" + lang;
+                                    }
+                                }
                             }
                         }
                     }

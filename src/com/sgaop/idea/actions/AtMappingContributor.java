@@ -2,6 +2,7 @@ package com.sgaop.idea.actions;
 
 import com.intellij.navigation.ChooseByNameContributor;
 import com.intellij.navigation.NavigationItem;
+import com.intellij.openapi.progress.ProcessCanceledException;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.java.stubs.index.JavaAnnotationIndex;
@@ -119,31 +120,36 @@ public class AtMappingContributor implements ChooseByNameContributor {
 
     private String[] getTopAt(PsiElement at) {
         String[] topReqs = new String[1];
-        topReqs[0] = "";   //避免出现Null
-        PsiElement psiMethod = at.getParent().getParent().getParent().getParent();
-        if (psiMethod instanceof PsiClass) {
-            String moduleName = ((PsiClass) psiMethod).getName().toLowerCase();
-            PsiElement psiElement = psiMethod.getFirstChild();
-            int tryNum = 0;
-            while (!(psiElement instanceof PsiModifierList) && tryNum < max) {
-                psiElement = psiElement.getNextSibling();
-                tryNum++;
-            }
-            PsiModifierList psiModifierList = (PsiModifierList) psiElement;
-            PsiAnnotation[] classAnnotations = psiModifierList.getAnnotations();
-            for (PsiAnnotation classAnnotation : classAnnotations) {
-                if (NutzCons.AT.equals(classAnnotation.getQualifiedName())) {
-                    PsiNameValuePair[] pairs = classAnnotation.getParameterList().getAttributes();
-                    if (pairs.length == 0) {
-                        topReqs[0] = "/" + moduleName;
-                    } else {
-                        topReqs = new String[pairs.length];
-                        for (int i = 0; i < pairs.length; i++) {
-                            topReqs[i] = pairs[i].getLiteralValue();
+        //提前赋值避免出现Null
+        topReqs[0] = "";
+        try {
+            PsiElement psiMethod = at.getParent().getParent().getParent().getParent();
+            if (psiMethod instanceof PsiClass) {
+                String moduleName = ((PsiClass) psiMethod).getName().toLowerCase();
+                PsiElement psiElement = psiMethod.getFirstChild();
+                int tryNum = 0;
+                while (!(psiElement instanceof PsiModifierList) && tryNum < max) {
+                    psiElement = psiElement.getNextSibling();
+                    tryNum++;
+                }
+                PsiModifierList psiModifierList = (PsiModifierList) psiElement;
+                PsiAnnotation[] classAnnotations = psiModifierList.getAnnotations();
+                for (PsiAnnotation classAnnotation : classAnnotations) {
+                    if (NutzCons.AT.equals(classAnnotation.getQualifiedName())) {
+                        PsiNameValuePair[] pairs = classAnnotation.getParameterList().getAttributes();
+                        if (pairs.length == 0) {
+                            topReqs[0] = "/" + moduleName;
+                        } else {
+                            topReqs = new String[pairs.length];
+                            for (int i = 0; i < pairs.length; i++) {
+                                topReqs[i] = pairs[i].getLiteralValue();
+                            }
                         }
                     }
                 }
             }
+        } catch (ProcessCanceledException e) {
+            //过滤异常不提示
         }
         return topReqs;
     }
