@@ -29,7 +29,10 @@ public class AtMappingContributor implements ChooseByNameContributor {
     @Override
     public String[] getNames(Project project, boolean b) {
         navigationItems.clear();
-        navigationItems.addAll(findRequestMappingItems(project, "At"));
+        List<AtMappingItem> itemList = findRequestMappingItems(project, "At");
+        if (itemList != null) {
+            navigationItems.addAll(itemList);
+        }
         return navigationItems.stream().map(atMappingItem -> atMappingItem.getName()).distinct().toArray(String[]::new);
     }
 
