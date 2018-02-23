@@ -90,7 +90,7 @@ public class AtMappingContributor implements ChooseByNameContributor {
             }
             return mappingAnnotation;
         } catch (Exception ex) {
-            ex.printStackTrace();
+            //过滤异常不提示
         }
         return null;
     }
@@ -118,8 +118,8 @@ public class AtMappingContributor implements ChooseByNameContributor {
         }
         return sb.toString();
     }
-
-    private static final int max = 200;
+    //最大尝试次数
+    private static final int TRY_NUM_MAX = 200;
 
     private String[] getTopAt(PsiElement at) {
         String[] topReqs = new String[1];
@@ -131,7 +131,7 @@ public class AtMappingContributor implements ChooseByNameContributor {
                 String moduleName = ((PsiClass) psiMethod).getName().toLowerCase();
                 PsiElement psiElement = psiMethod.getFirstChild();
                 int tryNum = 0;
-                while (!(psiElement instanceof PsiModifierList) && tryNum < max) {
+                while (!(psiElement instanceof PsiModifierList) && tryNum < TRY_NUM_MAX) {
                     psiElement = psiElement.getNextSibling();
                     tryNum++;
                 }
@@ -151,7 +151,7 @@ public class AtMappingContributor implements ChooseByNameContributor {
                     }
                 }
             }
-        } catch (ProcessCanceledException e) {
+        } catch (Exception ex) {
             //过滤异常不提示
         }
         return topReqs;

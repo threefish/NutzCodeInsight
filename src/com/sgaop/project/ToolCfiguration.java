@@ -25,6 +25,9 @@ public class ToolCfiguration implements PersistentStateComponent<Element> {
 
     HashMap<String, String> data = new HashMap<>();
 
+    /**
+     * 取别名防止以特殊字符起始的key
+     */
     private final static String ALIAS = "ALIAS_";
 
     @Override
