@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.sgaop.idea.codeinsight.plugin</id>
     <name>NutzCodeInsight</name>
-    <version>1.8.1</version>
+    <version>1.8.2</version>
     <vendor email="306955302@qq.com" url="https://github.com/threefish/NutzCodeInsight">306955302@qq.com</vendor>
     <description><![CDATA[
      1、在 Nutz Action Module 中点击 @Ok 前面的jsp图标即可快速打开或切换至已经打开的jsp文件<br>
@@ -12,6 +12,10 @@
     ]]></description>
     <change-notes><![CDATA[
      <ul>
+      <ul>
+        1.8.2
+        <li>fix <a href="https://github.com/threefish/NutzCodeInsight/issues/3">fix #3</a>一个前缀同时支持多种模板文件,后缀设置如 .html;.btl;.ftl 以 ; 号分隔</li>
+       </ul>
      <ul>
         1.8.1
         <li>fix 取得国际化语言包路径错误的bug</li>
