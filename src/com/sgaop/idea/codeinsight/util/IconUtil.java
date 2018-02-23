@@ -27,7 +27,9 @@ public class IconUtil {
                 icon = AllIcons.FileTypes.Jsp;
                 break;
             case ".html":
+            case ".btl":
             case "html":
+            case "btl":
                 icon = AllIcons.FileTypes.Html;
                 break;
             case ".css":

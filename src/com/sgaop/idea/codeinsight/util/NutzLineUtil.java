@@ -64,20 +64,27 @@ public class NutzLineUtil {
      */
     public static List<VirtualFile> findTemplteFileList(PsiElement bindingElement) {
         JavaNutzTemplateVO nutzTemplate = getTemplateFilePathAndName(bindingElement);
-        Collection<VirtualFile> virtualFiles = FilenameIndex.getAllFilesByExt(bindingElement.getProject(), nutzTemplate.getFileExtension().replaceAll("\\.", ""), GlobalSearchScope.projectScope(bindingElement.getProject()));
         List<VirtualFile> fileList = new ArrayList<>();
-        String tempNutzFileName = nutzTemplate.getTemplatePath();
-        //兼容绝对路径模式
-        if (tempNutzFileName.endsWith(nutzTemplate.getFileExtension()) && tempNutzFileName.indexOf("/") > -1) {
-            tempNutzFileName = tempNutzFileName.substring(0, tempNutzFileName.length() - nutzTemplate.getFileExtension().length());
+        String[] exts = nutzTemplate.getFileExtension().split(";");
+        for (String ext : exts) {
+            if (ext.trim() != "") {
+                Collection<VirtualFile> tempVirtualFiles = FilenameIndex.getAllFilesByExt(bindingElement.getProject(), ext.replaceAll("\\.", ""), GlobalSearchScope.projectScope(bindingElement.getProject()));
+                if (tempVirtualFiles != null && tempVirtualFiles.size() > 0) {
+                    String tempNutzFileName = nutzTemplate.getTemplatePath();
+                    //兼容绝对路径模式
+                    if (tempNutzFileName.endsWith(ext) && tempNutzFileName.indexOf("/") > -1) {
+                        tempNutzFileName = tempNutzFileName.substring(0, tempNutzFileName.length() - ext.length());
+                    }
+                    //去除前缀
+                    tempNutzFileName = tempNutzFileName.substring(nutzTemplate.getName().length());
+                    //补上文件后缀
+                    tempNutzFileName = tempNutzFileName.replace(".", "/") + ext;
+                    String finalTempNutzFileName = tempNutzFileName;
+                    tempVirtualFiles.stream().filter(virtualFile -> virtualFile.getCanonicalPath().endsWith(finalTempNutzFileName))
+                            .forEach(virtualFile -> fileList.add(virtualFile));
+                }
+            }
         }
-        //去除前缀
-        tempNutzFileName = tempNutzFileName.substring(nutzTemplate.getName().length());
-        //补上文件后缀
-        tempNutzFileName = tempNutzFileName.replace(".", "/") + nutzTemplate.getFileExtension();
-        String finalTempNutzFileName = tempNutzFileName;
-        virtualFiles.stream().filter(virtualFile -> virtualFile.getCanonicalPath().endsWith(finalTempNutzFileName))
-                .forEach(virtualFile -> fileList.add(virtualFile));
         return fileList;
     }
 
