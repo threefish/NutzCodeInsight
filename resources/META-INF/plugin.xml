@@ -2,70 +2,47 @@
     <id>com.sgaop.idea.codeinsight.plugin</id>
     <name>NutzCodeInsight</name>
     <version>1.8.2</version>
-    <vendor email="306955302@qq.com" url="https://github.com/threefish/NutzCodeInsight">306955302@qq.com</vendor>
+    <vendor email="306955302@qq.com" url="https://github.com/threefish/NutzCodeInsight">threefish</vendor>
     <description><![CDATA[
-     1、在 Nutz Action Module 中点击 @Ok 前面的jsp图标即可快速打开或切换至已经打开的jsp文件<br>
-     2、支持以HTML、JSP等格式文件作为模版的框架资源文件的快速定位<br>
-     3、Navigate菜单中增加查找@At映射地址快捷方式 <br>
-     4、Nutz web环境中支持折叠显示国际化配置文件变量值 <br>
-     5、Beetl模版中也支持国际化配置文件折叠(${i18n("login.sucess")}或者${i18n("login.sucess","参数1","参数N")} ) <br>
-    ]]></description>
+      <h1>NutzCodeInsight</h1>
+      <br/>
+      <p>
+      <b>
+      <a href="https://github.com/threefish/NutzCodeInsight">GitHub</a> |
+      <a href="https://github.com/threefish/NutzCodeInsight/issues">Issues</a>
+      </b>
+      </p>
+      <p><b>支持功能:</b>
+       <ul>
+         <li>1、在 Nutz Action Module 中点击 @Ok 前面的jsp图标即可快速打开或切换至已经打开的jsp文件</li>
+         <li>2、支持以HTML、JSP等格式文件作为模版的框架资源文件的快速定位（支持动态配置）</li>
+         <li>3、Navigate菜单中增加查找@At映射地址快捷方式</li>
+         <li>4、Nutz web环境中支持折叠显示国际化配置文件变量值</li>
+         <li>5、Beetl模版中也支持国际化配置文件折叠(${i18n("login.sucess")}或者${i18n("login.sucess","参数1","参数N")} )</li>
+       </ul>
+      </p>
+      <br/>
+      <p><img src="https://raw.githubusercontent.com/threefish/NutzCodeInsight/master/image/NutzCodeInsight.gif" alt="NutzCodeInsight.gif"/></p>
+      <br/>
+      <p><a href="https://github.com/threefish/NutzCodeInsight/issues">Send feedback</a></p>
+    ]]>
+    </description>
     <change-notes><![CDATA[
-     <ul>
-      <ul>
-        1.8.2
-        <li>fix <a href="https://github.com/threefish/NutzCodeInsight/issues/3">fix #3</a>一个前缀同时支持多种模板文件,后缀设置如 .html;.btl;.ftl 以 ; 号分隔</li>
-       </ul>
-     <ul>
-        1.8.1
-        <li>fix 取得国际化语言包路径错误的bug</li>
-       </ul>
+      <p>
+      <b>1.8.2</b>
        <ul>
-        1.8
-        <li>add Beetl模版中也支持国际化配置文件折叠(${i18n("login.sucess")}或者${i18n("login.sucess","参数1","参数N")} )</li>
+        <li>fix <a href="https://github.com/threefish/NutzCodeInsight/issues/3"> #3</a>一个前缀同时支持多种模板文件,后缀设置如 .html;.btl;.ftl 以 ; 号分隔</li>
        </ul>
-       <ul>
-       <ul>
-        1.7
-        <li>add Nutz web环境中支持折叠显示国际化配置文件变量值</li>
-       </ul>
-       <ul>
-        1.6
-        <li>add Navigate菜单中增加查找@At映射地址快捷方式</li>
-       </ul>
-       <ul>
-        1.5
-        <li>add 支持模版文件中资源文件的快速打开或切换</li>
-       </ul>
-      <ul>
-        1.4
-        <li>add 增加配置界面是否被修改状态的控制</li>
-        <li>fix 不能添加新配置的bug</li>
-       </ul>
-       <ul>
-        1.3
-        <li>add 支持配置自定义模版</li>
-       </ul>
-       <ul>
-        1.2
-        <li>add 支持自定义模版</li>
-       </ul>
-        <ul>
-        1.1
-        <li>add 支持Jsp模版</li>
-       </ul>
+       </p>
     ]]>
     </change-notes>
-
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
     <idea-version since-build="145.0"/>
-
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
     <!-- uncomment to enable plugin in all products
     <depends>com.intellij.modules.lang</depends>
     -->
-
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
         <applicationConfigurable instance="com.sgaop.project.ToolConfigurable"/>
@@ -78,8 +55,10 @@
         <codeInsight.lineMarkerProvider language="HTML"
                                         implementationClass="com.sgaop.idea.codeinsight.HtmlTemplateLineMarkerProvider"/>
         <!--代码折叠生成器-->
-        <lang.foldingBuilder language="JAVA" implementationClass="com.sgaop.idea.codeinsight.folding.NutzLocalizationFoldingBuilder"/>
-        <lang.foldingBuilder language="HTML" implementationClass="com.sgaop.idea.codeinsight.folding.BeetlLocalizationFoldingBuilder"/>
+        <lang.foldingBuilder language="JAVA"
+                             implementationClass="com.sgaop.idea.codeinsight.folding.NutzLocalizationFoldingBuilder"/>
+        <lang.foldingBuilder language="HTML"
+                             implementationClass="com.sgaop.idea.codeinsight.folding.BeetlLocalizationFoldingBuilder"/>
     </extensions>
 
     <actions>
