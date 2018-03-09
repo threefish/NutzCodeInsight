@@ -54,6 +54,10 @@ public class BeetlLocalizationFoldingBuilder extends FoldingBuilderEx {
                     int start = xmlToken.getTextRange().getStartOffset() + m.start() + 8;
                     int end = start + key.length();
                     descriptors.add(new NutzLocalizationFoldingDescriptor(xmlToken.getNode(), new TextRange(start, end), properties.get(0)));
+                } else if (properties.size() > 1) {
+                    int start = xmlToken.getTextRange().getStartOffset() + m.start() + 8;
+                    int end = start + key.length();
+                    descriptors.add(new NutzLocalizationFoldingDescriptor(xmlToken.getNode(), new TextRange(start, end), "NutzCodeInsight:当前键值【" + key + "】在国际化信息中存在重复KEY请检查！"));
                 }
             }
         }
