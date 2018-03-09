@@ -53,6 +53,10 @@ public class NutzLocalizationFoldingBuilder extends FoldingBuilderEx {
                     descriptors.add(new NutzLocalizationFoldingDescriptor(literalExpression.getNode(),
                             new TextRange(literalExpression.getTextRange().getStartOffset() + 1, literalExpression.getTextRange().getEndOffset() - 1),
                             properties.get(0)));
+                } else if (properties.size() > 1) {
+                    descriptors.add(new NutzLocalizationFoldingDescriptor(literalExpression.getNode(),
+                            new TextRange(literalExpression.getTextRange().getStartOffset() + 1, literalExpression.getTextRange().getEndOffset() - 1),
+                            "NutzCodeInsight:当前键值【" + key + "】在国际化信息中存在重复KEY请检查！"));
                 }
             }
         }
