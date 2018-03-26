@@ -35,7 +35,7 @@ public class NutzLocalUtil {
     /**
      * beetl模版中匹配国际化方法得正则表达式
      */
-    public static final Pattern PATTERN = Pattern.compile("\\$\\{i18n\\((.*?)\\)}");
+    public static final Pattern PATTERN = Pattern.compile("\\$\\{i18n\\((\"|\')(.*?)(\"|\')\\)}");
 
     public static List<String> findProperties(Project project, Collection<VirtualFile> virtualFiles, String localizationPackage, String key) {
         List<String> result = new ArrayList<>();

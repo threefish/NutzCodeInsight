@@ -8,4 +8,29 @@
 ${i18n("login.sucessFormat",date(),1)}
    sdfa 12${i18n("login.sucessFormat")}   123
 </body>
+<script>
+    $(function(){
+        $("#updateBtn").click(function(){
+            $.ajax({
+                type: "post",
+                url: "${base}/manage/user/changePassword",
+                data: $("#form1").serialize(),
+                dataType: "json",
+                success: function (data) {
+                    if (data && data.ok) {
+                        layer.msg(data.data, {icon: 1});
+                        $("#form1")[0].reset();
+                        setTimeout(function(){
+                            window.location.href="${base!}/management/login";
+                        },300);
+                    } else {
+                        layer.msg(data.msg, {icon: 7, time: 2000});
+                    }
+                }, error: function (status) {
+                    layer.msg("xx${i18n('ajax.networkError')}xxx", {icon: 5, time: 1000});
+                    console.log(status);
+                }
+            })
+        });
+</script>
 </html>

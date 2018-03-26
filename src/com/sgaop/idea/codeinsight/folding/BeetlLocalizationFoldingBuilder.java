@@ -5,21 +5,16 @@ import com.intellij.lang.folding.FoldingBuilderEx;
 import com.intellij.lang.folding.FoldingDescriptor;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.search.FilenameIndex;
-import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlToken;
-import com.sgaop.idea.codeinsight.util.NutzLocalUtil;
+import com.sgaop.idea.codeinsight.util.BeetlHtmlLineUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.regex.Matcher;
 
 /**
  * Created with IntelliJ IDEA.
@@ -35,32 +30,9 @@ public class BeetlLocalizationFoldingBuilder extends FoldingBuilderEx {
     @Override
     public FoldingDescriptor[] buildFoldRegions(@NotNull PsiElement root, @NotNull Document document, boolean quick) {
         Project project = root.getProject();
-        String localizationPackage = NutzLocalUtil.getLocalizationPackage(project);
-        if (null == localizationPackage) {
-            return new FoldingDescriptor[0];
-        }
         List<FoldingDescriptor> descriptors = new ArrayList<>();
-        Collection<VirtualFile> propertiesFiles = FilenameIndex.getAllFilesByExt(project, "properties", GlobalSearchScope.projectScope(project));
-        Collection<XmlToken> xmlTokens = PsiTreeUtil.findChildrenOfType(root, XmlToken.class);
-        for (final XmlToken xmlToken : xmlTokens) {
-            Matcher m = NutzLocalUtil.PATTERN.matcher(xmlToken.getText());
-            while (m.find()) {
-                String value = m.group(1);
-                String startQm = value.substring(0, 1);
-                String key = value.substring(1, value.length());
-                key = key.substring(0, key.indexOf(startQm));
-                final List<String> properties = NutzLocalUtil.findProperties(project, propertiesFiles, localizationPackage, key);
-                if (properties.size() == 1) {
-                    int start = xmlToken.getTextRange().getStartOffset() + m.start() + 8;
-                    int end = start + key.length();
-                    descriptors.add(new NutzLocalizationFoldingDescriptor(xmlToken.getNode(), new TextRange(start, end), properties.get(0)));
-                } else if (properties.size() > 1) {
-                    int start = xmlToken.getTextRange().getStartOffset() + m.start() + 8;
-                    int end = start + key.length();
-                    descriptors.add(new NutzLocalizationFoldingDescriptor(xmlToken.getNode(), new TextRange(start, end), "NutzCodeInsight:当前键值【" + key + "】在国际化信息中存在重复KEY请检查！"));
-                }
-            }
-        }
+        //取得国际化语言
+        descriptors.addAll(BeetlHtmlLineUtil.showNutzLocalization(project, root));
         return descriptors.toArray(new FoldingDescriptor[descriptors.size()]);
     }
 

@@ -7,6 +7,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.xml.XmlAttribute;
+import com.intellij.psi.xml.XmlToken;
 
 import javax.swing.*;
 import java.util.*;
@@ -19,7 +20,7 @@ import java.util.*;
  */
 public class HtmlTemplateLineUtil {
 
-    private static List<String> resNames = Arrays.asList(".js", ".gzjs",".json", ".css", ".png", ".jpg", ".gif");
+    private static List<String> resNames = Arrays.asList(".js", ".gzjs", ".json", ".css", ".png", ".jpg", ".gif",".html");
     private static List<String> resTag = Arrays.asList("src", "href", "img");
 
     /**
@@ -29,6 +30,15 @@ public class HtmlTemplateLineUtil {
      * @return
      */
     public static boolean isRes(PsiElement bindingElement) {
+        if (bindingElement instanceof XmlToken) {
+            XmlToken xmlToken = (XmlToken) bindingElement;
+            List<String> layouts = BeetlHtmlLineUtil.showBeetlLayout(xmlToken);
+            List<String> includes = BeetlHtmlLineUtil.showBeetlInclude(xmlToken);
+            if (layouts.size() > 0 || includes.size() > 0) {
+                return true;
+            }
+            return false;
+        }
         if (!(bindingElement instanceof XmlAttribute)) {
             return false;
         }
@@ -42,6 +52,18 @@ public class HtmlTemplateLineUtil {
         if (resTag.contains(name) && path.startsWith("${") && endWithRes(path)) {
             return true;
         }
+        return false;
+    }
+
+    /**
+     * 判断是否是资源文件
+     *
+     * @param psiElement
+     * @return
+     */
+    public static boolean isTemplate(PsiElement psiElement) {
+
+
         return false;
     }
 
@@ -77,7 +99,39 @@ public class HtmlTemplateLineUtil {
      * @return
      */
     public static String getTemplateFilePathAndName(PsiElement bindingElement) {
-        XmlAttribute attribute = (XmlAttribute) bindingElement;
+        if (bindingElement instanceof XmlAttribute) {
+            return getResPath((XmlAttribute) bindingElement);
+        } else if (bindingElement instanceof XmlToken) {
+            return getBeetlResPath((XmlToken) bindingElement);
+        } else {
+            throw new RuntimeException("未知类型？？请提交issues");
+        }
+    }
+
+    /**
+     * 取得静态资源文件layout("/layouts/lay.html"){}和include("/header.html"){}等等类型
+     *
+     * @return
+     */
+    private static String getBeetlResPath(XmlToken xmlToken) {
+        List<String> includes = BeetlHtmlLineUtil.showBeetlInclude(xmlToken);
+        if (includes.size() > 0) {
+            return includes.get(0);
+        }
+        List<String> layouts = BeetlHtmlLineUtil.showBeetlLayout(xmlToken);
+        if (layouts.size() > 0) {
+            return layouts.get(0);
+        }
+        return "";
+    }
+
+
+    /**
+     * 取得静态资源文件${xxx/xx.js}等等类型
+     *
+     * @return
+     */
+    private static String getResPath(XmlAttribute attribute) {
         String path = Strings.nullToEmpty(attribute.getValue());
         int sp = path.indexOf("?");
         if (sp > -1) {

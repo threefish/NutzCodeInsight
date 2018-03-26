@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.sgaop.idea.codeinsight.plugin</id>
     <name>NutzCodeInsight</name>
-    <version>1.8.3</version>
+    <version>1.9</version>
     <vendor email="306955302@qq.com" url="https://github.com/threefish/NutzCodeInsight">threefish</vendor>
     <description><![CDATA[
       <h1>NutzCodeInsight</h1>
@@ -29,17 +29,16 @@
     </description>
     <change-notes><![CDATA[
     <p>
+    <b>1.9</b>
+       <ul>
+        <li>add 增加beetl中layout("/layouts/lay.html"){}和include("/header.html"){}文件的快速定位功能</li>
+        <li>add 增加javascript中对nutz国际化使用${i18n('ajax.networkError')}方式代码折叠的支持</li>
+       </ul>
       <b>1.8.3</b>
        <ul>
         <li>add 增加对国际化中KEY值存在重复提示信息，避免程序员使用出错！</li>
        </ul>
-       </p>
-      <p>
-      <b>1.8.2</b>
-       <ul>
-        <li>fix <a href="https://github.com/threefish/NutzCodeInsight/issues/3"> #3</a>一个前缀同时支持多种模板文件,后缀设置如 .html;.btl;.ftl 以 ; 号分隔</li>
-       </ul>
-       </p>
+      </p>
     ]]>
     </change-notes>
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
