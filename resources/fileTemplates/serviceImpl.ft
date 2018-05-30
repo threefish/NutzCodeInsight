@@ -1,0 +1,22 @@
+package com.cdyhsoft.service.sys.impl;
+
+import com.cdyhsoft.entity.sys.monitor.AlarmOption;
+import com.cdyhsoft.service.impl.BaseServiceImpl;
+import com.cdyhsoft.service.sys.AlarmOptionService;
+import org.nutz.dao.Dao;
+import org.nutz.ioc.loader.annotation.IocBean;
+
+/**
+* Created with IntelliJ IDEA.
+*
+* @author 306955302@qq.com
+* 创建人：黄川
+* 创建时间: 2018/1/9  17:09
+* 描述此类：
+*/
+@IocBean(args = {"refer:dao"})
+public class AlarmOptionServiceImpl extends BaseServiceImpl<AlarmOption> implements AlarmOptionService {
+    public AlarmOptionServiceImpl(Dao dao) {
+        super(dao);
+    }
+}

@@ -72,6 +72,11 @@
                 text="Find Nutz @At Mapping Url" description="Find Nutz At Mapping Url">
             <add-to-group group-id="GoToTargetEx" anchor="first"/>
         </action>
+        <!--快速生成接口和实现类-->
+        <action id="createServiceImplAction" class="com.sgaop.idea.actions.CreateServiceImplAction"  text="快速创建接口及实现类" description="快速创建接口及实现类">
+            <add-to-group group-id="GenerateGroup" anchor="first"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+        </action>
     </actions>
 
 </idea-plugin>
