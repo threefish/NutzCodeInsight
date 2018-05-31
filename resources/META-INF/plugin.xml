@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.sgaop.idea.codeinsight.plugin</id>
     <name>NutzCodeInsight</name>
-    <version>1.9</version>
+    <version>1.9.1.internal</version>
     <vendor email="306955302@qq.com" url="https://github.com/threefish/NutzCodeInsight">threefish</vendor>
     <description><![CDATA[
       <h1>NutzCodeInsight</h1>
@@ -73,7 +73,8 @@
             <add-to-group group-id="GoToTargetEx" anchor="first"/>
         </action>
         <!--快速生成接口和实现类-->
-        <action id="createServiceImplAction" class="com.sgaop.idea.actions.CreateServiceImplAction"  text="快速创建接口及实现类" description="快速创建接口及实现类">
+        <action id="createServiceImplAction" icon="/fileTypes/java.png"
+                class="com.sgaop.idea.actions.CreateServiceImplAction" text="快速创建接口及实现类" description="快速创建接口及实现类">
             <add-to-group group-id="GenerateGroup" anchor="first"/>
             <add-to-group group-id="EditorPopupMenu" anchor="last"/>
         </action>

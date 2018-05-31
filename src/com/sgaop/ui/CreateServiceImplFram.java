@@ -1,5 +1,11 @@
 package com.sgaop.ui;
 
+import com.intellij.ide.fileTemplates.FileTemplate;
+import com.intellij.ide.fileTemplates.FileTemplateManager;
+import com.intellij.ide.projectView.impl.AbstractProjectViewPane;
+import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.openapi.vfs.VirtualFileManager;
+import com.intellij.openapi.vfs.newvfs.impl.VirtualDirectoryImpl;
 import com.sgaop.idea.ProjectPluginConfig;
 import com.sgaop.templte.BeetlTemplteEngine;
 import com.sgaop.templte.ITemplteEngine;
@@ -13,7 +19,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Properties;
 
+/**
+ * 自动生成接口和实现类
+ */
 public class CreateServiceImplFram extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
@@ -23,20 +33,26 @@ public class CreateServiceImplFram extends JDialog {
 
     ProjectPluginConfig pluginrInfo;
 
-    String packageName;
+    String entityPackage;
 
-    String fileName;
+    String entityName;
 
     String serviceFileName;
 
     String serviceImplFileName;
 
-    public CreateServiceImplFram(ProjectPluginConfig pluginEditorInfo, String packageName, String filename) {
+    String servicePackage;
+
+    String serviceImplPackage;
+
+    public CreateServiceImplFram(ProjectPluginConfig pluginEditorInfo, String entityPackage, String entityName) {
         this.pluginrInfo = pluginEditorInfo;
-        this.packageName = packageName;
-        this.fileName = filename;
-        this.serviceFileName = filename + "Service";
-        this.serviceImplFileName = filename + "ServiceImpl";
+        this.entityPackage = entityPackage;
+        this.entityName = entityName;
+        this.serviceFileName = entityName + "Service";
+        this.serviceImplFileName = entityName + "ServiceImpl";
+        this.servicePackage = entityPackage.replace("entity", "service");
+        this.serviceImplPackage = entityPackage.replace("entity", "service") + ".impl";
         int w = 500, h = 400;
         int x = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (w / 2));
         int y = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (h / 2));
@@ -47,8 +63,8 @@ public class CreateServiceImplFram extends JDialog {
         getRootPane().setDefaultButton(buttonOK);
         buttonOK.addActionListener((e) -> onOK());
         buttonCancel.addActionListener((e) -> onCancel());
-        servicePackageText.setText(packageName + "." + serviceFileName);
-        serviceImplPackageText.setText(packageName + "." + serviceImplFileName);
+        servicePackageText.setText(this.servicePackage + "." + serviceFileName);
+        serviceImplPackageText.setText(this.serviceImplPackage + "." + serviceImplFileName);
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -65,17 +81,38 @@ public class CreateServiceImplFram extends JDialog {
         ITemplteEngine renderTemplte = new BeetlTemplteEngine();
         try {
             String moduleBasePath = pluginrInfo.getPsiFile().getVirtualFile().getCanonicalPath();
-            String temp = packageName.replaceAll("\\.", "/");
+            String temp = entityPackage.replaceAll("\\.", "/");
             moduleBasePath = moduleBasePath.replace(temp, "");
-            moduleBasePath = moduleBasePath.replace("/" + fileName + ".java", "");
-            HashMap bindData = new HashMap();
-            renderTemplte.renderToFile("service.ft", bindData, getPath(moduleBasePath, this.servicePackageText.getText()));
-            renderTemplte.renderToFile("serviceImpl.ft", bindData, getPath(moduleBasePath, this.serviceImplPackageText.getText()));
-            pluginrInfo.getProject().getProjectFile().refresh(true, true);
+            moduleBasePath = moduleBasePath.replace("/" + entityName + ".java", "");
+            HashMap bindData = getBindData();
+            FileTemplateManager fileTemplateManager = FileTemplateManager.getInstance(pluginrInfo.getProject());
+            FileTemplate service = fileTemplateManager.getTemplate("service");
+            FileTemplate serviceImpl = fileTemplateManager.getTemplate("serviceImpl");
+            final String finalmoduleBasePath = moduleBasePath;
+            VirtualFile value = VirtualFileManager.getInstance().findFileByUrl(Paths.get(moduleBasePath).toUri().toString());
+            renderTemplte.renderToFile(service.getText(), bindData, getPath(finalmoduleBasePath, this.servicePackageText.getText()));
+            renderTemplte.renderToFile(serviceImpl.getText(), bindData, getPath(finalmoduleBasePath, this.serviceImplPackageText.getText()));
+            value.refresh(true,true);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "错误提示", JOptionPane.ERROR_MESSAGE, null);
         }
         dispose();
+    }
+
+
+    private HashMap getBindData() {
+        Properties sys = System.getProperties();
+        HashMap bindData = new HashMap(7);
+        bindData.put("entityName", this.entityName);
+        bindData.put("entityPackage", this.entityPackage);
+
+        bindData.put("serviceFileName", this.serviceFileName);
+        bindData.put("servicePackage", this.servicePackage);
+
+        bindData.put("serviceImplFileName", this.serviceImplFileName);
+        bindData.put("serviceImplPackage", this.serviceImplPackage);
+        bindData.put("user", sys.getProperty("user.name"));
+        return bindData;
     }
 
     private Path getPath(String basePath, String packages) {
