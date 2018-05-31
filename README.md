@@ -1,10 +1,13 @@
 # NutzCodeInsight
 ### 1、在 Nutz Action Module 中点击 @Ok 前面的jsp图标即可快速打开或切换至已经打开的jsp文件
-### 2、支持以HTML、JSP等格式文件作为页面模版得资源文件的快速定位
-### 3、Navigate菜单中增加查找@At映射地址快捷方式 
+### 2、支持以HTML、JSP等格式文件作为模版的框架资源文件的快速定位（支持动态配置）
+### 3、Navigate菜单中增加查找@At映射地址快捷方式
 ### 4、Nutz web环境中支持折叠显示国际化配置文件变量值
-#
-idea插件仓库[https://plugins.jetbrains.com/plugin/10311-nutzcodeinsight](https://plugins.jetbrains.com/plugin/10311-nutzcodeinsight "真实项目")
+### 5、Beetl模版中也支持国际化配置文件折叠(${i18n("login.sucess")}或者${i18n("login.sucess","参数1","参数N")} )
+### 6、Nutz 支持折叠显示java类中注入配置文件变量值 @Inject("java:$conf.get('attach.savePath')")
+
+>idea插件仓库[https://plugins.jetbrains.com/plugin/10311-nutzcodeinsight](https://plugins.jetbrains.com/plugin/10311-nutzcodeinsight "真实项目")
+
 ####  完成
     - 支持自定义模版配置
 #### 1 在 Nutz Action Module 中点击 @Ok 前面的jsp图标即可快速打开或切换至已经打开的jsp文件
