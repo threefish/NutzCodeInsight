@@ -17,9 +17,21 @@ public class StringExt {
      * @param string
      * @return
      */
-    public String capFirst(String string) {
+    public String capitalize(String string) {
         String first = string.substring(0, 1);
         String end = string.substring(1, string.length());
         return first.toUpperCase() + end;
+    }
+
+    /**
+     * 首字母小写转换
+     *
+     * @param string
+     * @return
+     */
+    public String uncapitalize(String string) {
+        String first = string.substring(0, 1);
+        String end = string.substring(1, string.length());
+        return first.toLowerCase() + end;
     }
 }

@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.sgaop.idea.codeinsight.plugin</id>
     <name>NutzCodeInsight</name>
-    <version>1.9.1.internal</version>
+    <version>1.9.2.internal</version>
     <vendor email="306955302@qq.com" url="https://github.com/threefish/NutzCodeInsight">threefish</vendor>
     <description><![CDATA[
       <h1>NutzCodeInsight</h1>

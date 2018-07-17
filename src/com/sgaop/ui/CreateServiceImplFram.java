@@ -2,10 +2,8 @@ package com.sgaop.ui;
 
 import com.intellij.ide.fileTemplates.FileTemplate;
 import com.intellij.ide.fileTemplates.FileTemplateManager;
-import com.intellij.ide.projectView.impl.AbstractProjectViewPane;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
-import com.intellij.openapi.vfs.newvfs.impl.VirtualDirectoryImpl;
 import com.sgaop.idea.ProjectPluginConfig;
 import com.sgaop.templte.BeetlTemplteEngine;
 import com.sgaop.templte.ITemplteEngine;
@@ -92,7 +90,7 @@ public class CreateServiceImplFram extends JDialog {
             VirtualFile value = VirtualFileManager.getInstance().findFileByUrl(Paths.get(moduleBasePath).toUri().toString());
             renderTemplte.renderToFile(service.getText(), bindData, getPath(finalmoduleBasePath, this.servicePackageText.getText()));
             renderTemplte.renderToFile(serviceImpl.getText(), bindData, getPath(finalmoduleBasePath, this.serviceImplPackageText.getText()));
-            value.refresh(true,true);
+            value.refresh(true, true);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "错误提示", JOptionPane.ERROR_MESSAGE, null);
         }
