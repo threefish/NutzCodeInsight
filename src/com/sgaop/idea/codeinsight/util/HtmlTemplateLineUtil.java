@@ -85,7 +85,7 @@ public class HtmlTemplateLineUtil {
      */
     public static List<VirtualFile> findTemplteFileList(PsiElement bindingElement) {
         String path = getTemplateFilePathAndName(bindingElement);
-        Collection<VirtualFile> virtualFiles = FilenameIndex.getAllFilesByExt(bindingElement.getProject(), getFileExtension(path).replaceAll("\\.", ""), GlobalSearchScope.projectScope(bindingElement.getProject()));
+        Collection<VirtualFile> virtualFiles = FilenameIndex.getAllFilesByExt(bindingElement.getProject(), getFileExtension(path).replaceAll("\\.", ""), bindingElement.getResolveScope());
         List<VirtualFile> fileList = new ArrayList<>();
         virtualFiles.stream().filter(virtualFile -> virtualFile.getCanonicalPath().endsWith(path))
                 .forEach(virtualFile -> fileList.add(virtualFile));

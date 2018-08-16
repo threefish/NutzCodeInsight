@@ -11,6 +11,14 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Created with IntelliJ IDEA.
+ *
+ * @author 306955302@qq.com
+ * 创建人：黄川
+ * 创建时间: 2018/1/3  14:26
+ * 描述此类：
+ */
 public class NutzInjectConfUtil {
 
     private static final List<String> qualifiedNames = Arrays.asList("org.nutz.ioc.loader.annotation.Inject");

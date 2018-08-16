@@ -12,7 +12,14 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.*;
 import java.util.regex.Pattern;
-
+/**
+ * Created with IntelliJ IDEA.
+ *
+ * @author 306955302@qq.com
+ * 创建人：黄川
+ * 创建时间: 2018/1/3  14:26
+ * 描述此类：
+ */
 public class NutzLocalUtil {
 
     private static final List<String> localQualifiedNames = Arrays.asList(

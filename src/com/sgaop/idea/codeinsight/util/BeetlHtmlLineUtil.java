@@ -103,20 +103,4 @@ public class BeetlHtmlLineUtil {
         return descriptors;
     }
 
-
-    /**
-     * 取得文件
-     *
-     * @param project
-     * @param path
-     * @return
-     */
-    public static List<VirtualFile> findTemplteFileList(Project project, String path) {
-        Collection<VirtualFile> virtualFiles = FilenameIndex.getAllFilesByExt(project, BEETL_SUFFIX, GlobalSearchScope.projectScope(project));
-        List<VirtualFile> fileList = new ArrayList<>();
-        virtualFiles.stream().filter(virtualFile -> virtualFile.getCanonicalPath().endsWith(path))
-                .forEach(virtualFile -> fileList.add(virtualFile));
-        return fileList;
-    }
-
 }
