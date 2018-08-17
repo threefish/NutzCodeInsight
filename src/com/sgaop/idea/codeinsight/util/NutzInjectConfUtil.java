@@ -14,15 +14,15 @@ import java.util.regex.Pattern;
 /**
  * Created with IntelliJ IDEA.
  *
- * @author 306955302@qq.com
- * 创建人：黄川
+ * @author 黄川 huchuc@vip.qq.com
+
  * 创建时间: 2018/1/3  14:26
- * 描述此类：
+
  */
 public class NutzInjectConfUtil {
 
+    public static final Pattern PATTERN = Pattern.compile("java\\:\\$conf\\.get\\(\'(.*?)\'\\)");
     private static final List<String> qualifiedNames = Arrays.asList("org.nutz.ioc.loader.annotation.Inject");
-
 
     public static List<String> findProperties(Project project, Collection<VirtualFile> virtualFiles, String key) {
         List<String> result = new ArrayList<>();
@@ -43,7 +43,6 @@ public class NutzInjectConfUtil {
         return result;
     }
 
-
     public static boolean isInjectConf(PsiLiteralExpression literalExpression) {
         PsiElement p1 = literalExpression.getParent();
         if (null == p1 || !(p1 instanceof PsiNameValuePair)) {
@@ -63,8 +62,6 @@ public class NutzInjectConfUtil {
         }
         return false;
     }
-
-    public static final Pattern PATTERN = Pattern.compile("java\\:\\$conf\\.get\\(\'(.*?)\'\\)");
 
     public static String getKey(String value) {
         if (value == null) {

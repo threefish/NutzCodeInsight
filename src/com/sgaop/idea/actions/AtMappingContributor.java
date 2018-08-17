@@ -2,7 +2,6 @@ package com.sgaop.idea.actions;
 
 import com.intellij.navigation.ChooseByNameContributor;
 import com.intellij.navigation.NavigationItem;
-import com.intellij.openapi.progress.ProcessCanceledException;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.java.stubs.index.JavaAnnotationIndex;
@@ -17,13 +16,14 @@ import java.util.List;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author 306955302@qq.com
+ * @author 黄川 huchuc@vip.qq.com
  * @date 2017/12/30 0030 23:50
  */
 public class AtMappingContributor implements ChooseByNameContributor {
 
+    //最大尝试次数
+    private static final int TRY_NUM_MAX = 200;
     private List<AtMappingItem> navigationItems = new ArrayList<>();
-
 
     @NotNull
     @Override
@@ -95,7 +95,6 @@ public class AtMappingContributor implements ChooseByNameContributor {
         return null;
     }
 
-
     private String getMethodType(PsiAnnotation[] psiAnnotations) {
         StringBuilder sb = new StringBuilder();
         for (PsiAnnotation annotation : psiAnnotations) {
@@ -118,8 +117,6 @@ public class AtMappingContributor implements ChooseByNameContributor {
         }
         return sb.toString();
     }
-    //最大尝试次数
-    private static final int TRY_NUM_MAX = 200;
 
     private String[] getTopAt(PsiElement at) {
         String[] topReqs = new String[1];

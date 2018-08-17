@@ -10,7 +10,7 @@ import com.intellij.openapi.project.Project;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author 306955302@qq.com
+ * @author 黄川 huchuc@vip.qq.com
  * @date 2017/12/30 0030
  */
 public class GoToNutzAtMappingAction extends GotoActionBase implements DumbAware {

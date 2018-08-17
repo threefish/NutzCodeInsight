@@ -12,16 +12,21 @@ import java.io.IOException;
 import java.io.StringReader;
 import java.util.*;
 import java.util.regex.Pattern;
+
 /**
  * Created with IntelliJ IDEA.
  *
- * @author 306955302@qq.com
- * 创建人：黄川
+ * @author 黄川 huchuc@vip.qq.com
+
  * 创建时间: 2018/1/3  14:26
- * 描述此类：
+
  */
 public class NutzLocalUtil {
 
+    /**
+     * beetl模版中匹配国际化方法得正则表达式
+     */
+    public static final Pattern PATTERN = Pattern.compile("\\$\\{i18n\\((\"|\')(.*?)(\"|\')\\)}");
     private static final List<String> localQualifiedNames = Arrays.asList(
             "Mvcs.getMessage",
             "org.nutz.mvc.Mvcs.getMessage",
@@ -39,10 +44,6 @@ public class NutzLocalUtil {
      * 是否初始化
      */
     private static boolean isInit = false;
-    /**
-     * beetl模版中匹配国际化方法得正则表达式
-     */
-    public static final Pattern PATTERN = Pattern.compile("\\$\\{i18n\\((\"|\')(.*?)(\"|\')\\)}");
 
     public static List<String> findProperties(Project project, Collection<VirtualFile> virtualFiles, String localizationPackage, String key) {
         List<String> result = new ArrayList<>();
@@ -108,7 +109,7 @@ public class NutzLocalUtil {
                             if ("defaultLocalizationKey".equals(nv.getName())) {
                                 String lang = nv.getLiteralValue();
                                 if (lang != null) {
-                                    localizationPackage=localizationPackage.replace("//","/");
+                                    localizationPackage = localizationPackage.replace("//", "/");
                                     if (localizationPackage.endsWith("/")) {
                                         localizationPackage = localizationPackage + lang;
                                     } else {

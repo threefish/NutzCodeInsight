@@ -7,27 +7,23 @@ import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.ui.popup.PopupChooserBuilder;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.XmlToken;
 import com.intellij.ui.awt.RelativePoint;
 import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBList;
 import com.intellij.util.ui.JBUI;
 import com.intellij.util.ui.UIUtil;
-import com.sgaop.idea.codeinsight.util.BeetlHtmlLineUtil;
 import com.sgaop.idea.codeinsight.util.HtmlTemplateLineUtil;
 import com.sgaop.idea.codeinsight.util.IconUtil;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
  *
- * @author 306955302@qq.com
+ * @author 黄川 huchuc@vip.qq.com
  * @date 2017/12/29  11:54
  */
 public class HtmlTemplateGutterIconNavigationHandler implements GutterIconNavigationHandler {

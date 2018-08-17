@@ -19,11 +19,24 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author 黄川 306955302@qq.com
+ * @author 黄川 huchuc@vip.qq.com
  * @date: 2018/3/26
- * 描述此类：
+
  */
 public class BeetlHtmlLineUtil {
+
+    /**
+     * 默认beetl后缀为 html
+     */
+    private static final String BEETL_SUFFIX = "html";
+    /**
+     * beetl模版中匹配layout
+     */
+    private static final Pattern PATTERN_LAYOUT = Pattern.compile("layout\\((\"|\')(.*?)\\." + BEETL_SUFFIX + "(\"|\')");
+    /**
+     * beetl模版中匹配include得正则表达式
+     */
+    private static final Pattern PATTERN_INCLUDE = Pattern.compile("include\\((\"|\')(.*?)\\." + BEETL_SUFFIX + "(\"|\')\\)");
 
     public static List<FoldingDescriptor> showNutzLocalization(Project project, PsiElement root) {
         List<FoldingDescriptor> descriptors = new ArrayList<>();
@@ -48,19 +61,6 @@ public class BeetlHtmlLineUtil {
         }
         return descriptors;
     }
-
-    /**
-     * 默认beetl后缀为 html
-     */
-    private static final String BEETL_SUFFIX = "html";
-    /**
-     * beetl模版中匹配layout
-     */
-    private static final Pattern PATTERN_LAYOUT = Pattern.compile("layout\\((\"|\')(.*?)\\." + BEETL_SUFFIX + "(\"|\')");
-    /**
-     * beetl模版中匹配include得正则表达式
-     */
-    private static final Pattern PATTERN_INCLUDE = Pattern.compile("include\\((\"|\')(.*?)\\." + BEETL_SUFFIX + "(\"|\')\\)");
 
     private static List<FoldingDescriptor> getFoldingDescriptor(Matcher matcher, String text, Project project, Collection<VirtualFile> propertiesFiles, String localizationPackage, PsiElement psiElement) {
         List<FoldingDescriptor> descriptors = new ArrayList<>();

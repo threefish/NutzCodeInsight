@@ -3,10 +3,10 @@ package com.sgaop.idea.codeinsight;
 /**
  * Created with IntelliJ IDEA.
  *
- * @author 306955302@qq.com
- * 创建人：黄川
+ * @author 黄川 huchuc@vip.qq.com
+
  * 创建时间: 2018/1/22  19:23
- * 描述此类：
+
  */
 public class NutzCons {
 

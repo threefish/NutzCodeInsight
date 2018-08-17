@@ -5,7 +5,6 @@ import com.intellij.icons.AllIcons;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.search.FilenameIndex;
-import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlToken;
 
@@ -15,12 +14,12 @@ import java.util.*;
 /**
  * Created with IntelliJ IDEA.
  *
- * @author 306955302@qq.com
+ * @author 黄川 huchuc@vip.qq.com
  * @date 2018/01/03  11:37
  */
 public class HtmlTemplateLineUtil {
 
-    private static List<String> resNames = Arrays.asList(".js", ".gzjs", ".json", ".css", ".png", ".jpg", ".gif",".html");
+    private static List<String> resNames = Arrays.asList(".js", ".gzjs", ".json", ".css", ".png", ".jpg", ".gif", ".html");
     private static List<String> resTag = Arrays.asList("src", "href", "img");
 
     /**

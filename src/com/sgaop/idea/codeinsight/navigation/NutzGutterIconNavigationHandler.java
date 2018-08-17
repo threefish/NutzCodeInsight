@@ -1,9 +1,6 @@
 package com.sgaop.idea.codeinsight.navigation;
 
 import com.intellij.codeInsight.daemon.GutterIconNavigationHandler;
-import com.intellij.openapi.fileChooser.FileChooserDescriptor;
-import com.intellij.openapi.fileChooser.FileChooserDialog;
-import com.intellij.openapi.fileChooser.ex.FileChooserDialogImpl;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
@@ -14,7 +11,6 @@ import com.intellij.ui.awt.RelativePoint;
 import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBList;
 import com.intellij.util.ui.JBUI;
-import com.intellij.util.ui.UIUtil;
 import com.sgaop.idea.codeinsight.util.NutzLineUtil;
 
 import javax.swing.*;
@@ -25,7 +21,7 @@ import java.util.List;
 /**
  * Created with IntelliJ IDEA.
  *
- * @author 306955302@qq.com
+ * @author 黄川 huchuc@vip.qq.com
  * @date 2017/12/29  11:54
  */
 public class NutzGutterIconNavigationHandler implements GutterIconNavigationHandler {
@@ -38,28 +34,23 @@ public class NutzGutterIconNavigationHandler implements GutterIconNavigationHand
             if (fileList.size() == 1) {
                 FileEditorManager.getInstance(project).openFile(fileList.get(0), true);
             } else if (fileList.size() > 1) {
-//                FileChooserDescriptor descriptor=new FileChooserDescriptor();
-//                FileChooserDialog fileChooserDialog = new FileChooserDialogImpl();
                 final List<VirtualFile> infos = new ArrayList<>(fileList);
                 final JBList list = new JBList(infos);
-                list.setFixedCellHeight(UIUtil.LIST_FIXED_CELL_HEIGHT);
-                PopupChooserBuilder builder = JBPopupFactory.getInstance().createListPopupBuilder(list);
+                list.setFixedCellHeight(25);
+                PopupChooserBuilder builder = JBPopupFactory.getInstance().createListPopupBuilder(list).setTitle("请选择要打开的模版文件");
+                builder.setCancelOnClickOutside(true);
+                builder.setCancelOnWindowDeactivation(true);
                 list.installCellRenderer(vfile -> {
-                    if (vfile instanceof VirtualFile) {
-                        VirtualFile tempVfile = (VirtualFile) vfile;
-                        Icon icon = NutzLineUtil.getTemplateIcon(tempVfile.getExtension());
-                        final String name = tempVfile.getName();
-                        final String path = tempVfile.getCanonicalPath()
-                                .replace(project.getBasePath(), "")
-                                .replace("/src/main/webapp/", "    ")
-                                .replace("/src/main/resources/", "    ")
-                                .replace("WEB-INF/", "    ");
-                        final JBLabel nameLable = new JBLabel(path, icon, SwingConstants.LEFT);
-                        nameLable.setComponentStyle(UIUtil.ComponentStyle.REGULAR);
-                        nameLable.setBorder(JBUI.Borders.empty(2));
-                        return nameLable;
-                    }
-                    return new JPanel();
+                    VirtualFile tempVfile = (VirtualFile) vfile;
+                    Icon icon = NutzLineUtil.getTemplateIcon(tempVfile.getExtension());
+                    final String path = tempVfile.getCanonicalPath()
+                            .replace(project.getBasePath(), "")
+                            .replace("/src/main/webapp/", "    ")
+                            .replace("/src/main/resources/", "    ")
+                            .replace("WEB-INF/", "    ") + "   ";
+                    final JBLabel nameLable = new JBLabel(path, icon, SwingConstants.LEFT);
+                    nameLable.setBorder(JBUI.Borders.empty(2));
+                    return nameLable;
                 });
                 builder.setItemChoosenCallback(() -> {
                     final VirtualFile value = (VirtualFile) list.getSelectedValue();

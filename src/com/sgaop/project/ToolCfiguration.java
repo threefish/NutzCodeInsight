@@ -15,20 +15,34 @@ import java.util.Map;
 /**
  * Created with IntelliJ IDEA.
  *
- * @author 306955302@qq.com
- * 创建人：黄川
+ * @author 黄川 huchuc@vip.qq.com
+
  * 创建时间: 2017/12/11  14:09
- * 描述此类：
+
  */
 @State(name = "ToolCfiguration", storages = {@Storage("ToolCfiguration.xml")})
 public class ToolCfiguration implements PersistentStateComponent<Element> {
-
-    HashMap<String, String> data = new HashMap<>();
 
     /**
      * 取别名防止以特殊字符起始的key
      */
     private final static String ALIAS = "ALIAS_";
+    HashMap<String, String> data = new HashMap<>();
+
+    @Nullable
+    public static ToolCfiguration getInstance() {
+        ToolCfiguration cfiguration = ServiceManager.getService(ToolCfiguration.class);
+        //初始化数据
+        HashMap<String, String> initData = new HashMap<>(3);
+        initData.put("jsp:", ".jsp");
+        initData.put("btl:", ".html");
+        initData.put("beetl:", ".html");
+        for (Map.Entry<String, String> entry : cfiguration.getData().entrySet()) {
+            initData.put(entry.getKey(), entry.getValue());
+        }
+        cfiguration.setData(initData);
+        return cfiguration;
+    }
 
     @Override
     @Nullable
@@ -49,21 +63,6 @@ public class ToolCfiguration implements PersistentStateComponent<Element> {
         });
     }
 
-    @Nullable
-    public static ToolCfiguration getInstance() {
-        ToolCfiguration cfiguration = ServiceManager.getService(ToolCfiguration.class);
-        //初始化数据
-        HashMap<String, String> initData = new HashMap<>(3);
-        initData.put("jsp:", ".jsp");
-        initData.put("btl:", ".html");
-        initData.put("beetl:", ".html");
-        for (Map.Entry<String, String> entry : cfiguration.getData().entrySet()) {
-            initData.put(entry.getKey(), entry.getValue());
-        }
-        cfiguration.setData(initData);
-        return cfiguration;
-    }
-
     /**
      * 取得模版
      *
@@ -81,11 +80,11 @@ public class ToolCfiguration implements PersistentStateComponent<Element> {
         return null;
     }
 
-    public void setData(HashMap<String, String> data) {
-        this.data = data;
-    }
-
     public HashMap<String, String> getData() {
         return data;
+    }
+
+    public void setData(HashMap<String, String> data) {
+        this.data = data;
     }
 }

@@ -3,7 +3,7 @@ package com.sgaop.idea.codeinsight;
 /**
  * Created with IntelliJ IDEA.
  *
- * @author 306955302@qq.com
+ * @author 黄川 huchuc@vip.qq.com
  * @date 2018/1/2  10:27
  */
 public class JavaNutzTemplateVO {
@@ -32,16 +32,16 @@ public class JavaNutzTemplateVO {
         return fileExtension;
     }
 
+    public void setFileExtension(String fileExtension) {
+        this.fileExtension = fileExtension;
+    }
+
     public String getTemplatePath() {
         return templatePath;
     }
 
     public void setTemplatePath(String templatePath) {
         this.templatePath = templatePath;
-    }
-
-    public void setFileExtension(String fileExtension) {
-        this.fileExtension = fileExtension;
     }
 
     @Override

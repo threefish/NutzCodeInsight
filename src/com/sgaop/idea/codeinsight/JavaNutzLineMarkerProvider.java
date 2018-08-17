@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created with IntelliJ IDEA.
  *
- * @author 306955302@qq.com
+ * @author 黄川 huchuc@vip.qq.com
  * @date 2017/12/29  11:30
  */
 public class JavaNutzLineMarkerProvider extends LineMarkerProviderDescriptor {

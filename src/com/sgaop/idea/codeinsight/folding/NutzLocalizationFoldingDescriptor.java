@@ -9,10 +9,10 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Created with IntelliJ IDEA.
  *
- * @author 306955302@qq.com
- * 创建人：黄川
+ * @author 黄川 huchuc@vip.qq.com
+
  * 创建时间: 2018/1/25  10:56
- * 描述此类：
+
  */
 public class NutzLocalizationFoldingDescriptor extends FoldingDescriptor {
 

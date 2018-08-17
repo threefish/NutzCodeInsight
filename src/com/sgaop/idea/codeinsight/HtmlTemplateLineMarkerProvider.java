@@ -5,11 +5,7 @@ import com.intellij.codeInsight.daemon.LineMarkerInfo;
 import com.intellij.codeInsight.daemon.LineMarkerProviderDescriptor;
 import com.intellij.openapi.editor.markup.GutterIconRenderer;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.util.PsiTreeUtil;
-import com.intellij.psi.xml.XmlToken;
-import com.intellij.util.Function;
 import com.sgaop.idea.codeinsight.navigation.HtmlTemplateGutterIconNavigationHandler;
-import com.sgaop.idea.codeinsight.util.BeetlHtmlLineUtil;
 import com.sgaop.idea.codeinsight.util.HtmlTemplateLineUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -21,7 +17,7 @@ import java.util.List;
 /**
  * Created with IntelliJ IDEA.
  *
- * @author 306955302@qq.com
+ * @author 黄川 huchuc@vip.qq.com
  * @date 2018/1/3  11:28
  */
 public class HtmlTemplateLineMarkerProvider extends LineMarkerProviderDescriptor {

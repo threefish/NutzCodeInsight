@@ -5,7 +5,7 @@ import com.intellij.util.Function;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author 306955302@qq.com
+ * @author 黄川 huchuc@vip.qq.com
  * @date 2018/1/3 0003 22:43
  */
 public class FunctionTooltip implements Function {

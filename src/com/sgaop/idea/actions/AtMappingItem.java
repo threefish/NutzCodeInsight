@@ -12,7 +12,7 @@ import javax.swing.*;
 /**
  * Created by IntelliJ IDEA.
  *
- * @author 306955302@qq.com
+ * @author 黄川 huchuc@vip.qq.com
  * @date 2017/12/30 0030 23:53
  */
 public class AtMappingItem implements NavigationItem {
@@ -22,15 +22,15 @@ public class AtMappingItem implements NavigationItem {
     private String urlPath;
     private String requestMethod;
 
-    public String getUrlPath() {
-        return urlPath;
-    }
-
     public AtMappingItem(PsiElement psiElement, String urlPath, String requestMethod) {
         this.psiElement = psiElement;
         this.requestMethod = requestMethod;
-        this.urlPath = urlPath.replaceAll("//","/");
+        this.urlPath = urlPath.replaceAll("//", "/");
         this.navigatable = (Navigatable) psiElement;
+    }
+
+    public String getUrlPath() {
+        return urlPath;
     }
 
     @Nullable

@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created with IntelliJ IDEA.
  *
- * @author 306955302@qq.com
+ * @author 黄川 huchuc@vip.qq.com
  * @date 2017/12/29  15:51
  */
 public class NutzLineUtil {
