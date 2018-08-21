@@ -22,7 +22,6 @@ import java.util.List;
 /**
  * @author 黄川 huchuc@vip.qq.com
  * @date: 2018/5/31
-
  */
 public class NutzInjectConfFoldingBuilder extends FoldingBuilderEx {
 
@@ -49,11 +48,11 @@ public class NutzInjectConfFoldingBuilder extends FoldingBuilderEx {
                     descriptors.add(new NutzLocalizationFoldingDescriptor(literalExpression.getNode(),
                             new TextRange(literalExpression.getTextRange().getStartOffset() + 1, literalExpression.getTextRange().getEndOffset() - 1),
                             "NutzCodeInsight:当前键值【" + key + "】在多个配置文件中存在！"));
+                } else {
+                    descriptors.add(new NutzLocalizationFoldingDescriptor(literalExpression.getNode(),
+                            new TextRange(literalExpression.getTextRange().getStartOffset() + 1, literalExpression.getTextRange().getEndOffset() - 1),
+                            "NutzCodeInsight:当前键值【" + key + "】在多个配置文件中未发现，使用时可能为Null，请注意检查！"));
                 }
-            } else {
-                descriptors.add(new NutzLocalizationFoldingDescriptor(literalExpression.getNode(),
-                        new TextRange(literalExpression.getTextRange().getStartOffset() + 1, literalExpression.getTextRange().getEndOffset() - 1),
-                        "NutzCodeInsight:当前键值【" + key + "】在多个配置文件中未发现，使用时可能为Null，请注意检查！"));
             }
         }
         return descriptors.toArray(new FoldingDescriptor[descriptors.size()]);
