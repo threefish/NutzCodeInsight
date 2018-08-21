@@ -10,7 +10,6 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLiteralExpression;
 import com.intellij.psi.search.FilenameIndex;
-import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.sgaop.idea.codeinsight.util.NutzLocalUtil;
 import org.jetbrains.annotations.NotNull;
@@ -24,9 +23,8 @@ import java.util.List;
  * Created with IntelliJ IDEA.
  *
  * @author 黄川 huchuc@vip.qq.com
-
+ * <p>
  * 创建时间: 2018/1/22  17:55
-
  */
 public class NutzLocalizationFoldingBuilder extends FoldingBuilderEx {
 
@@ -58,6 +56,10 @@ public class NutzLocalizationFoldingBuilder extends FoldingBuilderEx {
                             new TextRange(literalExpression.getTextRange().getStartOffset() + 1, literalExpression.getTextRange().getEndOffset() - 1),
                             "NutzCodeInsight:当前键值【" + key + "】在国际化信息中存在重复KEY请检查！"));
                 }
+            } else {
+                descriptors.add(new NutzLocalizationFoldingDescriptor(literalExpression.getNode(),
+                        new TextRange(literalExpression.getTextRange().getStartOffset() + 1, literalExpression.getTextRange().getEndOffset() - 1),
+                        "NutzCodeInsight:当前键值【" + key + "】在国际化信息中存在重复KEY请检查，使用时可能为Null，请注意检查！"));
             }
         }
         return descriptors.toArray(new FoldingDescriptor[descriptors.size()]);

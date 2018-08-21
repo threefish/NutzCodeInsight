@@ -10,7 +10,6 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLiteralExpression;
 import com.intellij.psi.search.FilenameIndex;
-import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.sgaop.idea.codeinsight.util.NutzInjectConfUtil;
 import org.jetbrains.annotations.NotNull;
@@ -51,6 +50,10 @@ public class NutzInjectConfFoldingBuilder extends FoldingBuilderEx {
                             new TextRange(literalExpression.getTextRange().getStartOffset() + 1, literalExpression.getTextRange().getEndOffset() - 1),
                             "NutzCodeInsight:当前键值【" + key + "】在多个配置文件中存在！"));
                 }
+            } else {
+                descriptors.add(new NutzLocalizationFoldingDescriptor(literalExpression.getNode(),
+                        new TextRange(literalExpression.getTextRange().getStartOffset() + 1, literalExpression.getTextRange().getEndOffset() - 1),
+                        "NutzCodeInsight:当前键值【" + key + "】在多个配置文件中未发现，使用时可能为Null，请注意检查！"));
             }
         }
         return descriptors.toArray(new FoldingDescriptor[descriptors.size()]);
