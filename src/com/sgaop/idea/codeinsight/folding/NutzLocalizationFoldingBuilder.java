@@ -40,7 +40,7 @@ public class NutzLocalizationFoldingBuilder extends FoldingBuilderEx {
             return new FoldingDescriptor[0];
         }
         List<FoldingDescriptor> descriptors = new ArrayList<>();
-        Collection<VirtualFile> propertiesFiles = FilenameIndex.getAllFilesByExt(project, "properties", GlobalSearchScope.projectScope(project));
+        Collection<VirtualFile> propertiesFiles = FilenameIndex.getAllFilesByExt(project, "properties", root.getResolveScope());
         Collection<PsiLiteralExpression> literalExpressions = PsiTreeUtil.findChildrenOfType(root, PsiLiteralExpression.class);
         for (final PsiLiteralExpression literalExpression : literalExpressions) {
             if (!NutzLocalUtil.isLocal(literalExpression)) {

@@ -31,6 +31,12 @@ public class ToolConfigurable implements Configurable {
         return "NutzCodeInsight";
     }
 
+    @Nls
+    @Override
+    public String getHelpTopic() {
+        return "NutzCodeInsight";
+    }
+
     @Nullable
     @Override
     public JComponent createComponent() {

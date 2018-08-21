@@ -32,7 +32,7 @@ public class NutzInjectConfFoldingBuilder extends FoldingBuilderEx {
     public FoldingDescriptor[] buildFoldRegions(@NotNull PsiElement root, @NotNull Document document, boolean b) {
         Project project = root.getProject();
         List<FoldingDescriptor> descriptors = new ArrayList<>();
-        Collection<VirtualFile> propertiesFiles = FilenameIndex.getAllFilesByExt(project, "properties", GlobalSearchScope.projectScope(project));
+        Collection<VirtualFile> propertiesFiles = FilenameIndex.getAllFilesByExt(project, "properties", root.getResolveScope());
         Collection<PsiLiteralExpression> literalExpressions = PsiTreeUtil.findChildrenOfType(root, PsiLiteralExpression.class);
         for (final PsiLiteralExpression literalExpression : literalExpressions) {
             if (!NutzInjectConfUtil.isInjectConf(literalExpression)) {
