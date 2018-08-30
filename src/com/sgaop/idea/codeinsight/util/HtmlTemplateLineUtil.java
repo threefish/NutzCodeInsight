@@ -5,6 +5,7 @@ import com.intellij.icons.AllIcons;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.search.FilenameIndex;
+import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlToken;
 
@@ -84,7 +85,7 @@ public class HtmlTemplateLineUtil {
      */
     public static List<VirtualFile> findTemplteFileList(PsiElement bindingElement) {
         String path = getTemplateFilePathAndName(bindingElement);
-        Collection<VirtualFile> virtualFiles = FilenameIndex.getAllFilesByExt(bindingElement.getProject(), getFileExtension(path).replaceAll("\\.", ""), bindingElement.getResolveScope());
+        Collection<VirtualFile> virtualFiles = FilenameIndex.getAllFilesByExt(bindingElement.getProject(), getFileExtension(path).replaceAll("\\.", ""), GlobalSearchScope.projectScope(bindingElement.getProject()));
         List<VirtualFile> fileList = new ArrayList<>();
         virtualFiles.stream().filter(virtualFile -> virtualFile.getCanonicalPath().endsWith(path))
                 .forEach(virtualFile -> fileList.add(virtualFile));
