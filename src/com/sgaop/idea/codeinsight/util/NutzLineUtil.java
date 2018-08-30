@@ -1,6 +1,5 @@
 package com.sgaop.idea.codeinsight.util;
 
-import com.intellij.openapi.module.impl.scopes.ModuleWithDependenciesScope;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.psi.search.FilenameIndex;
@@ -69,9 +68,9 @@ public class NutzLineUtil {
         String[] exts = nutzTemplate.getFileExtension().split(";");
         for (String ext : exts) {
             if (ext.trim() != "") {
-                //优化定位至当前Module
-                GlobalSearchScope globalSearchScope = ((ModuleWithDependenciesScope) bindingElement.getResolveScope()).getModule().getModuleScope();
-                Collection<VirtualFile> tempVirtualFiles = FilenameIndex.getAllFilesByExt(bindingElement.getProject(), ext.replaceAll("\\.", ""), globalSearchScope);
+                //优化定位至当前Module 跨模块资源无法取得还是返回
+                //GlobalSearchScope globalSearchScope = ((ModuleWithDependenciesScope) bindingElement.getResolveScope()).getModule().getModuleScope();
+                Collection<VirtualFile> tempVirtualFiles = FilenameIndex.getAllFilesByExt(bindingElement.getProject(), ext.replaceAll("\\.", ""), GlobalSearchScope.projectScope(bindingElement.getProject()));
                 if (tempVirtualFiles != null && tempVirtualFiles.size() > 0) {
                     String tempNutzFileName = nutzTemplate.getTemplatePath();
                     //兼容绝对路径模式
