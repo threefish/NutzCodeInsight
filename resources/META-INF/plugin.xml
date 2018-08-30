@@ -69,6 +69,7 @@
     <!-- uncomment to enable plugin in all products
     <depends>com.intellij.modules.lang</depends>
     -->
+    <depends>com.intellij.modules.java</depends>
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
         <applicationConfigurable instance="com.sgaop.project.ToolConfigurable"/>
@@ -91,8 +92,10 @@
         <lang.foldingBuilder language="JAVA"
                              implementationClass="com.sgaop.idea.codeinsight.folding.NutzInjectConfFoldingBuilder"/>
         <!--配置文件折叠-结束-->
+        <!--控制显示新创建NutzBoot项目-->
+        <moduleType id="NutzBoot" implementationClass="com.sgaop.project.module.NutzBootModuleType"
+                    classpathProvider="true"/>
     </extensions>
-
     <actions>
         <!--快速定位至NutzAction-->
         <action id="GoToRequestMapping" class="com.sgaop.idea.actions.GoToNutzAtMappingAction"
