@@ -60,7 +60,6 @@ public class FileUtil {
      */
     public static void extractZipFile(File file, File root) {
         byte[] buffer = new byte[BUFFER];
-        System.out.println(file.getAbsolutePath());
         try {
             ZipInputStream zis = new ZipInputStream(new FileInputStream(file), Charset.forName("GBK"));
             ZipEntry entry;

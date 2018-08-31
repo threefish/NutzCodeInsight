@@ -43,7 +43,7 @@ public class NutzBootModuleType extends ModuleType<NutzBootModuleBuilder> {
     @NotNull
     @Override
     public String getDescription() {
-        return "NutzBoot项目";
+        return "NutzBoot Project Maker";
     }
 
     public Icon getBigIcon() {
@@ -59,7 +59,10 @@ public class NutzBootModuleType extends ModuleType<NutzBootModuleBuilder> {
     @Override
     public ModuleWizardStep[] createWizardSteps(@NotNull WizardContext wizardContext, @NotNull NutzBootModuleBuilder moduleBuilder, @NotNull ModulesProvider modulesProvider) {
         ArrayList<ModuleWizardStep> wizardSteps = new ArrayList<>();
-        wizardSteps.add(new NutzBootChooseStep(wizardContext));
+        NutzBootMakerChooseStep makerChooseStep = new NutzBootMakerChooseStep(wizardContext);
+        NutzBootChooseMakerUrlStep makerUrlStep = new NutzBootChooseMakerUrlStep(wizardContext, makerChooseStep);
+        wizardSteps.add(makerUrlStep);
+        wizardSteps.add(makerChooseStep);
         return wizardSteps.toArray(new ModuleWizardStep[]{});
     }
 }

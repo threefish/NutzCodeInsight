@@ -6,8 +6,6 @@ import com.intellij.ide.util.projectWizard.WizardContext;
 import com.intellij.ide.wizard.CommitStepException;
 import com.intellij.openapi.options.ConfigurationException;
 import com.sgaop.project.FileUtil;
-import com.sgaop.project.module.vo.NutzBootGroupVO;
-import com.sgaop.project.module.vo.NutzBootVO;
 import com.sgaop.project.ui.ModuleWizardStepUI;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
@@ -27,18 +25,27 @@ import java.util.HashMap;
 /**
  * @author 黄川 huchuc@vip.qq.com
  */
-public class NutzBootChooseStep extends ProjectJdkStep {
+public class NutzBootMakerChooseStep extends ProjectJdkStep {
 
     protected final WizardContext wizardContext;
 
     private ModuleWizardStepUI moduleWizardStepUI;
 
     private String downLoadKey;
+
     private Gson gson = new Gson();
 
     private String makeUrl = "http://127.0.0.1:8080";
 
-    public NutzBootChooseStep(WizardContext wizardContext) {
+    public String getMakeUrl() {
+        return makeUrl;
+    }
+
+    public void setMakeUrl(String makeUrl) {
+        this.makeUrl = makeUrl;
+    }
+
+    public NutzBootMakerChooseStep(WizardContext wizardContext) {
         super(wizardContext);
         this.wizardContext = wizardContext;
         this.moduleWizardStepUI = new ModuleWizardStepUI();
@@ -109,11 +116,14 @@ public class NutzBootChooseStep extends ProjectJdkStep {
 
     @Override
     public void updateStep() {
-        String json = "{\"version\":[\"2.2.4\", \"2.3.1-SNAPSHOT\"],\"groups\":[{\"lable\":\"添加Web容器支持\",\"enable\":true,\"items\":[{\"lable\":\"jetty容器\",\"name\":\"jetty\",\"enable\":true,\"pros\":[{\"name\":\"host\",\"val\":\"127.0.0.1\"}]}]}, {\"lable\":\"添加模板引擎支持\",\"enable\":true,\"items\":[{\"lable\":\"beetl模版引擎\",\"name\":\"beetl\",\"enable\":true,\"pros\":[]}]}]}\n";
-        NutzBootVO nutzBootVO = gson.fromJson(json, NutzBootVO.class);
-        this.moduleWizardStepUI.getVersion().setModel(new DefaultComboBoxModel<>(nutzBootVO.getVersion()));
-        for (NutzBootGroupVO bootGroupVO : nutzBootVO.getGroups()) {
-
+        HttpClient httpclient = HttpClients.createDefault();
+        HttpGet httppost = new HttpGet(makeUrl + "/maker.json");
+        try {
+            HttpResponse response = httpclient.execute(httppost);
+            String json = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
+            moduleWizardStepUI.refresh(json);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "网络异常！请稍候尝试", "错误提示", JOptionPane.ERROR_MESSAGE, null);
         }
     }
 }
