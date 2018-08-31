@@ -6,6 +6,8 @@ import com.intellij.ide.util.projectWizard.WizardContext;
 import com.intellij.ide.wizard.CommitStepException;
 import com.intellij.openapi.options.ConfigurationException;
 import com.sgaop.project.FileUtil;
+import com.sgaop.project.module.vo.NutzBootGroupVO;
+import com.sgaop.project.module.vo.NutzBootVO;
 import com.sgaop.project.ui.ModuleWizardStepUI;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
@@ -28,9 +30,11 @@ import java.util.HashMap;
 public class NutzBootChooseStep extends ProjectJdkStep {
 
     protected final WizardContext wizardContext;
+
     private ModuleWizardStepUI moduleWizardStepUI;
 
     private String downLoadKey;
+    private Gson gson = new Gson();
 
     private String makeUrl = "https://get.nutz.io";
 
@@ -57,7 +61,6 @@ public class NutzBootChooseStep extends ProjectJdkStep {
             FileUtil.extractZipFile(zipFile, dir);
             zipFile.delete();
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "网络异常！请稍候再试！", "错误提示", JOptionPane.ERROR_MESSAGE, null);
             throw new CommitStepException(e.getMessage());
         }
     }
@@ -73,19 +76,18 @@ public class NutzBootChooseStep extends ProjectJdkStep {
             httppost.setEntity(entity);
             HttpResponse response = httpclient.execute(httppost);
             String json = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
-            HashMap redata = new Gson().fromJson(json, HashMap.class);
+            HashMap redata = gson.fromJson(json, HashMap.class);
             boolean ok = Boolean.parseBoolean(String.valueOf(redata.getOrDefault("ok", "false")));
             if (ok) {
                 downLoadKey = String.valueOf(redata.get("key"));
                 return true;
             } else {
                 downLoadKey = null;
+                JOptionPane.showMessageDialog(null, redata.getOrDefault("msg", "服务暂不可用！请稍后再试！"), "错误提示", JOptionPane.ERROR_MESSAGE, null);
                 return false;
             }
         } catch (IOException e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "网络异常！请稍候再试！", "错误提示", JOptionPane.ERROR_MESSAGE, null);
-            return false;
+            throw new ConfigurationException(e.getMessage());
         }
     }
 
@@ -108,6 +110,11 @@ public class NutzBootChooseStep extends ProjectJdkStep {
 
     @Override
     public void updateStep() {
-    }
+        String json = "{\"version\":[\"2.2.4\", \"2.3.1-SNAPSHOT\"],\"groups\":[{\"lable\":\"添加Web容器支持\",\"enable\":true,\"items\":[{\"lable\":\"jetty容器\",\"name\":\"jetty\",\"enable\":true,\"pros\":[{\"name\":\"host\",\"val\":\"127.0.0.1\"}]}]}, {\"lable\":\"添加模板引擎支持\",\"enable\":true,\"items\":[{\"lable\":\"beetl模版引擎\",\"name\":\"beetl\",\"enable\":true,\"pros\":[]}]}]}\n";
+        NutzBootVO nutzBootVO = gson.fromJson(json, NutzBootVO.class);
+        this.moduleWizardStepUI.getVersion().setModel(new DefaultComboBoxModel<>(nutzBootVO.getVersion()));
+        for (NutzBootGroupVO bootGroupVO : nutzBootVO.getGroups()) {
 
+        }
+    }
 }
