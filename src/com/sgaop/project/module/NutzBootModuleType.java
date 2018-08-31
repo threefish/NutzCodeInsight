@@ -59,10 +59,7 @@ public class NutzBootModuleType extends ModuleType<NutzBootModuleBuilder> {
     @Override
     public ModuleWizardStep[] createWizardSteps(@NotNull WizardContext wizardContext, @NotNull NutzBootModuleBuilder moduleBuilder, @NotNull ModulesProvider modulesProvider) {
         ArrayList<ModuleWizardStep> wizardSteps = new ArrayList<>();
-        NutzBootMakerChooseStep makerChooseStep = new NutzBootMakerChooseStep(wizardContext);
-        NutzBootChooseMakerUrlStep makerUrlStep = new NutzBootChooseMakerUrlStep(wizardContext, makerChooseStep);
-        wizardSteps.add(makerUrlStep);
-        wizardSteps.add(makerChooseStep);
+        wizardSteps.add(new NutzBootMakerChooseStep(wizardContext));
         return wizardSteps.toArray(new ModuleWizardStep[]{});
     }
 }

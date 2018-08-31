@@ -7,6 +7,11 @@ import com.sgaop.project.module.vo.NutzBootProsVO;
 import com.sgaop.project.module.vo.NutzBootVO;
 import com.sgaop.project.ui.action.EnableGroupAction;
 import com.sgaop.project.ui.gui.DataCheckBox;
+import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.HttpClients;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -28,10 +33,32 @@ public class ModuleWizardStepUI {
     private JComboBox version;
     private JPanel groupsPanel;
     private JScrollPane scrollPanel;
+    private JTextField makerUrl;
+    private JButton reloadButton;
 
     private Vector<UiCatch> uiCatches = new Vector<>();
 
+    public ModuleWizardStepUI() {
+
+        makerUrl.setText("https://get.nutz.io");
+
+        reloadButton.addActionListener((event -> {
+            HttpClient httpclient = HttpClients.createDefault();
+            HttpGet httppost = new HttpGet(makerUrl.getText() + "/maker.json");
+            try {
+                HttpResponse response = httpclient.execute(httppost);
+                String json = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
+                refresh(json);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "网络异常！请稍候尝试", "错误提示", JOptionPane.ERROR_MESSAGE, null);
+            }
+        }));
+    }
+
     public void refresh(String json) {
+        uiCatches.clear();
+        groupsPanel.removeAll();
+
         groupsPanel.setLayout(new BoxLayout(groupsPanel, BoxLayout.Y_AXIS));
         groupsPanel.setBorder(new EmptyBorder(5, 5, 5, 0));
         Gson gson = new Gson();
@@ -120,6 +147,13 @@ public class ModuleWizardStepUI {
         }
     }
 
+    public JTextField getMakerUrl() {
+        return makerUrl;
+    }
+
+    public void setMakerUrl(JTextField makerUrl) {
+        this.makerUrl = makerUrl;
+    }
 
     public JScrollPane getScrollPanel() {
         return scrollPanel;

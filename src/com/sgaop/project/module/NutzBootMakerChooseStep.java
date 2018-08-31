@@ -35,16 +35,6 @@ public class NutzBootMakerChooseStep extends ProjectJdkStep {
 
     private Gson gson = new Gson();
 
-    private String makeUrl;
-
-    public String getMakeUrl() {
-        return makeUrl;
-    }
-
-    public void setMakeUrl(String makeUrl) {
-        this.makeUrl = makeUrl;
-    }
-
     public NutzBootMakerChooseStep(WizardContext wizardContext) {
         super(wizardContext);
         this.wizardContext = wizardContext;
@@ -59,7 +49,7 @@ public class NutzBootMakerChooseStep extends ProjectJdkStep {
     @Override
     public void onWizardFinished() throws CommitStepException {
         HttpClient httpclient = HttpClients.createDefault();
-        HttpGet httppost = new HttpGet(makeUrl + "/maker/download/" + downLoadKey);
+        HttpGet httppost = new HttpGet(moduleWizardStepUI.getMakerUrl().getText() + "/maker/download/" + downLoadKey);
         try {
             HttpResponse response = httpclient.execute(httppost);
             File zipFile = Paths.get(this.wizardContext.getProjectFileDirectory(), "temp.zip").toFile();
@@ -75,7 +65,7 @@ public class NutzBootMakerChooseStep extends ProjectJdkStep {
     @Override
     public boolean validate() throws ConfigurationException {
         HttpClient httpclient = HttpClients.createDefault();
-        HttpPost httppost = new HttpPost(makeUrl + "/maker/make");
+        HttpPost httppost = new HttpPost(moduleWizardStepUI.getMakerUrl().getText() + "/maker/make");
         try {
             BasicHttpEntity entity = new BasicHttpEntity();
             entity.setContent(new ByteArrayInputStream(gson.toJson(moduleWizardStepUI.getPostData()).getBytes()));
@@ -117,7 +107,7 @@ public class NutzBootMakerChooseStep extends ProjectJdkStep {
     @Override
     public void updateStep() {
         HttpClient httpclient = HttpClients.createDefault();
-        HttpGet httppost = new HttpGet(makeUrl + "/maker.json");
+        HttpGet httppost = new HttpGet(moduleWizardStepUI.getMakerUrl().getText() + "/maker.json");
         try {
             HttpResponse response = httpclient.execute(httppost);
             String json = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
