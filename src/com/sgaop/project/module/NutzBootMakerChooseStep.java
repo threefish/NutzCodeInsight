@@ -51,9 +51,14 @@ public class NutzBootMakerChooseStep extends ProjectJdkStep {
         HttpClient httpclient = HttpClients.createDefault();
         HttpGet httppost = new HttpGet(moduleWizardStepUI.getMakerUrl().getText() + "/maker/download/" + downLoadKey);
         try {
+            String path = this.wizardContext.getProjectFileDirectory();
+            if (this.wizardContext.getProject() != null) {
+                NutzBootModuleBuilder moduleBuilder = (NutzBootModuleBuilder) this.wizardContext.getProjectBuilder();
+                path = moduleBuilder.getPath();
+            }
             HttpResponse response = httpclient.execute(httppost);
-            File zipFile = Paths.get(this.wizardContext.getProjectFileDirectory(), "temp.zip").toFile();
-            File dir = Paths.get(this.wizardContext.getProjectFileDirectory()).toFile();
+            File zipFile = Paths.get(path, "temp.zip").toFile();
+            File dir = Paths.get(path).toFile();
             FileUtil.writeFile(zipFile, response.getEntity().getContent());
             FileUtil.extractZipFile(zipFile, dir);
             zipFile.delete();

@@ -31,4 +31,14 @@ public class NutzBootModuleBuilder extends JavaModuleBuilder {
     public ModuleWizardStep getCustomOptionsStep(WizardContext context, Disposable parentDisposable) {
         return new ProjectJdkStep(context);
     }
+
+    /**
+     * 取得当前模块路径
+     *
+     * @return
+     */
+    public String getPath() {
+        return getContentEntryPath();
+    }
+
 }
