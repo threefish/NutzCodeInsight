@@ -36,7 +36,7 @@ public class NutzBootChooseStep extends ProjectJdkStep {
     private String downLoadKey;
     private Gson gson = new Gson();
 
-    private String makeUrl = "https://get.nutz.io";
+    private String makeUrl = "http://127.0.0.1:8080";
 
     public NutzBootChooseStep(WizardContext wizardContext) {
         super(wizardContext);
@@ -69,10 +69,9 @@ public class NutzBootChooseStep extends ProjectJdkStep {
     public boolean validate() throws ConfigurationException {
         HttpClient httpclient = HttpClients.createDefault();
         HttpPost httppost = new HttpPost(makeUrl + "/maker/make");
-        String s = new String("{\"packageName\":\"io.nutz.demo\",\"groupId\":\"io.nutz\",\"artifactId\":\"demo\",\"finalName\":\"demo\",\"version\":\"2.3-SNAPSHOT\",\"nutzmvc\":{\"enable\":true},\"nutzdao\":{\"enable\":false,\"cache\":false},\"jetty\":{\"enable\":false,\"port\":8080,\"host\":\"127.0.0.1\"},\"jdbc\":{\"enable\":false,\"url\":\"jdbc:h2:mem:~\",\"username\":\"root\",\"password\":\"root\"},\"redis\":{\"enable\":false},\"quartz\":{\"enable\":false},\"weixin\":{\"enable\":false},\"tomcat\":{\"enable\":true,\"port\":8080,\"host\":\"127.0.0.1\"},\"undertow\":{\"enable\":false,\"port\":8080,\"host\":\"127.0.0.1\"},\"dubbo\":{\"enable\":false},\"zbus\":{\"enable\":false},\"ngrok\":{\"enable\":false,\"client\":{\"auth_token\":\"4kg9lckq5og4ip02j736e3i7ku\"}},\"shardingjdbc\":{\"enable\":false},\"beetlsql\":{\"enable\":false},\"mongo\":{\"enable\":false,\"dbname\":\"nutzboot\"},\"shiro\":{\"enable\":false},\"beetl\":{\"enable\":false},\"thymeleaf\":{\"enable\":false},\"disque\":{\"enable\":false},\"uflo2\":{\"enable\":false},\"urule\":{\"enable\":false},\"ureport\":{\"enable\":false},\"wkcache\":{\"enable\":false},\"feign\":{\"enable\":false},\"tio\":{\"enable\":false},\"j2cache\":{\"enable\":false},\"apolloClient\":{\"enable\":false},\"configClient\":{\"enable\":false},\"email\":{\"enable\":false},\"pout\":{\"enable\":false}}");
         try {
             BasicHttpEntity entity = new BasicHttpEntity();
-            entity.setContent(new ByteArrayInputStream(s.getBytes()));
+            entity.setContent(new ByteArrayInputStream(gson.toJson(moduleWizardStepUI.getPostData()).getBytes()));
             httppost.setEntity(entity);
             HttpResponse response = httpclient.execute(httppost);
             String json = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
@@ -86,8 +85,8 @@ public class NutzBootChooseStep extends ProjectJdkStep {
                 JOptionPane.showMessageDialog(null, redata.getOrDefault("msg", "服务暂不可用！请稍后再试！"), "错误提示", JOptionPane.ERROR_MESSAGE, null);
                 return false;
             }
-        } catch (IOException e) {
-            throw new ConfigurationException(e.getMessage());
+        } catch (Exception e) {
+            throw new ConfigurationException("构筑中心发生未知异常! " + e.getMessage());
         }
     }
 

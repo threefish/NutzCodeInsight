@@ -6,12 +6,12 @@ package com.sgaop.project.module.vo;
  */
 public class NutzBootProsVO {
     private String name;
-    private String val;
+    private Object val;
 
     public NutzBootProsVO() {
     }
 
-    public NutzBootProsVO(String name, String val) {
+    public NutzBootProsVO(String name, Object val) {
         this.name = name;
         this.val = val;
     }
@@ -24,11 +24,11 @@ public class NutzBootProsVO {
         this.name = name;
     }
 
-    public String getVal() {
+    public Object getVal() {
         return val;
     }
 
-    public void setVal(String val) {
+    public void setVal(Object val) {
         this.val = val;
     }
 
