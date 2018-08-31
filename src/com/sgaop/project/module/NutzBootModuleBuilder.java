@@ -2,6 +2,7 @@ package com.sgaop.project.module;
 
 import com.intellij.ide.util.projectWizard.JavaModuleBuilder;
 import com.intellij.ide.util.projectWizard.ModuleWizardStep;
+import com.intellij.ide.util.projectWizard.SettingsStep;
 import com.intellij.ide.util.projectWizard.WizardContext;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.module.ModuleType;
@@ -23,6 +24,11 @@ public class NutzBootModuleBuilder extends JavaModuleBuilder {
     @Override
     public ModuleType getModuleType() {
         return NutzBootModuleType.getInstance();
+    }
+
+    @Override
+    public ModuleWizardStep modifySettingsStep(SettingsStep settingsStep) {
+        return super.modifySettingsStep(settingsStep);
     }
 
     @Nullable

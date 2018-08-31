@@ -1,7 +1,7 @@
 package com.sgaop.project.module;
 
 import com.google.gson.Gson;
-import com.intellij.ide.util.projectWizard.ProjectJdkStep;
+import com.intellij.ide.util.projectWizard.ModuleWizardStep;
 import com.intellij.ide.util.projectWizard.WizardContext;
 import com.intellij.ide.wizard.CommitStepException;
 import com.intellij.openapi.options.ConfigurationException;
@@ -25,7 +25,9 @@ import java.util.HashMap;
 /**
  * @author 黄川 huchuc@vip.qq.com
  */
-public class NutzBootMakerChooseStep extends ProjectJdkStep {
+public class NutzBootMakerChooseStep extends ModuleWizardStep {
+
+    HttpClient httpclient = HttpClients.createDefault();
 
     protected final WizardContext wizardContext;
 
@@ -36,7 +38,6 @@ public class NutzBootMakerChooseStep extends ProjectJdkStep {
     private Gson gson = new Gson();
 
     public NutzBootMakerChooseStep(WizardContext wizardContext) {
-        super(wizardContext);
         this.wizardContext = wizardContext;
         this.moduleWizardStepUI = new ModuleWizardStepUI();
     }
@@ -48,9 +49,8 @@ public class NutzBootMakerChooseStep extends ProjectJdkStep {
 
     @Override
     public void onWizardFinished() throws CommitStepException {
-        HttpClient httpclient = HttpClients.createDefault();
-        HttpGet httppost = new HttpGet(moduleWizardStepUI.getMakerUrl().getText() + "/maker/download/" + downLoadKey);
         try {
+            HttpGet httppost = new HttpGet(moduleWizardStepUI.getMakerUrl().getText() + "/maker/download/" + downLoadKey);
             String path = this.wizardContext.getProjectFileDirectory();
             if (this.wizardContext.getProject() != null) {
                 NutzBootModuleBuilder moduleBuilder = (NutzBootModuleBuilder) this.wizardContext.getProjectBuilder();
@@ -69,9 +69,8 @@ public class NutzBootMakerChooseStep extends ProjectJdkStep {
 
     @Override
     public boolean validate() throws ConfigurationException {
-        HttpClient httpclient = HttpClients.createDefault();
-        HttpPost httppost = new HttpPost(moduleWizardStepUI.getMakerUrl().getText() + "/maker/make");
         try {
+            HttpPost httppost = new HttpPost(moduleWizardStepUI.getMakerUrl().getText() + "/maker/make");
             BasicHttpEntity entity = new BasicHttpEntity();
             entity.setContent(new ByteArrayInputStream(gson.toJson(moduleWizardStepUI.getPostData()).getBytes()));
             httppost.setEntity(entity);
@@ -94,24 +93,27 @@ public class NutzBootMakerChooseStep extends ProjectJdkStep {
 
     @Override
     public void updateDataModel() {
+        System.out.println("updateDataModel");
     }
 
     @Override
     public void onStepLeaving() {
+        System.out.println("onStepLeaving");
     }
 
     @Override
     public boolean isStepVisible() {
+        System.out.println("isStepVisible");
         return true;
     }
 
     @Override
     public void disposeUIResources() {
+        System.out.println("disposeUIResources");
     }
 
     @Override
     public void updateStep() {
-        HttpClient httpclient = HttpClients.createDefault();
         HttpGet httppost = new HttpGet(moduleWizardStepUI.getMakerUrl().getText() + "/maker.json");
         try {
             HttpResponse response = httpclient.execute(httppost);
