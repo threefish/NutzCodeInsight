@@ -23,20 +23,22 @@ public class NutzBootChooseMakerUrlStep extends ProjectJdkStep {
         this.makerChooseStep = makerChooseStep;
     }
 
-    public JTextField makerUrlText = new JTextField("http://127.0.0.1:8080");
+    public JTextField makerUrlText = new JTextField("https://get.nutz.io");
 
     @Override
     public JComponent getComponent() {
-        JPanel jPanel = new JPanel();
-        jPanel.setMaximumSize(new Dimension(0, 40));
-        jPanel.setMinimumSize(new Dimension(0, 40));
-        jPanel.setPreferredSize(new Dimension(0, 40));
-        makerUrlText.setPreferredSize(new Dimension(300, 30));
-//        jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.X_AXIS));
+        JPanel jPanel = new JPanel(new GridBagLayout()) {
+            @Override
+            public Dimension getPreferredSize() {
+                return new Dimension(-1, 200);
+            }
+        };
+        makerUrlText.setPreferredSize(new Dimension(500, 30));
         jPanel.setLayout(new FlowLayout(FlowLayout.LEFT, FlowLayout.CENTER, FlowLayout.LEFT));
-        JLabel jLabel = new JLabel("NutzBoot 构筑中心");
+        JLabel jLabel = new JLabel("NutzBoot 构筑中心 ");
         jPanel.add(jLabel);
         jPanel.add(makerUrlText);
+        jPanel.add(new JLabel(" 可改为私有构筑中心"));
         jPanel.revalidate();
         jPanel.repaint();
         return jPanel;
