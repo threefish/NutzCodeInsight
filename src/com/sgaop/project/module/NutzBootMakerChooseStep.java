@@ -35,7 +35,7 @@ public class NutzBootMakerChooseStep extends ProjectJdkStep {
 
     private Gson gson = new Gson();
 
-    private String makeUrl = "http://127.0.0.1:8080";
+    private String makeUrl;
 
     public String getMakeUrl() {
         return makeUrl;

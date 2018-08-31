@@ -28,11 +28,13 @@ public class NutzBootChooseMakerUrlStep extends ProjectJdkStep {
     @Override
     public JComponent getComponent() {
         JPanel jPanel = new JPanel();
-        jPanel.setMaximumSize(new Dimension(100, 40));
-        jPanel.setMinimumSize(new Dimension(100, 40));
-        jPanel.setPreferredSize(new Dimension(100, 40));
-        jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.X_AXIS));
-        JLabel jLabel = new JLabel("构筑中心");
+        jPanel.setMaximumSize(new Dimension(0, 40));
+        jPanel.setMinimumSize(new Dimension(0, 40));
+        jPanel.setPreferredSize(new Dimension(0, 40));
+        makerUrlText.setPreferredSize(new Dimension(300, 30));
+//        jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.X_AXIS));
+        jPanel.setLayout(new FlowLayout(FlowLayout.LEFT, FlowLayout.CENTER, FlowLayout.LEFT));
+        JLabel jLabel = new JLabel("NutzBoot 构筑中心");
         jPanel.add(jLabel);
         jPanel.add(makerUrlText);
         jPanel.revalidate();
