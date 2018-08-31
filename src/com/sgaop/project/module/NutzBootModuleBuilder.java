@@ -2,7 +2,6 @@ package com.sgaop.project.module;
 
 import com.intellij.ide.util.projectWizard.JavaModuleBuilder;
 import com.intellij.ide.util.projectWizard.ModuleWizardStep;
-import com.intellij.ide.util.projectWizard.ProjectJdkStep;
 import com.intellij.ide.util.projectWizard.WizardContext;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.module.ModuleType;
@@ -29,7 +28,7 @@ public class NutzBootModuleBuilder extends JavaModuleBuilder {
     @Nullable
     @Override
     public ModuleWizardStep getCustomOptionsStep(WizardContext context, Disposable parentDisposable) {
-        return new ProjectJdkStep(context);
+        return new NutzBootMakerChooseStep(context);
     }
 
     /**
