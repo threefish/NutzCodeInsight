@@ -1,20 +1,16 @@
 package com.sgaop.project.module;
 
-import com.intellij.ide.util.projectWizard.ModuleWizardStep;
-import com.intellij.ide.util.projectWizard.WizardContext;
-import com.intellij.openapi.module.ModuleType;
+import com.intellij.openapi.module.JavaModuleType;
 import com.intellij.openapi.module.ModuleTypeManager;
-import com.intellij.openapi.roots.ui.configuration.ModulesProvider;
 import com.intellij.openapi.util.IconLoader;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
-import java.util.ArrayList;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
  */
-public class NutzBootModuleType extends ModuleType<NutzBootModuleBuilder> {
+public class NutzBootModuleType extends JavaModuleType {
 
     private static final String ID = "NutzBoot";
 
@@ -43,23 +39,13 @@ public class NutzBootModuleType extends ModuleType<NutzBootModuleBuilder> {
     @NotNull
     @Override
     public String getDescription() {
-        return "NutzBoot Project Maker";
+        return "NutzBoot Project";
     }
 
-    public Icon getBigIcon() {
-        return icon;
-    }
 
     @Override
     public Icon getNodeIcon(@Deprecated boolean b) {
         return icon;
     }
 
-    @NotNull
-    @Override
-    public ModuleWizardStep[] createWizardSteps(@NotNull WizardContext wizardContext, @NotNull NutzBootModuleBuilder moduleBuilder, @NotNull ModulesProvider modulesProvider) {
-        ArrayList<ModuleWizardStep> wizardSteps = new ArrayList<>();
-        wizardSteps.add(new NutzBootMakerChooseStep(wizardContext));
-        return wizardSteps.toArray(new ModuleWizardStep[]{});
-    }
 }

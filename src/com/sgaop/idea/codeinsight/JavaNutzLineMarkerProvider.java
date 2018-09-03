@@ -5,7 +5,7 @@ import com.intellij.codeInsight.daemon.LineMarkerInfo;
 import com.intellij.codeInsight.daemon.LineMarkerProviderDescriptor;
 import com.intellij.openapi.editor.markup.GutterIconRenderer;
 import com.intellij.psi.PsiElement;
-import com.sgaop.idea.codeinsight.navigation.NutzGutterIconNavigationHandler;
+import com.sgaop.idea.codeinsight.navigation.NutzNavigationHandler;
 import com.sgaop.idea.codeinsight.util.NutzLineUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -28,7 +28,7 @@ public class JavaNutzLineMarkerProvider extends LineMarkerProviderDescriptor {
             JavaNutzTemplateVO vo = NutzLineUtil.getTemplateFilePathAndName(bindingElement);
             Icon icon = NutzLineUtil.getTemplateIcon(vo.getFileExtension().split(";")[0]);
             return new LineMarkerInfo<>(bindingElement, bindingElement.getTextRange(), icon,
-                    Pass.LINE_MARKERS, new FunctionTooltip(), new NutzGutterIconNavigationHandler(),
+                    Pass.LINE_MARKERS, new FunctionTooltip(), new NutzNavigationHandler(),
                     GutterIconRenderer.Alignment.LEFT);
         }
         return null;

@@ -12,26 +12,28 @@
       <a href="https://github.com/threefish/NutzCodeInsight/issues">Issues</a>
       </b>
       </p>
-      <p><b>支持功能:</b>
+      <p>
+      <b>English</b>
        <ul>
-          <li><b>1.9.3</b></li>
-         <li>1、在 Nutz Action Module 中点击 @Ok 前面的jsp图标即可快速打开或切换至已经打开的jsp文件</li>
-         <li>2、支持以HTML、JSP等格式文件作为模版的框架资源文件的快速定位（支持动态配置）</li>
-         <li>3、Navigate菜单中增加查找@At映射地址快捷方式</li>
-         <li>4、Nutz web环境中支持折叠显示国际化配置文件变量值</li>
-         <li>5、Beetl模版中也支持国际化配置文件折叠(${i18n("login.sucess")}或者${i18n("login.sucess","参数1","参数N")} )</li>
-         <li>6、Nutz 支持折叠显示java类中注入配置文件变量值 @Inject("java:$conf.get('attach.savePath')")</li>
+         <li> 1、Support the Nutz Boot project to build quickly</li>
+         <li> 2、Click on the template icon in front of @Ok in Nutz Action to quickly open or switch to an already opened template file.</li>
+         <li> 3、Fast positioning of framework resource files supporting HTML, JSP and other format files as templates (can be dynamically configured)</li>
+         <li> 4、Add a Find @At Map Address Shortcut to the Navigate Menu</li>
+         <li> 5、Support for folding display of internationalized configuration file variable values ​​in the Nutz web environment (shortcut: Alt++ or Alt+-)</li>
+         <li> 6、The Beetl template also supports internationalization profile folding (${i18n("login.sucess")} or ${i18n("login.sucess","parameter 1","parameter N")} ) (shortcut: Alt++) Or Alt+-)</li>
+         <li> 7、Nutz supports folding display java class injection configuration file variable value @Inject("java:$conf.get('attach.savePath')") (shortcut: Alt++ or Alt+-)</li>
+         <li> 8、Quickly create interfaces and implementation classes in the support entity class (shortcut: Alt + insert )</li>
        </ul>
-        <p><b>特殊:内部版本包含公开版本所有内容</b>
+       <b>中文</b>
        <ul>
-          <li><b>1.9.2:internal</b></li>
-         <li>1、在 Nutz Action Module 中点击 @Ok 前面的jsp图标即可快速打开或切换至已经打开的jsp文件</li>
-         <li>2、支持以HTML、JSP等格式文件作为模版的框架资源文件的快速定位（支持动态配置）</li>
-         <li>3、Navigate菜单中增加查找@At映射地址快捷方式</li>
-         <li>4、Nutz web环境中支持折叠显示国际化配置文件变量值</li>
-         <li>5、Beetl模版中也支持国际化配置文件折叠(${i18n("login.sucess")}或者${i18n("login.sucess","参数1","参数N")} )</li>
-         <li>6、Nutz 支持折叠显示java类中注入配置文件变量值 @Inject("java:$conf.get('attach.savePath')")</li>
-         <li>7、支持实体类中自动生成接口与实现类</li>
+         <li> 1、支持NutzBoot项目快速搭建</li>
+         <li> 2、在 Nutz Action 中点击 @Ok 前面的模版图标即可快速打开或切换至已经打开的模版文件</li>
+         <li> 3、支持以HTML、JSP等格式文件作为模版的框架资源文件的快速定位（支持动态配置）</li>
+         <li> 4、Navigate菜单中增加查找@At映射地址快捷方式</li>
+         <li> 5、Nutz web环境中支持折叠显示国际化配置文件变量值（快捷键：Alt++或Alt+-）</li>
+         <li> 6、Beetl模版中也支持国际化配置文件折叠(${i18n("login.sucess")}或者${i18n("login.sucess","参数1","参数N")} )（快捷键：Alt++或Alt+-）</li>
+         <li> 7、Nutz 支持折叠显示java类中注入配置文件变量值 @Inject("java:$conf.get('attach.savePath')")（快捷键：Alt++或Alt+-）</li>
+         <li> 8、支持实体类中快速创建接口与实现类（快捷键：Alt+insert）</li>
        </ul>
       </p>
       <br/>
@@ -42,22 +44,10 @@
     </description>
     <change-notes><![CDATA[
        <p>
-        <b>1.9.3</b>
+        <b>2.0</b>
        <ul>
-        <li>update: 优化定位模版的范围</li>
-       </ul>
-        <b>1.9.1:public</b>
-       <ul>
-        <li>add Nutz 支持折叠显示java类中注入配置文件变量值 @Inject("java:$conf.get('attach.savePath')")</li>
-       </ul>
-       <b>1.9</b>
-       <ul>
-        <li>add 增加beetl中layout("/layouts/lay.html"){}和include("/header.html"){}文件的快速定位功能</li>
-        <li>add 增加javascript中对nutz国际化使用${i18n('ajax.networkError')}方式代码折叠的支持</li>
-       </ul>
-      <b>1.8.3</b>
-       <ul>
-        <li>add 增加对国际化中KEY值存在重复提示信息，避免程序员使用出错！</li>
+        <li>add: Support the Nutz Boot project to build quickly</li>
+        <li>add: Support for fast creation of interfaces and implementation classes in entity classes</li>
        </ul>
       </p>
     ]]>
@@ -101,6 +91,12 @@
         <action id="GoToRequestMapping" class="com.sgaop.idea.actions.GoToNutzAtMappingAction"
                 text="Find Nutz @At Mapping Url" description="Find Nutz At Mapping Url">
             <add-to-group group-id="GoToTargetEx" anchor="first"/>
+        </action>
+        <!--快速生成接口和实现类-->
+        <action id="createServiceImplAction" icon="/fileTypes/java.png"
+                class="com.sgaop.idea.actions.CreateServiceImplAction" text="快速创建接口及实现类" description="快速创建接口及实现类">
+            <add-to-group group-id="GenerateGroup" anchor="last"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
         </action>
     </actions>
 

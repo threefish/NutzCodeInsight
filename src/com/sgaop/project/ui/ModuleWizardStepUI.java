@@ -1,17 +1,14 @@
 package com.sgaop.project.ui;
 
 import com.google.gson.Gson;
+import com.intellij.openapi.ui.Messages;
+import com.sgaop.project.HttpUtil;
 import com.sgaop.project.module.vo.NutzBootGroupVO;
 import com.sgaop.project.module.vo.NutzBootItemVO;
 import com.sgaop.project.module.vo.NutzBootProsVO;
 import com.sgaop.project.module.vo.NutzBootVO;
 import com.sgaop.project.ui.action.EnableGroupAction;
 import com.sgaop.project.ui.gui.DataCheckBox;
-import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.HttpClients;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -39,18 +36,12 @@ public class ModuleWizardStepUI {
     private Vector<UiCatch> uiCatches = new Vector<>();
 
     public ModuleWizardStepUI() {
-
         makerUrl.setText("https://get.nutz.io");
-
         reloadButton.addActionListener((event -> {
-            HttpClient httpclient = HttpClients.createDefault();
-            HttpGet httppost = new HttpGet(makerUrl.getText() + "/maker.json");
             try {
-                HttpResponse response = httpclient.execute(httppost);
-                String json = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
-                refresh(json);
+                refresh(HttpUtil.get(makerUrl.getText() + "/maker.json"));
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "网络异常！请稍候尝试", "错误提示", JOptionPane.ERROR_MESSAGE, null);
+                Messages.showErrorDialog("网络异常！请稍候尝试!" + e.getMessage(), "错误提示");
             }
         }));
     }
@@ -151,87 +142,7 @@ public class ModuleWizardStepUI {
         return makerUrl;
     }
 
-    public void setMakerUrl(JTextField makerUrl) {
-        this.makerUrl = makerUrl;
-    }
-
-    public JScrollPane getScrollPanel() {
-        return scrollPanel;
-    }
-
-    public void setScrollPanel(JScrollPane scrollPanel) {
-        this.scrollPanel = scrollPanel;
-    }
-
-    public Vector<UiCatch> getUiCatches() {
-        return uiCatches;
-    }
-
-    public void setUiCatches(Vector<UiCatch> uiCatches) {
-        this.uiCatches = uiCatches;
-    }
-
-    public JPanel getGroupsPanel() {
-        return groupsPanel;
-    }
-
-    public void setGroupsPanel(JPanel groupsPanel) {
-        this.groupsPanel = groupsPanel;
-    }
-
     public JPanel getRoot() {
         return root;
-    }
-
-    public void setRoot(JPanel root) {
-        this.root = root;
-    }
-
-    public JCheckBox getPout() {
-        return pout;
-    }
-
-    public void setPout(JCheckBox pout) {
-        this.pout = pout;
-    }
-
-    public JTextField getPackageName() {
-        return packageName;
-    }
-
-    public void setPackageName(JTextField packageName) {
-        this.packageName = packageName;
-    }
-
-    public JTextField getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(JTextField groupId) {
-        this.groupId = groupId;
-    }
-
-    public JTextField getArtifactId() {
-        return artifactId;
-    }
-
-    public void setArtifactId(JTextField artifactId) {
-        this.artifactId = artifactId;
-    }
-
-    public JTextField getFinalName() {
-        return finalName;
-    }
-
-    public void setFinalName(JTextField finalName) {
-        this.finalName = finalName;
-    }
-
-    public JComboBox getVersion() {
-        return version;
-    }
-
-    public void setVersion(JComboBox version) {
-        this.version = version;
     }
 }
