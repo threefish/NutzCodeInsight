@@ -1,6 +1,9 @@
 package com.sgaop.project.module;
 
-import com.intellij.ide.util.projectWizard.*;
+import com.intellij.ide.util.projectWizard.JavaModuleBuilder;
+import com.intellij.ide.util.projectWizard.ModuleWizardStep;
+import com.intellij.ide.util.projectWizard.SourcePathsBuilder;
+import com.intellij.ide.util.projectWizard.WizardContext;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.module.ModuleType;
 import org.jetbrains.annotations.Nullable;
@@ -19,7 +22,7 @@ public class NutzBootModuleBuilder extends JavaModuleBuilder implements SourcePa
     @Nullable
     @Override
     public ModuleWizardStep getCustomOptionsStep(WizardContext context, Disposable parentDisposable) {
-        return new ProjectJdkStep(context);
+        return new NutzBootMakerChooseStep(context);
     }
 
 }
