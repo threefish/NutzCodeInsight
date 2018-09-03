@@ -7,14 +7,10 @@ import com.intellij.ide.wizard.CommitStepException;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.ui.Messages;
 import com.sgaop.project.FileUtil;
+import com.sgaop.project.HttpUtil;
 import com.sgaop.project.ui.ModuleWizardStepUI;
-import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.BasicHttpEntity;
-import org.apache.http.impl.client.HttpClients;
 
 import javax.swing.*;
 import java.io.ByteArrayInputStream;
@@ -45,13 +41,11 @@ public class NutzBootMakerChooseStep extends ModuleWizardStep {
     public void onWizardFinished() throws CommitStepException {
         if (isNutzBootModuleBuilder()) {
             try {
-                HttpClient httpclient = HttpClients.createDefault();
-                HttpGet httppost = new HttpGet(moduleWizardStepUI.getMakerUrl().getText() + "/maker/download/" + downLoadKey);
+                HttpResponse response = HttpUtil.getResponse(moduleWizardStepUI.getMakerUrl().getText() + "/maker/download/" + downLoadKey);
                 String path = this.wizardContext.getProjectFileDirectory();
                 if (this.wizardContext.getProject() != null) {
                     path = ((NutzBootModuleBuilder) this.wizardContext.getProjectBuilder()).getContentEntryPath();
                 }
-                HttpResponse response = httpclient.execute(httppost);
                 File zipFile = Paths.get(path, "temp.zip").toFile();
                 File dir = Paths.get(path).toFile();
                 FileUtil.writeFile(zipFile, response.getEntity().getContent());
@@ -66,13 +60,9 @@ public class NutzBootMakerChooseStep extends ModuleWizardStep {
     @Override
     public boolean validate() throws ConfigurationException {
         try {
-            HttpClient httpclient = HttpClients.createDefault();
-            HttpPost httppost = new HttpPost(moduleWizardStepUI.getMakerUrl().getText() + "/maker/make");
             BasicHttpEntity entity = new BasicHttpEntity();
             entity.setContent(new ByteArrayInputStream(gson.toJson(moduleWizardStepUI.getPostData()).getBytes()));
-            httppost.setEntity(entity);
-            HttpResponse response = httpclient.execute(httppost);
-            String json = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
+            String json = HttpUtil.post(moduleWizardStepUI.getMakerUrl().getText() + "/maker/make", entity);
             HashMap redata = gson.fromJson(json, HashMap.class);
             boolean ok = Boolean.parseBoolean(String.valueOf(redata.getOrDefault("ok", "false")));
             if (ok) {
@@ -93,10 +83,7 @@ public class NutzBootMakerChooseStep extends ModuleWizardStep {
     public void updateStep() {
         if (!loadingCompleted) {
             try {
-                HttpClient httpclient = HttpClients.createDefault();
-                HttpGet httppost = new HttpGet(moduleWizardStepUI.getMakerUrl().getText() + "/maker.json");
-                HttpResponse response = httpclient.execute(httppost);
-                String json = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
+                String json = HttpUtil.get(moduleWizardStepUI.getMakerUrl().getText() + "/maker.json");
                 moduleWizardStepUI.refresh(json);
                 loadingCompleted = true;
             } catch (Exception e) {
