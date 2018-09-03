@@ -6,9 +6,9 @@ import com.intellij.ide.util.projectWizard.WizardContext;
 import com.intellij.ide.wizard.CommitStepException;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.ui.Messages;
-import com.sgaop.project.FileUtil;
 import com.sgaop.project.HttpUtil;
 import com.sgaop.project.ui.ModuleWizardStepUI;
+import com.sgaop.util.FileUtil;
 import org.apache.http.HttpResponse;
 import org.apache.http.entity.BasicHttpEntity;
 

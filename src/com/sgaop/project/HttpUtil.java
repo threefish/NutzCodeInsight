@@ -1,6 +1,6 @@
 package com.sgaop.project;
 
-import org.apache.commons.io.IOUtils;
+import com.sgaop.util.FileUtil;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -26,7 +26,7 @@ public class HttpUtil {
         post.addHeader(HEADER_NAME, HEADER_VALUE);
         post.setEntity(entity);
         HttpResponse response = httpclient.execute(post);
-        return IOUtils.toString(response.getEntity().getContent(), "UTF-8");
+        return FileUtil.ioToString(response.getEntity().getContent(), "UTF-8");
     }
 
     public static HttpResponse getResponse(String url) throws IOException {
@@ -38,6 +38,8 @@ public class HttpUtil {
 
     public static String get(String url) throws IOException {
         HttpResponse response = getResponse(url);
-        return IOUtils.toString(response.getEntity().getContent(), "UTF-8");
+        return FileUtil.ioToString(response.getEntity().getContent(), "UTF-8");
     }
+
+
 }
