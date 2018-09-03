@@ -1,6 +1,7 @@
 package com.sgaop.project.ui;
 
 import com.google.gson.Gson;
+import com.intellij.openapi.ui.Messages;
 import com.sgaop.project.module.vo.NutzBootGroupVO;
 import com.sgaop.project.module.vo.NutzBootItemVO;
 import com.sgaop.project.module.vo.NutzBootProsVO;
@@ -50,7 +51,7 @@ public class ModuleWizardStepUI {
                 String json = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
                 refresh(json);
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "网络异常！请稍候尝试", "错误提示", JOptionPane.ERROR_MESSAGE, null);
+                Messages.showErrorDialog("网络异常！请稍候尝试!" + e.getMessage(), "错误提示");
             }
         }));
     }
