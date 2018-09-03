@@ -1,4 +1,4 @@
-package com.sgaop.ui;
+package com.sgaop.templte.ui;
 
 import com.intellij.ide.fileTemplates.FileTemplate;
 import com.intellij.ide.fileTemplates.FileTemplateManager;

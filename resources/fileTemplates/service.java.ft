@@ -1,11 +1,9 @@
-package ${servicePackage};
+package
 
-
-import ${entityPackage}.${entityName};
-import com.cdyhsoft.service.BaseService;
-
+${servicePackage};
+${entityPackage}.${entityName};
 /**
  * @author ${user}
- * @date ${date(),dateFormat="yyyy年MM月dd日 HH时mm分ss秒"}
+ * @date ${date(), dateFormat="yyyy年MM月dd日 HH时mm分ss秒"}
  */
-public interface ${serviceFileName} extends BaseService<${entityName}> {}
+public interface ${serviceFileName} {}

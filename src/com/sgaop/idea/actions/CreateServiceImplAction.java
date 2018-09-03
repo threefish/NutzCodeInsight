@@ -14,7 +14,7 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.impl.source.PsiJavaFileImpl;
 import com.intellij.psi.util.PsiUtilBase;
 import com.sgaop.idea.ProjectPluginConfig;
-import com.sgaop.ui.CreateServiceImplFram;
+import com.sgaop.templte.ui.CreateServiceImplFram;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
