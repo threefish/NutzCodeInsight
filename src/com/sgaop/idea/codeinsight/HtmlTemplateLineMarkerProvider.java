@@ -10,7 +10,6 @@ import com.sgaop.idea.codeinsight.util.HtmlTemplateLineUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import javax.swing.*;
 import java.util.Collection;
 import java.util.List;
 
@@ -25,8 +24,7 @@ public class HtmlTemplateLineMarkerProvider extends LineMarkerProviderDescriptor
     @Override
     public LineMarkerInfo getLineMarkerInfo(@NotNull PsiElement bindingElement) {
         if (HtmlTemplateLineUtil.isRes(bindingElement)) {
-            Icon icon = HtmlTemplateLineUtil.getTemplateIcon(bindingElement);
-            return new LineMarkerInfo<>(bindingElement, bindingElement.getTextRange(), icon,
+            return new LineMarkerInfo<>(bindingElement, bindingElement.getTextRange(), HtmlTemplateLineUtil.getTemplateIcon(bindingElement),
                     Pass.LINE_MARKERS, new FunctionTooltip(), new HtmlTemplateGutterIconNavigationHandler(),
                     GutterIconRenderer.Alignment.LEFT);
         }

@@ -48,6 +48,7 @@ public class HtmlTemplateGutterIconNavigationHandler implements GutterIconNaviga
                         final String path = tempVfile.getCanonicalPath()
                                 .replace(project.getBasePath(), "")
                                 .replace("/src/main/webapp/", "    ")
+                                .replace("/src/main/resources/", "    ")
                                 .replace("WEB-INF/", "    ");
                         final JBLabel nameLable = new JBLabel(name + "    " + path, icon, SwingConstants.LEFT);
                         nameLable.setBorder(JBUI.Borders.empty(2));
