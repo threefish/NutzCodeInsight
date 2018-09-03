@@ -31,7 +31,7 @@ public class NutzBootMakerChooseStep extends ModuleWizardStep {
 
     protected final WizardContext wizardContext;
 
-    private ModuleWizardStepUI moduleWizardStepUI;
+    private ModuleWizardStepUI moduleWizardStepUI = new ModuleWizardStepUI();
 
     private String downLoadKey;
 
@@ -39,7 +39,6 @@ public class NutzBootMakerChooseStep extends ModuleWizardStep {
 
     public NutzBootMakerChooseStep(WizardContext wizardContext) {
         this.wizardContext = wizardContext;
-        this.moduleWizardStepUI = new ModuleWizardStepUI();
     }
 
     @Override
