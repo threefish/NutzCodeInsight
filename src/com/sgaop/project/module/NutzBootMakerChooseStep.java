@@ -18,7 +18,6 @@ import org.apache.http.impl.client.HttpClients;
 import javax.swing.*;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.HashMap;
 
@@ -27,7 +26,6 @@ import java.util.HashMap;
  */
 public class NutzBootMakerChooseStep extends ModuleWizardStep {
 
-    HttpClient httpclient = HttpClients.createDefault();
 
     protected final WizardContext wizardContext;
 
@@ -49,6 +47,8 @@ public class NutzBootMakerChooseStep extends ModuleWizardStep {
     @Override
     public void onWizardFinished() throws CommitStepException {
         try {
+            HttpClient httpclient = HttpClients.createDefault();
+
             HttpGet httppost = new HttpGet(moduleWizardStepUI.getMakerUrl().getText() + "/maker/download/" + downLoadKey);
             String path = this.wizardContext.getProjectFileDirectory();
             if (this.wizardContext.getProject() != null) {
@@ -61,7 +61,7 @@ public class NutzBootMakerChooseStep extends ModuleWizardStep {
             FileUtil.writeFile(zipFile, response.getEntity().getContent());
             FileUtil.extractZipFile(zipFile, dir);
             zipFile.delete();
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new CommitStepException(e.getMessage());
         }
     }
@@ -69,6 +69,7 @@ public class NutzBootMakerChooseStep extends ModuleWizardStep {
     @Override
     public boolean validate() throws ConfigurationException {
         try {
+            HttpClient httpclient = HttpClients.createDefault();
             HttpPost httppost = new HttpPost(moduleWizardStepUI.getMakerUrl().getText() + "/maker/make");
             BasicHttpEntity entity = new BasicHttpEntity();
             entity.setContent(new ByteArrayInputStream(gson.toJson(moduleWizardStepUI.getPostData()).getBytes()));
@@ -113,8 +114,9 @@ public class NutzBootMakerChooseStep extends ModuleWizardStep {
 
     @Override
     public void updateStep() {
-        HttpGet httppost = new HttpGet(moduleWizardStepUI.getMakerUrl().getText() + "/maker.json");
         try {
+            HttpClient httpclient = HttpClients.createDefault();
+            HttpGet httppost = new HttpGet(moduleWizardStepUI.getMakerUrl().getText() + "/maker.json");
             HttpResponse response = httpclient.execute(httppost);
             String json = IOUtils.toString(response.getEntity().getContent(), "UTF-8");
             moduleWizardStepUI.refresh(json);
