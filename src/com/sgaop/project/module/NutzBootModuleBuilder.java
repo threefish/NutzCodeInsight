@@ -6,7 +6,11 @@ import com.intellij.ide.util.projectWizard.SourcePathsBuilder;
 import com.intellij.ide.util.projectWizard.WizardContext;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.module.ModuleType;
+import com.intellij.openapi.roots.ui.configuration.ModulesProvider;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import javax.swing.*;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
@@ -22,7 +26,25 @@ public class NutzBootModuleBuilder extends JavaModuleBuilder implements SourcePa
     @Nullable
     @Override
     public ModuleWizardStep getCustomOptionsStep(WizardContext context, Disposable parentDisposable) {
-        return new NutzBootMakerChooseStep(context);
+
+        return new ModuleWizardStep() {
+            @Override
+            public JComponent getComponent() {
+                return new JLabel("欢迎使用NutzBoot---此处略过1万字");
+            }
+
+            @Override
+            public void updateDataModel() {
+
+            }
+        };
+    }
+
+
+    @Nullable
+    @Override
+    public ModuleWizardStep[] createWizardSteps(@NotNull WizardContext context, @NotNull ModulesProvider provider) {
+        return new ModuleWizardStep[]{new NutzBootMakerChooseStep(context)};
     }
 
 }
