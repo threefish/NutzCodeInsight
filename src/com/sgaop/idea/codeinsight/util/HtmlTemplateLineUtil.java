@@ -55,17 +55,7 @@ public class HtmlTemplateLineUtil {
         return false;
     }
 
-    /**
-     * 判断是否是资源文件
-     *
-     * @param psiElement
-     * @return
-     */
-    public static boolean isTemplate(PsiElement psiElement) {
 
-
-        return false;
-    }
 
     private static boolean endWithRes(String path) {
         Iterator<String> iterable = resNames.iterator();

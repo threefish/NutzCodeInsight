@@ -7,6 +7,7 @@ import com.intellij.ide.util.projectWizard.WizardContext;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.module.ModuleType;
 import com.intellij.openapi.roots.ui.configuration.ModulesProvider;
+import com.sgaop.project.ui.IntroductionUi;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -30,7 +31,7 @@ public class NutzBootModuleBuilder extends JavaModuleBuilder implements SourcePa
         return new ModuleWizardStep() {
             @Override
             public JComponent getComponent() {
-                return new JLabel("欢迎使用NutzBoot---此处略过1万字");
+                return new IntroductionUi().getRoot();
             }
 
             @Override

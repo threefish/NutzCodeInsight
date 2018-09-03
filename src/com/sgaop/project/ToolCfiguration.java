@@ -37,6 +37,7 @@ public class ToolCfiguration implements PersistentStateComponent<Element> {
         initData.put("jsp:", ".jsp");
         initData.put("btl:", ".html");
         initData.put("beetl:", ".html");
+        initData.put("->:", ".html");
         for (Map.Entry<String, String> entry : cfiguration.getData().entrySet()) {
             initData.put(entry.getKey(), entry.getValue());
         }
