@@ -3,10 +3,9 @@ package
 import org.nutz.dao.Dao;
 import org.nutz.ioc.loader.annotation.IocBean;
 
-${serviceImplPackage}
-        ;
-    ${entityPackage}.${entityName};
-    ${servicePackage}.${serviceFileName};
+${serviceImplPackage};
+${entityPackage}.${entityName};
+${servicePackage}.${serviceFileName};
 
 /**
  * @author ${user}
