@@ -1,5 +1,7 @@
 package com.sgaop.project.ui;
 
+import com.intellij.openapi.ui.Messages;
+
 import javax.swing.*;
 import javax.swing.event.TableModelEvent;
 import javax.swing.table.DefaultTableModel;
@@ -19,14 +21,26 @@ public class SettingConfigUi {
     public JPanel root;
     private JTable templateTable;
     private JButton btnAddTemplte;
-    private JTextField mark;
+    private JTextField layoutRegular;
+    private JTextField includeRegular;
+    private JTextField i18nRegular;
+    private JLabel issues;
+    private JTextField i18nKeyRegular;
+
+    public JTextField getI18nKeyRegular() {
+        return i18nKeyRegular;
+    }
 
     public SettingConfigUi() {
+
+        SwingUtils.addMouseListenerAndSetUrl(issues, "https://github.com/threefish/NutzCodeInsight/issues");
+
+
         templateTable.setRowHeight(25);
         DefaultTableModel model = new DefaultTableModel(new String[]{"模版前缀", "文件名后缀", "可编辑"}, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
-                if (row > 0) {
+                if (row > 1) {
                     return true;
                 }
                 return false;
@@ -43,7 +57,7 @@ public class SettingConfigUi {
                     names.add(model.getValueAt(i, 0).toString());
                 }
                 if (names.contains(newvalue)) {
-                    JOptionPane.showMessageDialog(null, "模版前缀已经存在，请使用其他名称！", "错误提示", JOptionPane.ERROR_MESSAGE, null);
+                    Messages.showErrorDialog("模版前缀已经存在，请使用其他名称！", "错误提示");
                     model.setValueAt("", e.getLastRow(), 0);
                 }
             }
@@ -54,12 +68,26 @@ public class SettingConfigUi {
             for (int i = 0, l = model.getRowCount(); i < l; i++) {
                 String val = model.getValueAt(i, 0).toString().trim();
                 if (val.length() == 0) {
-                    JOptionPane.showMessageDialog(null, "请填写完整后再添加！", "错误提示", JOptionPane.ERROR_MESSAGE, null);
+                    Messages.showErrorDialog("请填写完整后再添加！", "错误提示");
                     return;
                 }
             }
-            model.addRow(new String[]{"", "", "是"});
+            model.addRow(new String[]{"", "", ""});
         });
+    }
+
+    public JTextField getLayoutRegular() {
+        return layoutRegular;
+    }
+
+
+    public JTextField getIncludeRegular() {
+        return includeRegular;
+    }
+
+
+    public JTextField getI18nRegular() {
+        return i18nRegular;
     }
 
     public JTable getTemplateTable() {

@@ -7,6 +7,7 @@ import com.intellij.psi.impl.java.stubs.index.JavaAnnotationIndex;
 import com.intellij.psi.impl.source.tree.java.PsiAnnotationParamListImpl;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.sgaop.idea.codeinsight.NutzCons;
+import com.sgaop.project.ToolCfiguration;
 
 import java.io.IOException;
 import java.io.StringReader;
@@ -23,10 +24,6 @@ import java.util.regex.Pattern;
  */
 public class NutzLocalUtil {
 
-    /**
-     * beetl模版中匹配国际化方法得正则表达式
-     */
-    public static final Pattern PATTERN = Pattern.compile("\\$\\{i18n\\((\"|\')(.*?)(\"|\')\\)}");
     private static final List<String> localQualifiedNames = Arrays.asList(
             "Mvcs.getMessage",
             "org.nutz.mvc.Mvcs.getMessage",

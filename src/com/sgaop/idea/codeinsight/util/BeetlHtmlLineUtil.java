@@ -11,6 +11,7 @@ import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlToken;
 import com.sgaop.idea.codeinsight.folding.NutzLocalizationFoldingDescriptor;
+import com.sgaop.project.ToolCfiguration;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,22 +22,12 @@ import java.util.regex.Pattern;
 /**
  * @author 黄川 huchuc@vip.qq.com
  * @date: 2018/3/26
-
  */
 public class BeetlHtmlLineUtil {
 
-    /**
-     * 默认beetl后缀为 html
-     */
-    private static final String BEETL_SUFFIX = "html";
-    /**
-     * beetl模版中匹配layout
-     */
-    private static final Pattern PATTERN_LAYOUT = Pattern.compile("layout\\((\"|\')(.*?)\\." + BEETL_SUFFIX + "(\"|\')");
-    /**
-     * beetl模版中匹配include得正则表达式
-     */
-    private static final Pattern PATTERN_INCLUDE = Pattern.compile("include\\((\"|\')(.*?)\\." + BEETL_SUFFIX + "(\"|\')\\)");
+    private static ToolCfiguration cfiguration = ToolCfiguration.getInstance();
+
+    private static final Pattern FUN_PATTERN = Pattern.compile("\\((\"|')(.*?)\\.html(\"|')\\)");
 
     public static List<FoldingDescriptor> showNutzLocalization(Project project, PsiElement root) {
         List<FoldingDescriptor> descriptors = new ArrayList<>();
@@ -47,33 +38,33 @@ public class BeetlHtmlLineUtil {
         Collection<VirtualFile> propertiesFiles = FilenameIndex.getAllFilesByExt(project, "properties", GlobalSearchScope.projectScope(project));
         Collection<XmlToken> xmlTokens = PsiTreeUtil.findChildrenOfType(root, XmlToken.class);
         Collection<LeafPsiElement> LeafPsiElements = PsiTreeUtil.findChildrenOfType(root, LeafPsiElement.class);
+        Pattern i18nKeyPattern = Pattern.compile(cfiguration.getSettingVO().getI18nKeyRegular());
+        Pattern i18nPattern = Pattern.compile(cfiguration.getSettingVO().getI18nRegular());
         for (final LeafPsiElement leafPsiElement : LeafPsiElements) {
             if ("Language: JavaScript".equals(leafPsiElement.getLanguage().toString())) {
                 String text = leafPsiElement.getText();
-                Matcher m = NutzLocalUtil.PATTERN.matcher(text);
-                descriptors.addAll(getFoldingDescriptor(m, text, project, propertiesFiles, localizationPackage, leafPsiElement));
+                descriptors.addAll(getFoldingDescriptor(i18nPattern, i18nKeyPattern, text, project, propertiesFiles, localizationPackage, leafPsiElement));
             }
         }
         for (final XmlToken xmlToken : xmlTokens) {
             String text = xmlToken.getText();
-            Matcher m = NutzLocalUtil.PATTERN.matcher(text);
-            descriptors.addAll(getFoldingDescriptor(m, text, project, propertiesFiles, localizationPackage, xmlToken));
+            descriptors.addAll(getFoldingDescriptor(i18nPattern, i18nKeyPattern, text, project, propertiesFiles, localizationPackage, xmlToken));
         }
         return descriptors;
     }
 
-    private static List<FoldingDescriptor> getFoldingDescriptor(Matcher matcher, String text, Project project, Collection<VirtualFile> propertiesFiles, String localizationPackage, PsiElement psiElement) {
+    private static List<FoldingDescriptor> getFoldingDescriptor(Pattern i18nPattern, Pattern i18nKeyPattern, String text, Project project, Collection<VirtualFile> propertiesFiles, String localizationPackage, PsiElement psiElement) {
         List<FoldingDescriptor> descriptors = new ArrayList<>();
-        while (matcher.find()) {
-            String key = text.substring(matcher.start() + 8, matcher.end() - 3);
+        Matcher i18nMatcher = i18nPattern.matcher(text);
+        Matcher i18nKeyMatcher = i18nKeyPattern.matcher(text);
+        while (i18nMatcher.find() && i18nKeyMatcher.find()) {
+            String key = text.substring(i18nKeyMatcher.start() + 2, i18nKeyMatcher.end() - 2);
             final List<String> properties = NutzLocalUtil.findProperties(project, propertiesFiles, localizationPackage, key);
+            int start = psiElement.getTextRange().getStartOffset() + i18nMatcher.start() + i18nKeyMatcher.start() + 2;
+            int end = start + key.length();
             if (properties.size() == 1) {
-                int start = psiElement.getTextRange().getStartOffset() + matcher.start() + 8;
-                int end = start + key.length();
                 descriptors.add(new NutzLocalizationFoldingDescriptor(psiElement.getNode(), new TextRange(start, end), properties.get(0)));
             } else if (properties.size() > 1) {
-                int start = psiElement.getTextRange().getStartOffset() + matcher.start() + 8;
-                int end = start + key.length();
                 descriptors.add(new NutzLocalizationFoldingDescriptor(psiElement.getNode(), new TextRange(start, end), "NutzCodeInsight:当前键值【" + key + "】在国际化信息中存在重复KEY请检查！"));
             }
         }
@@ -82,22 +73,23 @@ public class BeetlHtmlLineUtil {
 
 
     public static List<String> showBeetlLayout(XmlToken xmlToken) {
-        List<String> descriptors = new ArrayList<>();
-        String text = xmlToken.getText();
-        Matcher m = PATTERN_LAYOUT.matcher(text);
-        while (m.find()) {
-            String value = text.substring(8, m.end() - 1);
-            descriptors.add(value);
-        }
-        return descriptors;
+        return getMatchers(xmlToken, cfiguration.getSettingVO().getBeetlLayoutRegular());
     }
 
     public static List<String> showBeetlInclude(XmlToken xmlToken) {
+        return getMatchers(xmlToken, cfiguration.getSettingVO().getBeetlIncludeRegular());
+    }
+
+    private static List<String> getMatchers(XmlToken xmlToken, String regRegular) {
         List<String> descriptors = new ArrayList<>();
-        String text = xmlToken.getText();
-        Matcher m = PATTERN_INCLUDE.matcher(text);
-        while (m.find()) {
-            String value = text.substring(11, m.end() - 2);
+        String text = xmlToken.getText().replace("\r", "").replace("\n", "");
+        Pattern layoutPattern = Pattern.compile(regRegular);
+        Matcher m = layoutPattern.matcher(text);
+        Matcher m2 = FUN_PATTERN.matcher(text);
+        while (m.find() && m2.find()) {
+            int start = m2.start();
+            int end = m2.end();
+            String value = text.substring(start + 2, end - 2);
             descriptors.add(value);
         }
         return descriptors;
