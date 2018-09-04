@@ -38,33 +38,33 @@ public class BeetlHtmlLineUtil {
         Collection<VirtualFile> propertiesFiles = FilenameIndex.getAllFilesByExt(project, "properties", GlobalSearchScope.projectScope(project));
         Collection<XmlToken> xmlTokens = PsiTreeUtil.findChildrenOfType(root, XmlToken.class);
         Collection<LeafPsiElement> LeafPsiElements = PsiTreeUtil.findChildrenOfType(root, LeafPsiElement.class);
+        Pattern i18nKeyPattern = Pattern.compile(cfiguration.getSettingVO().getI18nKeyRegular());
+        Pattern i18nPattern = Pattern.compile(cfiguration.getSettingVO().getI18nRegular());
         for (final LeafPsiElement leafPsiElement : LeafPsiElements) {
             if ("Language: JavaScript".equals(leafPsiElement.getLanguage().toString())) {
                 String text = leafPsiElement.getText();
-                Matcher m = Pattern.compile(cfiguration.getSettingVO().getI18nRegular()).matcher(text);
-                descriptors.addAll(getFoldingDescriptor(m, text, project, propertiesFiles, localizationPackage, leafPsiElement));
+                descriptors.addAll(getFoldingDescriptor(i18nPattern, i18nKeyPattern, text, project, propertiesFiles, localizationPackage, leafPsiElement));
             }
         }
         for (final XmlToken xmlToken : xmlTokens) {
             String text = xmlToken.getText();
-            Matcher m = Pattern.compile(cfiguration.getSettingVO().getI18nRegular()).matcher(text);
-            descriptors.addAll(getFoldingDescriptor(m, text, project, propertiesFiles, localizationPackage, xmlToken));
+            descriptors.addAll(getFoldingDescriptor(i18nPattern, i18nKeyPattern, text, project, propertiesFiles, localizationPackage, xmlToken));
         }
         return descriptors;
     }
 
-    private static List<FoldingDescriptor> getFoldingDescriptor(Matcher matcher, String text, Project project, Collection<VirtualFile> propertiesFiles, String localizationPackage, PsiElement psiElement) {
+    private static List<FoldingDescriptor> getFoldingDescriptor(Pattern i18nPattern, Pattern i18nKeyPattern, String text, Project project, Collection<VirtualFile> propertiesFiles, String localizationPackage, PsiElement psiElement) {
         List<FoldingDescriptor> descriptors = new ArrayList<>();
-        while (matcher.find()) {
-            String key = text.substring(matcher.start() + 8, matcher.end() - 3);
+        Matcher i18nMatcher = i18nPattern.matcher(text);
+        Matcher i18nKeyMatcher = i18nKeyPattern.matcher(text);
+        while (i18nMatcher.find() && i18nKeyMatcher.find()) {
+            String key = text.substring(i18nKeyMatcher.start() + 2, i18nKeyMatcher.end() - 2);
             final List<String> properties = NutzLocalUtil.findProperties(project, propertiesFiles, localizationPackage, key);
+            int start = psiElement.getTextRange().getStartOffset() + i18nMatcher.start() + i18nKeyMatcher.start() + 2;
+            int end = start + key.length();
             if (properties.size() == 1) {
-                int start = psiElement.getTextRange().getStartOffset() + matcher.start() + 8;
-                int end = start + key.length();
                 descriptors.add(new NutzLocalizationFoldingDescriptor(psiElement.getNode(), new TextRange(start, end), properties.get(0)));
             } else if (properties.size() > 1) {
-                int start = psiElement.getTextRange().getStartOffset() + matcher.start() + 8;
-                int end = start + key.length();
                 descriptors.add(new NutzLocalizationFoldingDescriptor(psiElement.getNode(), new TextRange(start, end), "NutzCodeInsight:当前键值【" + key + "】在国际化信息中存在重复KEY请检查！"));
             }
         }

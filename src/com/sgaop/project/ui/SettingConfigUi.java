@@ -25,6 +25,11 @@ public class SettingConfigUi {
     private JTextField includeRegular;
     private JTextField i18nRegular;
     private JLabel issues;
+    private JTextField i18nKeyRegular;
+
+    public JTextField getI18nKeyRegular() {
+        return i18nKeyRegular;
+    }
 
     public SettingConfigUi() {
 

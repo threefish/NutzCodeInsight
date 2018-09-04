@@ -20,6 +20,7 @@ public class GlobalSettingVO {
         globalSettingVO.setBeetlLayoutRegular("layout\\((\"|\')(.*?)\\.html(\"|\')\\)");
         globalSettingVO.setBeetlIncludeRegular("include\\((\"|\')(.*?)\\.html(\"|\')\\)");
         globalSettingVO.setI18nRegular("\\$\\{i18n\\((\"|\')(.*?)(\"|\')\\)}");
+        globalSettingVO.setI18nKeyRegular("\\((\"|')(.*?)(\"|')\\)");
         return globalSettingVO;
     }
 
@@ -38,6 +39,19 @@ public class GlobalSettingVO {
      * beetl模版中匹配语言国际化
      */
     private String i18nRegular;
+
+    /**
+     * beetl模版中国际化取KEY
+     */
+    private String i18nKeyRegular;
+
+    public String getI18nKeyRegular() {
+        return i18nKeyRegular;
+    }
+
+    public void setI18nKeyRegular(String i18nKeyRegular) {
+        this.i18nKeyRegular = i18nKeyRegular;
+    }
 
     public String getI18nRegular() {
         return i18nRegular;

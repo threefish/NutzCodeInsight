@@ -72,6 +72,7 @@ public class ToolConfigurable implements Configurable {
         ui.getIncludeRegular().setText(vo.getBeetlIncludeRegular());
         ui.getLayoutRegular().setText(vo.getBeetlLayoutRegular());
         ui.getI18nRegular().setText(vo.getI18nRegular());
+        ui.getI18nKeyRegular().setText(vo.getI18nKeyRegular());
     }
 
     private GlobalSettingVO getGlobalSettingVO() {
@@ -90,6 +91,7 @@ public class ToolConfigurable implements Configurable {
         vo.setBeetlLayoutRegular(ui.getLayoutRegular().getText());
         vo.setBeetlIncludeRegular(ui.getIncludeRegular().getText());
         vo.setI18nRegular(ui.getI18nRegular().getText());
+        vo.setI18nKeyRegular(ui.getI18nKeyRegular().getText());
         return vo;
     }
 }
