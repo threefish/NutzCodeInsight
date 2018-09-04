@@ -17,16 +17,35 @@ public class GlobalSettingVO {
         globalSettingVO.getTableData().put("btl:", ".html");
         globalSettingVO.getTableData().put("beetl:", ".html");
         globalSettingVO.getTableData().put("->:", ".html");
-        globalSettingVO.setBeetlLayoutRegular("layout\\((\"|\')(.*?)\\.html(\"|\')");
+        globalSettingVO.setBeetlLayoutRegular("layout\\((\"|\')(.*?)\\.html(\"|\')\\)");
         globalSettingVO.setBeetlIncludeRegular("include\\((\"|\')(.*?)\\.html(\"|\')\\)");
+        globalSettingVO.setI18nRegular("\\$\\{i18n\\((\"|\')(.*?)(\"|\')\\)}");
         return globalSettingVO;
     }
 
     private HashMap<String, String> tableData;
 
+    /**
+     * beetl模版中匹配layout
+     */
     private String beetlLayoutRegular;
-
+    /**
+     * beetl模版中匹配include得正则表达式
+     */
     private String beetlIncludeRegular;
+
+    /**
+     * beetl模版中匹配语言国际化
+     */
+    private String i18nRegular;
+
+    public String getI18nRegular() {
+        return i18nRegular;
+    }
+
+    public void setI18nRegular(String i18nRegular) {
+        this.i18nRegular = i18nRegular;
+    }
 
     public HashMap<String, String> getTableData() {
         return tableData;

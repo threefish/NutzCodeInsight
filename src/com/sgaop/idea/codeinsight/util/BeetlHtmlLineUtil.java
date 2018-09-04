@@ -11,6 +11,7 @@ import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlToken;
 import com.sgaop.idea.codeinsight.folding.NutzLocalizationFoldingDescriptor;
+import com.sgaop.project.ToolCfiguration;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -21,22 +22,12 @@ import java.util.regex.Pattern;
 /**
  * @author 黄川 huchuc@vip.qq.com
  * @date: 2018/3/26
-
  */
 public class BeetlHtmlLineUtil {
 
-    /**
-     * 默认beetl后缀为 html
-     */
-    private static final String BEETL_SUFFIX = "html";
-    /**
-     * beetl模版中匹配layout
-     */
-    private static final Pattern PATTERN_LAYOUT = Pattern.compile("layout\\((\"|\')(.*?)\\." + BEETL_SUFFIX + "(\"|\')");
-    /**
-     * beetl模版中匹配include得正则表达式
-     */
-    private static final Pattern PATTERN_INCLUDE = Pattern.compile("include\\((\"|\')(.*?)\\." + BEETL_SUFFIX + "(\"|\')\\)");
+    private static ToolCfiguration cfiguration = ToolCfiguration.getInstance();
+
+    private static final Pattern FUN_PATTERN = Pattern.compile("\\((\"|')(.*?)\\.html(\"|')\\)");
 
     public static List<FoldingDescriptor> showNutzLocalization(Project project, PsiElement root) {
         List<FoldingDescriptor> descriptors = new ArrayList<>();
@@ -50,13 +41,13 @@ public class BeetlHtmlLineUtil {
         for (final LeafPsiElement leafPsiElement : LeafPsiElements) {
             if ("Language: JavaScript".equals(leafPsiElement.getLanguage().toString())) {
                 String text = leafPsiElement.getText();
-                Matcher m = NutzLocalUtil.PATTERN.matcher(text);
+                Matcher m = Pattern.compile(cfiguration.getSettingVO().getI18nRegular()).matcher(text);
                 descriptors.addAll(getFoldingDescriptor(m, text, project, propertiesFiles, localizationPackage, leafPsiElement));
             }
         }
         for (final XmlToken xmlToken : xmlTokens) {
             String text = xmlToken.getText();
-            Matcher m = NutzLocalUtil.PATTERN.matcher(text);
+            Matcher m = Pattern.compile(cfiguration.getSettingVO().getI18nRegular()).matcher(text);
             descriptors.addAll(getFoldingDescriptor(m, text, project, propertiesFiles, localizationPackage, xmlToken));
         }
         return descriptors;
@@ -82,22 +73,23 @@ public class BeetlHtmlLineUtil {
 
 
     public static List<String> showBeetlLayout(XmlToken xmlToken) {
-        List<String> descriptors = new ArrayList<>();
-        String text = xmlToken.getText();
-        Matcher m = PATTERN_LAYOUT.matcher(text);
-        while (m.find()) {
-            String value = text.substring(8, m.end() - 1);
-            descriptors.add(value);
-        }
-        return descriptors;
+        return getMatchers(xmlToken, cfiguration.getSettingVO().getBeetlLayoutRegular());
     }
 
     public static List<String> showBeetlInclude(XmlToken xmlToken) {
+        return getMatchers(xmlToken, cfiguration.getSettingVO().getBeetlIncludeRegular());
+    }
+
+    private static List<String> getMatchers(XmlToken xmlToken, String regRegular) {
         List<String> descriptors = new ArrayList<>();
-        String text = xmlToken.getText();
-        Matcher m = PATTERN_INCLUDE.matcher(text);
-        while (m.find()) {
-            String value = text.substring(11, m.end() - 2);
+        String text = xmlToken.getText().replace("\r", "").replace("\n", "");
+        Pattern layoutPattern = Pattern.compile(regRegular);
+        Matcher m = layoutPattern.matcher(text);
+        Matcher m2 = FUN_PATTERN.matcher(text);
+        while (m.find() && m2.find()) {
+            int start = m2.start();
+            int end = m2.end();
+            String value = text.substring(start + 2, end - 2);
             descriptors.add(value);
         }
         return descriptors;

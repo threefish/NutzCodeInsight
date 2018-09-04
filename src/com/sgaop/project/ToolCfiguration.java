@@ -1,12 +1,11 @@
 package com.sgaop.project;
 
-import com.google.gson.Gson;
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
+import com.intellij.util.xmlb.XmlSerializerUtil;
 import com.sgaop.idea.codeinsight.JavaNutzTemplateVO;
-import org.jdom.Element;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;
@@ -19,9 +18,7 @@ import java.util.Iterator;
  * 创建时间: 2017/12/11  14:09
  */
 @State(name = "NutzCodeInsight", storages = {@Storage("NutzCodeInsight.xml")})
-public class ToolCfiguration implements PersistentStateComponent<Element> {
-
-    private Gson gson = new Gson();
+public class ToolCfiguration implements PersistentStateComponent<ToolCfiguration> {
 
     GlobalSettingVO settingVO = GlobalSettingVO.loadDefualt();
 
@@ -32,15 +29,13 @@ public class ToolCfiguration implements PersistentStateComponent<Element> {
 
     @Override
     @Nullable
-    public Element getState() {
-        Element element = new Element("NutzCodeInsightDataTables");
-        element.addContent(gson.toJson(settingVO));
-        return element;
+    public ToolCfiguration getState() {
+        return this;
     }
 
     @Override
-    public void loadState(Element element) {
-        this.settingVO = gson.fromJson(element.getContent().get(0).getValue(), GlobalSettingVO.class);
+    public void loadState(ToolCfiguration cfiguration) {
+        XmlSerializerUtil.copyBean(cfiguration, this);
     }
 
     /**

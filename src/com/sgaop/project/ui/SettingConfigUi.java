@@ -21,11 +21,16 @@ public class SettingConfigUi {
     public JPanel root;
     private JTable templateTable;
     private JButton btnAddTemplte;
-    private JTextField mark;
     private JTextField layoutRegular;
     private JTextField includeRegular;
+    private JTextField i18nRegular;
+    private JLabel issues;
 
     public SettingConfigUi() {
+
+        SwingUtils.addMouseListenerAndSetUrl(issues, "https://github.com/threefish/NutzCodeInsight/issues");
+
+
         templateTable.setRowHeight(25);
         DefaultTableModel model = new DefaultTableModel(new String[]{"模版前缀", "文件名后缀", "可编辑"}, 0) {
             @Override
@@ -70,16 +75,14 @@ public class SettingConfigUi {
         return layoutRegular;
     }
 
-    public void setLayoutRegular(JTextField layoutRegular) {
-        this.layoutRegular = layoutRegular;
-    }
 
     public JTextField getIncludeRegular() {
         return includeRegular;
     }
 
-    public void setIncludeRegular(JTextField includeRegular) {
-        this.includeRegular = includeRegular;
+
+    public JTextField getI18nRegular() {
+        return i18nRegular;
     }
 
     public JTable getTemplateTable() {
