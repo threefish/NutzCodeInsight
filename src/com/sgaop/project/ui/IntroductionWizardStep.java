@@ -1,12 +1,14 @@
 package com.sgaop.project.ui;
 
+import com.intellij.ide.util.projectWizard.ModuleWizardStep;
+
 import javax.swing.*;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
  * @date: 2018/9/3
  */
-public class IntroductionUi {
+public class IntroductionWizardStep extends ModuleWizardStep {
     private JPanel root;
     private JLabel authorLink;
     private JLabel nbIndex;
@@ -16,7 +18,7 @@ public class IntroductionUi {
     private JLabel questionAndAnswer;
     private JLabel nutzWk;
 
-    public IntroductionUi() {
+    public IntroductionWizardStep() {
         SwingUtils.addMouseListenerAndSetUrl(authorLink, "https://github.com/threefish/NutzCodeInsight/");
         SwingUtils.addMouseListenerAndSetUrl(nbIndex, "https://nutz.io/");
         SwingUtils.addMouseListenerAndSetUrl(history, "https://gitee.com/nutz/nutzboot/blob/dev/ChangeLog.md");
@@ -24,6 +26,16 @@ public class IntroductionUi {
         SwingUtils.addMouseListenerAndSetUrl(doc2, "http://nutzam.com/core/boot/overview.html");
         SwingUtils.addMouseListenerAndSetUrl(questionAndAnswer, "https://nutz.cn");
         SwingUtils.addMouseListenerAndSetUrl(nutzWk, "https://gitee.com/wizzer/NutzWk");
+    }
+
+    @Override
+    public JComponent getComponent() {
+        return getRoot();
+    }
+
+    @Override
+    public void updateDataModel() {
+
     }
 
 

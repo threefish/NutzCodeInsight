@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.sgaop.idea.codeinsight.plugin</id>
     <name>NutzCodeInsight</name>
-    <version>2.0.1</version>
+    <version>2.0.2</version>
     <vendor email="huchuc@vip.qq.com" url="https://github.com/threefish/NutzCodeInsight">threefish</vendor>
     <description><![CDATA[
       <h1>NutzCodeInsight</h1>
@@ -83,8 +83,7 @@
                              implementationClass="com.sgaop.idea.codeinsight.folding.NutzInjectConfFoldingBuilder"/>
         <!--配置文件折叠-结束-->
         <!--控制显示新创建NutzBoot项目-->
-        <moduleType id="NutzBoot" implementationClass="com.sgaop.project.module.NutzBootModuleType"
-                    classpathProvider="true"/>
+        <moduleBuilder builderClass="com.sgaop.project.module.NutzBootModuleBuilder"/>
     </extensions>
     <actions>
         <!--快速定位至NutzAction-->

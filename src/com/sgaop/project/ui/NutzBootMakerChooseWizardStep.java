@@ -1,17 +1,29 @@
 package com.sgaop.project.ui;
 
 import com.google.gson.Gson;
+import com.intellij.ide.util.projectWizard.ModuleWizardStep;
+import com.intellij.ide.util.projectWizard.WizardContext;
+import com.intellij.ide.wizard.CommitStepException;
+import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.ui.Messages;
 import com.sgaop.project.HttpUtil;
+import com.sgaop.project.module.NutzBootModuleBuilder;
 import com.sgaop.project.module.vo.NutzBootGroupVO;
 import com.sgaop.project.module.vo.NutzBootItemVO;
 import com.sgaop.project.module.vo.NutzBootProsVO;
 import com.sgaop.project.module.vo.NutzBootVO;
 import com.sgaop.project.ui.action.EnableGroupAction;
 import com.sgaop.project.ui.gui.DataCheckBox;
+import com.sgaop.util.FileUtil;
+import org.apache.http.HttpResponse;
+import org.apache.http.entity.BasicHttpEntity;
+import org.fest.util.Strings;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Vector;
 
@@ -19,10 +31,9 @@ import java.util.Vector;
  * @author 黄川 huchuc@vip.qq.com
  * @date: 2018/8/30
  */
-public class ModuleWizardStepUI {
+public class NutzBootMakerChooseWizardStep extends ModuleWizardStep {
 
     private JPanel root;
-    private JCheckBox pout;
     private JTextField packageName;
     private JTextField groupId;
     private JTextField artifactId;
@@ -35,7 +46,19 @@ public class ModuleWizardStepUI {
 
     private Vector<UiCatch> uiCatches = new Vector<>();
 
-    public ModuleWizardStepUI() {
+    protected WizardContext wizardContext;
+
+    private String downLoadKey;
+
+    private NutzBootModuleBuilder moduleBuilder;
+
+    private boolean loadingCompleted = false;
+
+    private Gson gson = new Gson();
+
+    public NutzBootMakerChooseWizardStep(NutzBootModuleBuilder moduleBuilder, WizardContext wizardContext) {
+        this.moduleBuilder = moduleBuilder;
+        this.wizardContext = wizardContext;
         makerUrl.setText("https://get.nutz.io");
         reloadButton.addActionListener((event -> {
             try {
@@ -46,10 +69,95 @@ public class ModuleWizardStepUI {
         }));
     }
 
+    @Override
+    public void onWizardFinished() throws CommitStepException {
+        if (isNutzBootModuleBuilder()) {
+            try {
+                HttpResponse response = HttpUtil.getResponse(makerUrl.getText() + "/maker/download/" + downLoadKey);
+                String path = this.wizardContext.getProjectFileDirectory();
+                if (this.wizardContext.getProject() != null) {
+                    path = ((NutzBootModuleBuilder) this.wizardContext.getProjectBuilder()).getContentEntryPath();
+                }
+                File zipFile = Paths.get(path, System.currentTimeMillis() + ".zip").toFile();
+                File dir = Paths.get(path).toFile();
+                FileUtil.writeFile(zipFile, response.getEntity().getContent());
+                FileUtil.extractZipFile(zipFile, dir);
+                zipFile.delete();
+            } catch (Exception e) {
+                throw new CommitStepException(e.getMessage());
+            }
+        }
+    }
+
+
+    @Override
+    public boolean validate() throws ConfigurationException {
+        try {
+            if (Strings.isNullOrEmpty(packageName.getText())) {
+                Messages.showErrorDialog("顶层包名不能为空", "错误提示");
+                return false;
+            }
+            if (Strings.isNullOrEmpty(groupId.getText())) {
+                Messages.showErrorDialog("项目组织名不能为空", "错误提示");
+                return false;
+            }
+            if (Strings.isNullOrEmpty(artifactId.getText())) {
+                Messages.showErrorDialog("项目ID不能为空", "错误提示");
+                return false;
+            }
+            if (Strings.isNullOrEmpty(finalName.getText())) {
+                Messages.showErrorDialog("发布文件名不能为空", "错误提示");
+                return false;
+            }
+            BasicHttpEntity entity = new BasicHttpEntity();
+            entity.setContent(new ByteArrayInputStream(gson.toJson(getPostData()).getBytes()));
+            String json = HttpUtil.post(makerUrl.getText() + "/maker/make", entity);
+            HashMap redata = gson.fromJson(json, HashMap.class);
+            boolean ok = Boolean.parseBoolean(String.valueOf(redata.getOrDefault("ok", "false")));
+            if (ok) {
+                downLoadKey = String.valueOf(redata.get("key"));
+                moduleBuilder.setModuleName(finalName.getText());
+                return true;
+            } else {
+                downLoadKey = null;
+                Messages.showErrorDialog(redata.getOrDefault("msg", "服务暂不可用！请稍后再试！").toString(), "错误提示");
+                return false;
+            }
+        } catch (Exception e) {
+            throw new ConfigurationException("构筑中心发生未知异常! " + e.getMessage());
+        }
+    }
+
+
+    @Override
+    public void updateStep() {
+        if (!loadingCompleted) {
+            try {
+                refresh(HttpUtil.get(makerUrl.getText() + "/maker.json"));
+                loadingCompleted = true;
+            } catch (Exception e) {
+                Messages.showErrorDialog("网络异常！请稍候尝试!" + e.getMessage(), "错误提示");
+            }
+        }
+    }
+
+    @Override
+    public void updateDataModel() {
+    }
+
+    @Override
+    public JComponent getComponent() {
+        return getRoot();
+    }
+
+    private boolean isNutzBootModuleBuilder() {
+        return this.wizardContext.getProjectBuilder() instanceof NutzBootModuleBuilder;
+    }
+
+
     public void refresh(String json) {
         uiCatches.clear();
         groupsPanel.removeAll();
-
         groupsPanel.setLayout(new BoxLayout(groupsPanel, BoxLayout.Y_AXIS));
         groupsPanel.setBorder(new EmptyBorder(5, 5, 5, 0));
         Gson gson = new Gson();
@@ -138,11 +246,8 @@ public class ModuleWizardStepUI {
         }
     }
 
-    public JTextField getMakerUrl() {
-        return makerUrl;
-    }
-
     public JPanel getRoot() {
         return root;
     }
+
 }
