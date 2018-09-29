@@ -41,19 +41,16 @@ public class NutzInjectConfFoldingBuilder extends FoldingBuilderEx {
             String key = NutzInjectConfUtil.getKey(value);
             if (key != null) {
                 final List<String> properties = NutzInjectConfUtil.findProperties(project, propertiesFiles, key);
+                final TextRange textRange = new TextRange(literalExpression.getTextRange().getStartOffset() + 1, literalExpression.getTextRange().getEndOffset() - 1);
+                String data;
                 if (properties.size() == 1) {
-                    descriptors.add(new NutzLocalizationFoldingDescriptor(literalExpression.getNode(),
-                            new TextRange(literalExpression.getTextRange().getStartOffset() + 1, literalExpression.getTextRange().getEndOffset() - 1),
-                            properties.get(0)));
+                    data = properties.get(0);
                 } else if (properties.size() > 1) {
-                    descriptors.add(new NutzLocalizationFoldingDescriptor(literalExpression.getNode(),
-                            new TextRange(literalExpression.getTextRange().getStartOffset() + 1, literalExpression.getTextRange().getEndOffset() - 1),
-                            "NutzCodeInsight:当前键值【" + key + "】在多个配置文件中存在！"));
+                    data = "NutzCodeInsight:当前键值【" + key + "】在多个配置文件中存在！";
                 } else {
-                    descriptors.add(new NutzLocalizationFoldingDescriptor(literalExpression.getNode(),
-                            new TextRange(literalExpression.getTextRange().getStartOffset() + 1, literalExpression.getTextRange().getEndOffset() - 1),
-                            "NutzCodeInsight:当前键值【" + key + "】在多个配置文件中未发现，使用时可能为Null，请注意检查！"));
+                    data = "NutzCodeInsight:当前键值【" + key + "】在多个配置文件中未发现，使用时可能为Null，请注意检查！";
                 }
+                descriptors.add(new NutzLocalizationFoldingDescriptor(literalExpression.getNode(), textRange, data));
             }
         }
         return descriptors.toArray(new FoldingDescriptor[descriptors.size()]);
@@ -67,7 +64,7 @@ public class NutzInjectConfFoldingBuilder extends FoldingBuilderEx {
 
     @Override
     public boolean isCollapsedByDefault(@NotNull ASTNode astNode) {
-        return false;
+        return true;
     }
 
 

@@ -35,7 +35,7 @@ public class NutzLocalizationFoldingBuilder extends FoldingBuilderEx {
         Project project = root.getProject();
         String localizationPackage = NutzLocalUtil.getLocalizationPackage(project);
         if (null == localizationPackage) {
-            return new FoldingDescriptor[0];
+            return FoldingDescriptor.EMPTY;
         }
         List<FoldingDescriptor> descriptors = new ArrayList<>();
         Collection<VirtualFile> propertiesFiles = FilenameIndex.getAllFilesByExt(project, "properties", root.getResolveScope());
@@ -47,19 +47,16 @@ public class NutzLocalizationFoldingBuilder extends FoldingBuilderEx {
             String key = literalExpression.getValue() instanceof String ? (String) literalExpression.getValue() : null;
             if (key != null) {
                 final List<String> properties = NutzLocalUtil.findProperties(project, propertiesFiles, localizationPackage, key);
+                TextRange textRange = new TextRange(literalExpression.getTextRange().getStartOffset() + 1, literalExpression.getTextRange().getEndOffset() - 1);
+                String value;
                 if (properties.size() == 1) {
-                    descriptors.add(new NutzLocalizationFoldingDescriptor(literalExpression.getNode(),
-                            new TextRange(literalExpression.getTextRange().getStartOffset() + 1, literalExpression.getTextRange().getEndOffset() - 1),
-                            properties.get(0)));
+                    value = properties.get(0);
                 } else if (properties.size() > 1) {
-                    descriptors.add(new NutzLocalizationFoldingDescriptor(literalExpression.getNode(),
-                            new TextRange(literalExpression.getTextRange().getStartOffset() + 1, literalExpression.getTextRange().getEndOffset() - 1),
-                            "NutzCodeInsight:当前键值【" + key + "】在国际化信息中存在重复KEY请检查！"));
+                    value = "NutzCodeInsight:当前键值【" + key + "】在国际化信息中存在重复KEY请检查！";
                 } else {
-                    descriptors.add(new NutzLocalizationFoldingDescriptor(literalExpression.getNode(),
-                            new TextRange(literalExpression.getTextRange().getStartOffset() + 1, literalExpression.getTextRange().getEndOffset() - 1),
-                            "NutzCodeInsight:当前键值【" + key + "】在国际化信息中存在重复KEY请检查，使用时可能为Null，请注意检查！"));
+                    value = "NutzCodeInsight:当前键值【" + key + "】在国际化信息中存在重复KEY请检查，使用时可能为Null，请注意检查！";
                 }
+                descriptors.add(new NutzLocalizationFoldingDescriptor(literalExpression.getNode(), textRange, value));
             }
         }
         return descriptors.toArray(new FoldingDescriptor[descriptors.size()]);
@@ -73,7 +70,7 @@ public class NutzLocalizationFoldingBuilder extends FoldingBuilderEx {
 
     @Override
     public boolean isCollapsedByDefault(@NotNull ASTNode astNode) {
-        return false;
+        return true;
     }
 
 }
