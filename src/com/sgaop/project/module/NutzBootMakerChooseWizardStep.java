@@ -1,4 +1,4 @@
-package com.sgaop.project.ui;
+package com.sgaop.project.module;
 
 import com.google.gson.Gson;
 import com.intellij.ide.util.projectWizard.ModuleWizardStep;

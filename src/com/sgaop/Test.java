@@ -1,6 +1,7 @@
 package com.sgaop;
 
 import com.google.gson.Gson;
+import com.intellij.openapi.util.text.DelimitedListProcessor;
 import com.sgaop.project.module.vo.NutzBootGroupVO;
 import com.sgaop.project.module.vo.NutzBootItemVO;
 import com.sgaop.project.module.vo.NutzBootProsVO;
@@ -15,7 +16,8 @@ import java.util.List;
  * @date: 2018/8/30
  */
 public class Test {
-    public static void main(String[] args) {
+
+    private static void test1() {
         List<NutzBootGroupVO> list = new ArrayList<>();
 
         NutzBootVO nutzBootVO = new NutzBootVO();
@@ -95,5 +97,22 @@ public class Test {
         System.out.println(json);
         NutzBootVO nutzBootVO1 = new Gson().fromJson(json, NutzBootVO.class);
         System.out.println(nutzBootVO1);
+
+
+    }
+
+    private static void test2() {
+        String value="layout(\"/layouts/blank.html\",{title:'xx'}){";
+        new DelimitedListProcessor("\"") {
+            @Override
+            protected void processToken(int start, int end, boolean delimitersOnly) {
+                String text = value.substring(start, end);
+                System.out.println(text);
+            }
+        }.processText(value);
+    }
+
+    public static void main(String[] args) {
+        test2();
     }
 }

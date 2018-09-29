@@ -17,8 +17,8 @@ public class GlobalSettingVO {
         globalSettingVO.getTableData().put("btl:", ".html");
         globalSettingVO.getTableData().put("beetl:", ".html");
         globalSettingVO.getTableData().put("->:", ".html");
-        globalSettingVO.setBeetlLayoutRegular("layout\\((\"|\')(.*?)\\.html(\"|\')\\)");
-        globalSettingVO.setBeetlIncludeRegular("include\\((\"|\')(.*?)\\.html(\"|\')\\)");
+        globalSettingVO.setBeetlLayoutRegular("layout\\((\"|\')(.*?)\\.html(\"|\')");
+        globalSettingVO.setBeetlIncludeRegular("include\\((\"|\')(.*?)\\.html(\"|\')");
         globalSettingVO.setI18nRegular("\\$\\{i18n\\((\"|\')(.*?)(\"|\')\\)}");
         globalSettingVO.setI18nKeyRegular("\\((\"|')(.*?)(\"|')\\)");
         return globalSettingVO;

@@ -73,7 +73,7 @@ public class NutzLocalizationFoldingBuilder extends FoldingBuilderEx {
 
     @Override
     public boolean isCollapsedByDefault(@NotNull ASTNode astNode) {
-        return true;
+        return false;
     }
 
 }
