@@ -67,7 +67,7 @@ public class NutzInjectConfFoldingBuilder extends FoldingBuilderEx {
 
     @Override
     public boolean isCollapsedByDefault(@NotNull ASTNode astNode) {
-        return true;
+        return false;
     }
 
 
