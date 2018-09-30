@@ -1,5 +1,9 @@
 package com.sgaop.idea.codeinsight.util;
 
+import com.intellij.lang.properties.IProperty;
+import com.intellij.lang.properties.psi.Property;
+import com.intellij.lang.properties.psi.impl.PropertiesFileImpl;
+import com.intellij.lang.properties.psi.impl.PropertyImpl;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
@@ -37,6 +41,21 @@ public class NutzInjectConfUtil {
             properties.forEach((name, val) -> {
                 if (name.equals(key)) {
                     result.add(String.valueOf(val));
+                }
+            });
+        }
+        return result;
+    }
+
+
+    public static List<PsiElement> findPropertiesPsiElement(Project project, Collection<VirtualFile> virtualFiles, String key) {
+        List<PsiElement> result = new ArrayList<>();
+        for (VirtualFile virtualFile : virtualFiles) {
+            PsiFile psiFile = PsiManager.getInstance(project).findFile(virtualFile);
+            List<IProperty> iProperties = ((PropertiesFileImpl) psiFile).getProperties();
+            iProperties.forEach(iProperty -> {
+                if (iProperty.getKey().startsWith(key)) {
+                    result.add(iProperty.getPsiElement());
                 }
             });
         }

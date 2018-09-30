@@ -17,6 +17,19 @@ import java.util.List;
  */
 public class Test {
 
+    interface C {
+        @Inject("aaa")
+        String ss();
+    }
+
+    @Inject("aaa")
+    public void setSs(@Inject("aaa") String ss) {
+        this.ss = ss;
+    }
+
+    private String ss;
+
+
     private static void test1() {
         List<NutzBootGroupVO> list = new ArrayList<>();
 
@@ -102,7 +115,7 @@ public class Test {
     }
 
     private static void test2() {
-        String value="layout(\"/layouts/blank.html\",{title:'xx'}){";
+        String value = "layout(\"/layouts/blank.html\",{title:'xx'}){";
         new DelimitedListProcessor("\"") {
             @Override
             protected void processToken(int start, int end, boolean delimitersOnly) {
