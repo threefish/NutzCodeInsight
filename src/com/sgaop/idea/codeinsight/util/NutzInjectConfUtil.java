@@ -54,7 +54,7 @@ public class NutzInjectConfUtil {
             PsiFile psiFile = PsiManager.getInstance(project).findFile(virtualFile);
             List<IProperty> iProperties = ((PropertiesFileImpl) psiFile).getProperties();
             iProperties.forEach(iProperty -> {
-                if (iProperty.getKey().startsWith(key)) {
+                if (iProperty.getKey().equals(key)) {
                     result.add(iProperty.getPsiElement());
                 }
             });

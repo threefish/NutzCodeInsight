@@ -13,16 +13,12 @@ import org.jetbrains.annotations.Nullable;
  */
 public class PsiJavaInjectReference implements PsiReference {
 
-    String key;
     PsiElement javaElement;
     PsiElement propsElement;
-    TextRange textRange;
 
-    public PsiJavaInjectReference(String key, PsiElement javaElement, PsiElement propsElement, TextRange textRange) {
-        this.key = key;
+    public PsiJavaInjectReference(PsiElement javaElement, PsiElement propsElement) {
         this.javaElement = javaElement;
         this.propsElement = propsElement;
-        this.textRange = textRange;
     }
 
     @Override
@@ -33,8 +29,9 @@ public class PsiJavaInjectReference implements PsiReference {
     @Override
     public TextRange getRangeInElement() {
         String text = this.javaElement.getText();
-        if ((text.startsWith("\"")) && (text.endsWith("\"")) && (text.length() > 2)) {
-//            return new TextRange(17, this.javaElement.getTextLength() - 3);
+        boolean match = text.startsWith("\"") && text.endsWith("\"");
+        final int len = 2;
+        if (match && text.length() > len) {
             return new TextRange(1, this.javaElement.getTextLength() - 1);
         }
         return new TextRange(0, this.javaElement.getTextLength());
