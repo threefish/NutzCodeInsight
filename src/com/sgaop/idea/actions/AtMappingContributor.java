@@ -22,7 +22,7 @@ public class AtMappingContributor implements ChooseByNameContributor {
 
 
     public AtMappingContributor(Project project) {
-        ApplicationManager.getApplication().runReadAction(() -> findAllAt(project));
+        ApplicationManager.getApplication().invokeLater(() -> findAllAt(project));
     }
 
     private void findAllAt(Project project) {
