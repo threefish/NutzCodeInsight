@@ -1,6 +1,6 @@
 package com.sgaop.project.ui.action;
 
-import com.sgaop.project.ui.ModuleWizardStepUI;
+import com.sgaop.project.module.NutzBootMakerChooseWizardStep;
 import com.sgaop.project.ui.gui.DataCheckBox;
 
 import javax.swing.*;
@@ -14,9 +14,9 @@ import java.awt.event.ActionListener;
 public class EnableGroupAction implements ActionListener {
 
 
-    private ModuleWizardStepUI.UiCatch uiCatch;
+    private NutzBootMakerChooseWizardStep.UiCatch uiCatch;
 
-    public EnableGroupAction(ModuleWizardStepUI.UiCatch uiCatch) {
+    public EnableGroupAction(NutzBootMakerChooseWizardStep.UiCatch uiCatch) {
         this.uiCatch = uiCatch;
     }
 

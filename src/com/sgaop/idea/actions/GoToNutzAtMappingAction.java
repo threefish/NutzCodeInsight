@@ -13,7 +13,7 @@ import com.intellij.openapi.project.Project;
  * @author 黄川 huchuc@vip.qq.com
  * @date 2017/12/30 0030
  */
-public class GoToNutzAtMappingAction extends GotoActionBase implements DumbAware {
+public class GoToNutzAtMappingAction extends GotoActionBase {
     @Override
     protected void gotoActionPerformed(AnActionEvent anActionEvent) {
         Project project = anActionEvent.getData(CommonDataKeys.PROJECT);

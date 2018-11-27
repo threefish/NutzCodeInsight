@@ -3,6 +3,7 @@ package com.sgaop.idea.codeinsight.util;
 import com.intellij.lang.folding.FoldingDescriptor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
+import com.intellij.openapi.util.text.DelimitedListProcessor;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.impl.source.tree.LeafPsiElement;
@@ -27,7 +28,7 @@ public class BeetlHtmlLineUtil {
 
     private static ToolCfiguration cfiguration = ToolCfiguration.getInstance();
 
-    private static final Pattern FUN_PATTERN = Pattern.compile("\\((\"|')(.*?)\\.html(\"|')\\)");
+    private static final Pattern FUN_PATTERN = Pattern.compile("(\"|')(.*?)(\"|')");
 
     public static List<FoldingDescriptor> showNutzLocalization(Project project, PsiElement root) {
         List<FoldingDescriptor> descriptors = new ArrayList<>();
@@ -89,7 +90,7 @@ public class BeetlHtmlLineUtil {
         while (m.find() && m2.find()) {
             int start = m2.start();
             int end = m2.end();
-            String value = text.substring(start + 2, end - 2);
+            String value = text.substring(start + 1, end - 1);
             descriptors.add(value);
         }
         return descriptors;

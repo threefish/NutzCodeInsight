@@ -73,6 +73,7 @@ public class ToolConfigurable implements Configurable {
         ui.getLayoutRegular().setText(vo.getBeetlLayoutRegular());
         ui.getI18nRegular().setText(vo.getI18nRegular());
         ui.getI18nKeyRegular().setText(vo.getI18nKeyRegular());
+        ui.getCachePeriod().setText(String.valueOf(vo.getCachePeriod()));
     }
 
     private GlobalSettingVO getGlobalSettingVO() {
@@ -92,6 +93,13 @@ public class ToolConfigurable implements Configurable {
         vo.setBeetlIncludeRegular(ui.getIncludeRegular().getText());
         vo.setI18nRegular(ui.getI18nRegular().getText());
         vo.setI18nKeyRegular(ui.getI18nKeyRegular().getText());
+        try {
+            long period = Long.parseLong(ui.getCachePeriod().getText());
+            period = period < 20L ? 20 : period;
+            vo.setCachePeriod(period);
+        } catch (Exception e) {
+            vo.setCachePeriod(20L);
+        }
         return vo;
     }
 }

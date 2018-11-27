@@ -26,16 +26,14 @@ public class SettingConfigUi {
     private JTextField i18nRegular;
     private JLabel issues;
     private JTextField i18nKeyRegular;
+    private JTextField cachePeriod;
 
     public JTextField getI18nKeyRegular() {
         return i18nKeyRegular;
     }
 
     public SettingConfigUi() {
-
         SwingUtils.addMouseListenerAndSetUrl(issues, "https://github.com/threefish/NutzCodeInsight/issues");
-
-
         templateTable.setRowHeight(25);
         DefaultTableModel model = new DefaultTableModel(new String[]{"模版前缀", "文件名后缀", "可编辑"}, 0) {
             @Override
@@ -74,6 +72,10 @@ public class SettingConfigUi {
             }
             model.addRow(new String[]{"", "", ""});
         });
+    }
+
+    public JTextField getCachePeriod() {
+        return cachePeriod;
     }
 
     public JTextField getLayoutRegular() {

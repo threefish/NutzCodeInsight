@@ -43,3 +43,5 @@
 
 ![NutzCodeInsight](image/NutzCodeInsight.gif)
 
+![NutzCodeInsight](image/ReferenceContributor.gif)
+

@@ -1,10 +1,10 @@
 <idea-plugin>
     <id>com.sgaop.idea.codeinsight.plugin</id>
     <name>NutzCodeInsight</name>
-    <version>2.0.1</version>
+    <version>2.0.5</version>
     <vendor email="huchuc@vip.qq.com" url="https://github.com/threefish/NutzCodeInsight">threefish</vendor>
     <description><![CDATA[
-      <h1>NutzCodeInsight</h1>
+      <h1>Intellij idea plugin for <a href="https://github.com/nutzam/nutz">Nutz</a></h1>
       <br/>
       <p>
       <b>
@@ -22,7 +22,8 @@
          <li> 5、Support for folding display of internationalized configuration file variable values ​​in the Nutz web environment (shortcut: Alt++ or Alt+-)</li>
          <li> 6、The Beetl template also supports internationalization profile folding (${i18n("login.sucess")} or ${i18n("login.sucess","parameter 1","parameter N")} ) (shortcut: Alt++) Or Alt+-)</li>
          <li> 7、Nutz supports folding display java class injection configuration file variable value @Inject("java:$conf.get('attach.savePath')") (shortcut: Alt++ or Alt+-)</li>
-         <li> 8、Quickly create interfaces and implementation classes in the support entity class (shortcut: Alt + insert )</li>
+         <li> 8、@Inject("java:$conf.get('attach.savePath')") You can jump to each other in java files and configuration files by ctrl+click or ctrl+b</li>
+         <li> 9、Quickly create interfaces and implementation classes in the support entity class (shortcut: Alt + insert )</li>
        </ul>
        <b>中文</b>
        <ul>
@@ -33,7 +34,8 @@
          <li> 5、Nutz web环境中支持折叠显示国际化配置文件变量值（快捷键：Alt++或Alt+-）</li>
          <li> 6、Beetl模版中也支持国际化配置文件折叠(${i18n("login.sucess")}或者${i18n("login.sucess","参数1","参数N")} )（快捷键：Alt++或Alt+-）</li>
          <li> 7、Nutz 支持折叠显示java类中注入配置文件变量值 @Inject("java:$conf.get('attach.savePath')")（快捷键：Alt++或Alt+-）</li>
-         <li> 8、支持实体类中快速创建接口与实现类（快捷键：Alt+insert）</li>
+         <li> 8、@Inject("java:$conf.get('attach.savePath')") 可以通过 ctrl+click 或 ctrl+b 在java文件与配置文件中互相跳转</li>
+         <li> 9、支持实体类中快速创建接口与实现类（快捷键：Alt+insert）</li>
        </ul>
       </p>
       <br/>
@@ -44,10 +46,15 @@
     </description>
     <change-notes><![CDATA[
        <p>
+         <b>2.0.5</b>
+       <ul>
+        <li>update：Add the asynchronous scanning At Mapping mechanism to quickly find Url Mapping.</li>
+        <li>更新：添加异步扫描AtMapping机制，实现快速查找UrlMapping</li>
+       </ul>
         <b>2.0</b>
        <ul>
-        <li>add: Support the Nutz Boot project to build quickly</li>
-        <li>add: Support for fast creation of interfaces and implementation classes in entity classes</li>
+        <li>add: @Inject("java:$conf.get('attach.savePath')") You can jump to each other in java files and configuration files by ctrl+click or ctrl+b</li>
+        <li>update：Optimize parameter template positioning in beetl </li>
        </ul>
       </p>
     ]]>
@@ -60,6 +67,7 @@
     <depends>com.intellij.modules.lang</depends>
     -->
     <depends>com.intellij.modules.java</depends>
+    <depends>com.intellij.properties</depends>
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
         <applicationConfigurable instance="com.sgaop.project.ToolConfigurable"/>
@@ -81,10 +89,14 @@
         <!--配置文件注入折叠-开始-->
         <lang.foldingBuilder language="JAVA"
                              implementationClass="com.sgaop.idea.codeinsight.folding.NutzInjectConfFoldingBuilder"/>
+        <!--配置文件引用-->
+        <psi.referenceContributor
+                implementation="com.sgaop.idea.codeinsight.reference.NutzInjectToPropsReferenceContributor"/>
         <!--配置文件折叠-结束-->
         <!--控制显示新创建NutzBoot项目-->
-        <moduleType id="NutzBoot" implementationClass="com.sgaop.project.module.NutzBootModuleType"
-                    classpathProvider="true"/>
+        <moduleBuilder builderClass="com.sgaop.project.module.NutzBootModuleBuilder"/>
+        <!--快速定位至NutzAction-->
+        <gotoSymbolContributor implementation="com.sgaop.idea.actions.AtMappingContributor"/>
     </extensions>
     <actions>
         <!--快速定位至NutzAction-->
