@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.sgaop.idea.codeinsight.plugin</id>
     <name>NutzCodeInsight</name>
-    <version>2.0.3</version>
+    <version>2.0.5</version>
     <vendor email="huchuc@vip.qq.com" url="https://github.com/threefish/NutzCodeInsight">threefish</vendor>
     <description><![CDATA[
       <h1>Intellij idea plugin for <a href="https://github.com/nutzam/nutz">Nutz</a></h1>
@@ -46,10 +46,10 @@
     </description>
     <change-notes><![CDATA[
        <p>
-         <b>2.0.3</b>
+         <b>2.0.5</b>
        <ul>
-        <li>update：Add a timing scan At Mapping mechanism (configuration can be adjusted) to quickly find Url Mapping.</li>
-        <li>更新：添加定时扫描AtMapping机制（配置可以调整），实现快速查找UrlMapping的</li>
+        <li>update：Add the asynchronous scanning At Mapping mechanism to quickly find Url Mapping.</li>
+        <li>更新：添加异步扫描AtMapping机制，实现快速查找UrlMapping</li>
        </ul>
         <b>2.0</b>
        <ul>
@@ -97,8 +97,6 @@
         <moduleBuilder builderClass="com.sgaop.project.module.NutzBootModuleBuilder"/>
         <!--快速定位至NutzAction-->
         <gotoSymbolContributor implementation="com.sgaop.idea.actions.AtMappingContributor"/>
-        <!--将AtServices交给IDEA管理实现单例-->
-        <projectService serviceImplementation="com.sgaop.idea.actions.AtServices"/>
     </extensions>
     <actions>
         <!--快速定位至NutzAction-->

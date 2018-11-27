@@ -31,7 +31,7 @@ public class AtMappingModel extends FilteringGotoByModel<FileType> implements Du
 
 
     public AtMappingModel(@NotNull Project project) {
-        super(project, new ChooseByNameContributor[]{new AtMappingContributor()});
+        super(project, new ChooseByNameContributor[]{new AtMappingContributor(project)});
     }
 
     @Nullable

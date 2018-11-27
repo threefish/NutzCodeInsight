@@ -1,20 +1,15 @@
 package com.sgaop.idea.codeinsight.util;
 
-import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.java.stubs.index.JavaAnnotationIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.sgaop.idea.actions.AtMappingItem;
 import com.sgaop.idea.codeinsight.NutzCons;
-import com.sgaop.project.ToolCfiguration;
-import org.apache.commons.lang3.concurrent.BasicThreadFactory;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
@@ -26,7 +21,6 @@ public class FindRequestMappingItemsUtil {
      * 最大尝试次数
      */
     private static final int TRY_NUM_MAX = 200;
-
 
     public static List<AtMappingItem> findRequestMappingItems(Project project, String annotationName) {
         try {
@@ -51,7 +45,11 @@ public class FindRequestMappingItemsUtil {
                                 if (va instanceof PsiLiteralExpression) {
                                     //单个映射值
                                     String requestPath = nameValuePair.getLiteralValue();
-                                    addMappingItem(mappingAnnotation, topReqs, requestPath, annotation, getMethodType(methodAanotations));
+                                    for (String topReq : topReqs) {
+                                        if (topReq != null) {
+                                            mappingAnnotation.add(new AtMappingItem(annotation, topReq + requestPath, getMethodType(methodAanotations)));
+                                        }
+                                    }
                                 } else if (va instanceof PsiAnnotationMemberValue) {
                                     //多个映射值
                                     PsiArrayInitializerMemberValue memberValue = (PsiArrayInitializerMemberValue) nameValuePair.getValue();
@@ -59,7 +57,11 @@ public class FindRequestMappingItemsUtil {
                                     for (PsiAnnotationMemberValue value : values) {
                                         PsiLiteralExpression val = (PsiLiteralExpression) value;
                                         String requestPath = (String) val.getValue();
-                                        addMappingItem(mappingAnnotation, topReqs, requestPath, annotation, getMethodType(methodAanotations));
+                                        for (String topReq : topReqs) {
+                                            if (topReq != null) {
+                                                mappingAnnotation.add(new AtMappingItem(annotation, topReq + requestPath, getMethodType(methodAanotations)));
+                                            }
+                                        }
                                     }
                                 }
                             }
@@ -68,7 +70,11 @@ public class FindRequestMappingItemsUtil {
                             if (psiMethod instanceof PsiMethod) {
                                 String[] topReqs = getTopAt(at);
                                 String requestPath = "/" + ((PsiMethod) psiMethod).getName().toLowerCase();
-                                addMappingItem(mappingAnnotation, topReqs, requestPath, annotation, getMethodType(methodAanotations));
+                                for (String topReq : topReqs) {
+                                    if (topReq != null) {
+                                        mappingAnnotation.add(new AtMappingItem(annotation, topReq + requestPath, getMethodType(methodAanotations)));
+                                    }
+                                }
                             }
                         }
                     }
@@ -138,14 +144,5 @@ public class FindRequestMappingItemsUtil {
             //过滤异常不提示
         }
         return topReqs;
-    }
-
-
-    private static void addMappingItem(List<AtMappingItem> mappingAnnotation, String[] topReqs, String requestPath, PsiElement annotation, String requestMethod) {
-        for (String topReq : topReqs) {
-            if (topReq != null) {
-                mappingAnnotation.add(new AtMappingItem(annotation, topReq + requestPath, requestMethod));
-            }
-        }
     }
 }
