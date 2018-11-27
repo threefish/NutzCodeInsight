@@ -21,6 +21,7 @@ public class GlobalSettingVO {
         globalSettingVO.setBeetlIncludeRegular("include\\((\"|\')(.*?)\\.html(\"|\')");
         globalSettingVO.setI18nRegular("\\$\\{i18n\\((\"|\')(.*?)(\"|\')\\)}");
         globalSettingVO.setI18nKeyRegular("\\((\"|')(.*?)(\"|')\\)");
+        globalSettingVO.setCachePeriod(20L);
         return globalSettingVO;
     }
 
@@ -44,6 +45,20 @@ public class GlobalSettingVO {
      * beetl模版中国际化取KEY
      */
     private String i18nKeyRegular;
+
+
+    /**
+     * 定时任务周期
+     */
+    private Long cachePeriod;
+
+    public Long getCachePeriod() {
+        return cachePeriod;
+    }
+
+    public void setCachePeriod(Long cachePeriod) {
+        this.cachePeriod = cachePeriod;
+    }
 
     public String getI18nKeyRegular() {
         return i18nKeyRegular;

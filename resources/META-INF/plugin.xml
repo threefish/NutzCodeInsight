@@ -46,10 +46,15 @@
     </description>
     <change-notes><![CDATA[
        <p>
+         <b>2.0.3</b>
+       <ul>
+        <li>update：Add a timing scan At Mapping mechanism (configuration can be adjusted) to quickly find Url Mapping.</li>
+        <li>更新：添加定时扫描AtMapping机制（配置可以调整），实现快速查找UrlMapping的</li>
+       </ul>
         <b>2.0</b>
        <ul>
         <li>add: @Inject("java:$conf.get('attach.savePath')") You can jump to each other in java files and configuration files by ctrl+click or ctrl+b</li>
-        <li> update：Optimize parameter template positioning in beetl </li>
+        <li>update：Optimize parameter template positioning in beetl </li>
        </ul>
       </p>
     ]]>
@@ -85,12 +90,15 @@
         <lang.foldingBuilder language="JAVA"
                              implementationClass="com.sgaop.idea.codeinsight.folding.NutzInjectConfFoldingBuilder"/>
         <!--配置文件引用-->
-        <psi.referenceContributor implementation="com.sgaop.idea.codeinsight.reference.NutzInjectToPropsReferenceContributor"/>
+        <psi.referenceContributor
+                implementation="com.sgaop.idea.codeinsight.reference.NutzInjectToPropsReferenceContributor"/>
         <!--配置文件折叠-结束-->
         <!--控制显示新创建NutzBoot项目-->
         <moduleBuilder builderClass="com.sgaop.project.module.NutzBootModuleBuilder"/>
         <!--快速定位至NutzAction-->
         <gotoSymbolContributor implementation="com.sgaop.idea.actions.AtMappingContributor"/>
+        <!--将AtServices交给IDEA管理实现单例-->
+        <projectService serviceImplementation="com.sgaop.idea.actions.AtServices"/>
     </extensions>
     <actions>
         <!--快速定位至NutzAction-->

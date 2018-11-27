@@ -1,9 +1,7 @@
 package com.sgaop.idea.codeinsight.util;
 
 import com.intellij.lang.properties.IProperty;
-import com.intellij.lang.properties.psi.Property;
 import com.intellij.lang.properties.psi.impl.PropertiesFileImpl;
-import com.intellij.lang.properties.psi.impl.PropertyImpl;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
@@ -19,9 +17,8 @@ import java.util.regex.Pattern;
  * Created with IntelliJ IDEA.
  *
  * @author 黄川 huchuc@vip.qq.com
-
+ * <p>
  * 创建时间: 2018/1/3  14:26
-
  */
 public class NutzInjectConfUtil {
 
