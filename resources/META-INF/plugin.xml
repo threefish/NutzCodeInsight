@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.sgaop.idea.codeinsight.plugin</id>
     <name>NutzCodeInsight</name>
-    <version>2.0.5</version>
+    <version>2.0.3</version>
     <vendor email="huchuc@vip.qq.com" url="https://github.com/threefish/NutzCodeInsight">threefish</vendor>
     <description><![CDATA[
       <h1>Intellij idea plugin for <a href="https://github.com/nutzam/nutz">Nutz</a></h1>
@@ -46,7 +46,7 @@
     </description>
     <change-notes><![CDATA[
        <p>
-         <b>2.0.5</b>
+         <b>2.0.3</b>
        <ul>
         <li>update：Add the asynchronous scanning At Mapping mechanism to quickly find Url Mapping.</li>
         <li>更新：添加异步扫描AtMapping机制，实现快速查找映射地址</li>
@@ -73,6 +73,8 @@
         <applicationConfigurable instance="com.sgaop.project.ToolConfigurable"/>
         <applicationService serviceInterface="com.sgaop.project.ToolCfiguration"
                             serviceImplementation="com.sgaop.project.ToolCfiguration"/>
+        <!--将AtMapping缓存，此类在applicationService在Service是单例的-->
+        <applicationService serviceImplementation="com.sgaop.idea.actions.AtMappingContributor"/>
         <!--NutzAction快速跳转模版文件-->
         <codeInsight.lineMarkerProvider language="JAVA"
                                         implementationClass="com.sgaop.idea.codeinsight.JavaNutzLineMarkerProvider"/>
