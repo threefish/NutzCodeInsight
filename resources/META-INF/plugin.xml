@@ -48,8 +48,8 @@
        <p>
          <b>2.0.3</b>
        <ul>
-        <li>update：Add the asynchronous scanning At Mapping mechanism to quickly find Url Mapping.</li>
-        <li>更新：添加异步扫描AtMapping机制，实现快速查找映射地址</li>
+        <li>Update: Add asynchronous scanning At Mapping mechanism and implement caching to achieve fast search mapping address.</li>
+        <li>更新：添加异步扫描AtMapping机制，并实现缓存，达到快速查找映射地址</li>
        </ul>
         <b>2.0</b>
        <ul>
