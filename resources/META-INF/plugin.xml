@@ -49,7 +49,7 @@
          <b>2.0.5</b>
        <ul>
         <li>update：Add the asynchronous scanning At Mapping mechanism to quickly find Url Mapping.</li>
-        <li>更新：添加异步扫描AtMapping机制，实现快速查找UrlMapping</li>
+        <li>更新：添加异步扫描AtMapping机制，实现快速查找映射地址</li>
        </ul>
         <b>2.0</b>
        <ul>
@@ -97,6 +97,8 @@
         <moduleBuilder builderClass="com.sgaop.project.module.NutzBootModuleBuilder"/>
         <!--快速定位至NutzAction-->
         <gotoSymbolContributor implementation="com.sgaop.idea.actions.AtMappingContributor"/>
+        <gotoClassContributor implementation="com.sgaop.idea.actions.AtMappingContributor"/>
+        <gotoFileContributor implementation="com.sgaop.idea.actions.AtMappingContributor"/>
     </extensions>
     <actions>
         <!--快速定位至NutzAction-->

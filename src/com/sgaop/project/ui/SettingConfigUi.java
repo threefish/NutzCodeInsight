@@ -26,7 +26,6 @@ public class SettingConfigUi {
     private JTextField i18nRegular;
     private JLabel issues;
     private JTextField i18nKeyRegular;
-    private JTextField cachePeriod;
 
     public JTextField getI18nKeyRegular() {
         return i18nKeyRegular;
@@ -74,9 +73,6 @@ public class SettingConfigUi {
         });
     }
 
-    public JTextField getCachePeriod() {
-        return cachePeriod;
-    }
 
     public JTextField getLayoutRegular() {
         return layoutRegular;

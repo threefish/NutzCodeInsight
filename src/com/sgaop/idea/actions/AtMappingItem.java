@@ -1,10 +1,10 @@
 package com.sgaop.idea.actions;
 
-import com.intellij.icons.AllIcons;
 import com.intellij.navigation.ItemPresentation;
 import com.intellij.navigation.NavigationItem;
 import com.intellij.pom.Navigatable;
 import com.intellij.psi.PsiElement;
+import com.sgaop.util.IconsUtil;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -75,7 +75,7 @@ public class AtMappingItem implements NavigationItem {
             @Nullable
             @Override
             public Icon getIcon(boolean b) {
-                return AllIcons.FileTypes.Java;
+                return IconsUtil.NUTZ;
             }
         };
     }
