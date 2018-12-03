@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.sgaop.idea.codeinsight.plugin</id>
     <name>NutzCodeInsight</name>
-    <version>2.0.3</version>
+    <version>2.0.5</version>
     <vendor email="huchuc@vip.qq.com" url="https://github.com/threefish/NutzCodeInsight">threefish</vendor>
     <description><![CDATA[
       <h1>Intellij idea plugin for <a href="https://github.com/nutzam/nutz">Nutz</a></h1>
@@ -45,16 +45,18 @@
     ]]>
     </description>
     <change-notes><![CDATA[
+        <b>2.0.5</b>
+       <ul>
+        <li>Add: Class File Symbol can quickly find the mapped address, faster than "Find Nutz At Mapping Url"</li>
+        <li>Update: Cancel the asynchronous scanning At Mapping mechanism, but continue to use the cache, to some extent, to quickly find the mapped address</li>
+        <li>添加：Class  File  Symbol 中可以快速查找映射地址，速度优于"Find Nutz At Mapping Url"</li>
+        <li>更新：取消异步扫描AtMapping机制，但继续使用缓存，一定程度上达到快速查找映射地址</li>
+       </ul>
        <p>
          <b>2.0.3</b>
        <ul>
         <li>Update: Add asynchronous scanning At Mapping mechanism and implement caching to achieve fast search mapping address.</li>
         <li>更新：添加异步扫描AtMapping机制，并实现缓存，达到快速查找映射地址</li>
-       </ul>
-        <b>2.0</b>
-       <ul>
-        <li>add: @Inject("java:$conf.get('attach.savePath')") You can jump to each other in java files and configuration files by ctrl+click or ctrl+b</li>
-        <li>update：Optimize parameter template positioning in beetl </li>
        </ul>
       </p>
     ]]>
@@ -73,8 +75,6 @@
         <applicationConfigurable instance="com.sgaop.project.ToolConfigurable"/>
         <applicationService serviceInterface="com.sgaop.project.ToolCfiguration"
                             serviceImplementation="com.sgaop.project.ToolCfiguration"/>
-        <!--将AtMapping缓存，此类在applicationService在Service是单例的-->
-        <applicationService serviceImplementation="com.sgaop.idea.actions.AtMappingContributor"/>
         <!--NutzAction快速跳转模版文件-->
         <codeInsight.lineMarkerProvider language="JAVA"
                                         implementationClass="com.sgaop.idea.codeinsight.JavaNutzLineMarkerProvider"/>

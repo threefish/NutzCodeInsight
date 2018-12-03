@@ -3,7 +3,6 @@ package com.sgaop.idea.codeinsight.navigation;
 import com.intellij.codeInsight.daemon.GutterIconNavigationHandler;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.ui.popup.PopupChooserBuilder;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
@@ -50,7 +49,8 @@ public abstract class AbstractNavigationHandler implements GutterIconNavigationH
                 final List<VirtualFile> infos = new ArrayList<>(fileList);
                 final JBList list = new JBList(infos);
                 list.setFixedCellHeight(25);
-                PopupChooserBuilder builder = JBPopupFactory.getInstance().createListPopupBuilder(list).setTitle("   请选择要打开的模版文件   ");
+                PopupChooserBuilder builder = new PopupChooserBuilder(list);
+                builder.setTitle("   请选择要打开的模版文件   ");
                 builder.setCancelOnClickOutside(true);
                 builder.setCancelOnWindowDeactivation(true);
                 list.installCellRenderer(vfile -> {

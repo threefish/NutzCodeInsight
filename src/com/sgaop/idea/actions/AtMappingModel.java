@@ -19,7 +19,7 @@ import org.jetbrains.annotations.Nullable;
 public class AtMappingModel extends FilteringGotoByModel<FileType> implements DumbAware, CustomMatcherModel {
 
     public AtMappingModel(@NotNull Project project) {
-        super(project, new ChooseByNameContributor[]{AtMappingContributor.getInstance(project)});
+        super(project, new ChooseByNameContributor[]{new AtMappingContributor()});
     }
 
     @Nullable
@@ -50,6 +50,7 @@ public class AtMappingModel extends FilteringGotoByModel<FileType> implements Du
     }
 
     @Override
+    @Deprecated
     public char getCheckBoxMnemonic() {
         return 0;
     }
