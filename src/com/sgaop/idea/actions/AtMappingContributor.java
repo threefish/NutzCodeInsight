@@ -2,6 +2,7 @@ package com.sgaop.idea.actions;
 
 import com.intellij.navigation.ChooseByNameContributor;
 import com.intellij.navigation.NavigationItem;
+import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
 import com.sgaop.idea.codeinsight.util.FindRequestMappingItemsUtil;
@@ -19,22 +20,36 @@ import java.util.List;
  */
 public class AtMappingContributor implements ChooseByNameContributor, DumbAware {
 
+    private static boolean lock = false;
     /**
      * 按项目进行缓存
      */
     private HashMap<String, List<AtMappingItem>> data = new HashMap<>();
 
-    private void findAllAt(Project project) {
-        List<AtMappingItem> itemList = FindRequestMappingItemsUtil.findRequestMappingItems(project, "At");
-        if (itemList != null) {
-            data.put(project.getLocationHash(), itemList);
+    public AtMappingContributor() {
+    }
+
+    private synchronized void findAllAt(Project project) {
+        synchronized (this) {
+            if (lock == false) {
+                //加锁
+                lock = true;
+                List<AtMappingItem> itemList = FindRequestMappingItemsUtil.findRequestMappingItems(project, "At");
+                if (itemList != null) {
+                    data.put(project.getLocationHash(), itemList);
+                }
+                //解锁
+                lock = false;
+            }
         }
     }
 
     @NotNull
     @Override
     public String[] getNames(Project project, boolean includeNonProjectItems) {
-        findAllAt(project);
+        if (lock == false) {
+            ApplicationManager.getApplication().invokeLater(() -> findAllAt(project));
+        }
         return data.getOrDefault(project.getLocationHash(), new ArrayList<>()).stream().map(atMappingItem -> atMappingItem.getName()).distinct().toArray(String[]::new);
     }
 
