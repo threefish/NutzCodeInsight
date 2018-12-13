@@ -47,7 +47,9 @@ public class AtMappingContributor implements ChooseByNameContributor, DumbAware 
     @NotNull
     @Override
     public String[] getNames(Project project, boolean includeNonProjectItems) {
-        if (lock == false) {
+        if (data.getOrDefault(project.getLocationHash(), new ArrayList<>()).size() == 0) {
+            findAllAt(project);
+        } else if (lock == false) {
             ApplicationManager.getApplication().invokeLater(() -> findAllAt(project));
         }
         return data.getOrDefault(project.getLocationHash(), new ArrayList<>()).stream().map(atMappingItem -> atMappingItem.getName()).distinct().toArray(String[]::new);
