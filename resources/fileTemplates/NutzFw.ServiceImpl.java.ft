@@ -1,0 +1,17 @@
+package ${serviceImplPackage}import com.nutzfw.service.impl.BaseServiceImpl;
+import org.nutz.dao.Dao;
+import org.nutz.ioc.loader.annotation.IocBean;
+
+;
+${entityPackage}
+.${entityName};
+    ${servicePackage}
+        .${serviceFileName};
+
+/**
+ * @author ${user} xxx@qq.com
+ * @date ${date(), dateFormat="yyyy年MM月dd日 HH时mm分ss秒"}
+ */
+@IocBean(args = {"refer:dao"}, name = "${sp.uncapitalize(serviceFileName)}")
+public class ${serviceImplFileName} extends BaseServiceImpl<${entityName}>  implements ${serviceFileName} {
+public ${serviceImplFileName}(Dao dao){super(dao);}}

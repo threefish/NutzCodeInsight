@@ -10,15 +10,20 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.DumbAwareAction;
 import com.intellij.openapi.project.Project;
+import com.intellij.psi.PsiField;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.impl.source.PsiJavaFileImpl;
 import com.intellij.psi.util.PsiUtilBase;
 import com.sgaop.idea.ProjectPluginConfig;
+import com.sgaop.idea.codegenerat.vo.JavaField;
 import com.sgaop.templte.ui.CreateServiceImplFram;
+import com.sgaop.util.JavaFieldUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author 黄川 306955302@qq.com
@@ -67,7 +72,26 @@ public class CreateServiceImplAction extends DumbAwareAction {
             CommandProcessor processor = CommandProcessor.getInstance();
             //当前所在文档
             Document document = editor.getDocument();
-            ProjectPluginConfig pluginEditorInfo = new ProjectPluginConfig(applicationManager, processor, document, project, editor, psiFile);
+            List<JavaField> javaFields = new ArrayList<>();
+            PsiField[] psiFields = psiJavaFile.getClasses()[0].getAllFields();
+            for (PsiField field : psiFields) {
+                String dbName = JavaFieldUtil.getDbNameAndIsColumn(field);
+                if (dbName != null) {
+                    JavaField javaField = new JavaField();
+                    javaField.setName(field.getName());
+                    javaField.setDbName(dbName);
+                    javaField.setComment(JavaFieldUtil.getComment(field));
+                    javaField.setType(field.getType().getPresentableText());
+                    javaField.setFullType(field.getType().getCanonicalText());
+                    String dictCode = JavaFieldUtil.getDictCode(field);
+                    if (dictCode != null) {
+                        javaField.setDict(true);
+                        javaField.setDictCode(dictCode);
+                    }
+                    javaFields.add(javaField);
+                }
+            }
+            ProjectPluginConfig pluginEditorInfo = new ProjectPluginConfig(applicationManager, processor, document, project, editor, psiFile, javaFields);
             CreateServiceImplFram dialog = new CreateServiceImplFram(pluginEditorInfo, packageName, filename);
             dialog.pack();
             dialog.setVisible(true);

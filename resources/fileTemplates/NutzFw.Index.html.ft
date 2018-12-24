@@ -1,0 +1,198 @@
+<%
+var title="办公室职员管理";
+layout("/layouts/blank.html",{title:title}){
+%>
+<style type="text/css">
+</style>
+<section class="content-header">
+    <h1>
+        ${title}
+        <small>控制面板</small>
+    </h1>
+</section>
+
+<section class="content" id="container" v-if="initLoad">
+    <div style="height: 40px">
+        <form class="searchFrom">
+            <div class="input-group">
+                <div class="input-group-addon">名称</div>
+                <input type="text" v-model="searchData.key" class="form-control">
+            </div>
+            <div class="input-group">
+                <input type="button" class="layui-btn layui-btn-normal layui-btn-sm" @click="handleSearchTable"
+                       value="查询">
+            </div>
+        </form>
+    </div>
+    <div style="background: #ffffff">
+        <div id="listTable" lay-filter='listTable'></div>
+    </div>
+</section>
+<script type="text/html" id="toolBarFixed">
+    <%if(so.hasPermission("OfficeStaff.index.edit")){%>
+    <div class="layui-btn layui-btn-sm layui-btn-normal" lay-event="edit">编辑</div>
+    <%}%>
+    <div class="layui-btn layui-btn-sm layui-btn-normal" lay-event="view">查看</div>
+</script>
+<script type="text/html" id="topToolbar">
+    <%if(so.hasPermission("OfficeStaff.index.edit")){%>
+    <div class="btn toptoolbar layui-btn-primary layui-btn-sm" lay-event="handleAdd">新增办公室职员</div>
+    <%}%>
+    <%if(so.hasPermission(" OfficeStaff.index.del")){%>
+    <div class="btn toptoolbar layui-btn-primary layui-btn-sm" lay-event="handleDel">批量删除</div>
+    <%}%>
+</script>
+<script type="text/javascript">
+    var listTable, table;
+    var vm = new Vue({
+        el: '#container',
+        data: {
+            fromData: {},
+            fromDataSubmit: false,
+            fromDataEdit: true,
+            initLoad: false,
+            synchronizeType: 0,
+            searchData: {
+                key: ''
+            },
+        },
+        methods: {
+            handleView: function (uuid) {
+                parent.core.openUrlOk("/OfficeStaff/view?uuid=" + uuid, "查看办公室职员信息", '60%', '500px', function (body, index) {
+                    parent.layer.closeAll();
+                });
+            },
+            handleAdd: function (uuid) {
+                uuid = uuid || '';
+                parent.core.openUrlOk("/OfficeStaff/edit?uuid=" + uuid, "编辑办公室职员信息", '60%', '500px', function (body, index) {
+                    var iframeVm = parent.window.frames['layui-layer-iframe' + index].window.vm;
+                    if (iframeVm.fromDataSubmit == false) {
+                        iframeVm.fromDataSubmit = true;
+                        $.post(base + "/OfficeStaff/save", {
+                            fromData: iframeVm.fromData,
+                        }, function (data) {
+                            iframeVm.fromDataSubmit = false;
+                            if (data.ok) {
+                                listTable.reload();
+                                parent.layer.closeAll();
+                                parent.core.msg("操作成功！");
+                            } else {
+                                parent.core.error(data.msg);
+                            }
+                        });
+                    } else {
+                        core.msg("您操作的太频繁了，请稍候再试")
+                    }
+                });
+            },
+            handleDel: function () {
+                var checkStatus = table.checkStatus('listTable')
+                if (checkStatus.data.length > 0) {
+                    core.confirm("删除后无法恢复!<br>确定删除?", function () {
+                        var uuids = [];
+                        for (var i in  checkStatus.data) {
+                            uuids.push(checkStatus.data[i].uuid);
+                        }
+                        var jsonre = core.postJSON("/OfficeStaff/del", {uuids: uuids});
+                        core.msg(jsonre);
+                        if (jsonre.ok) {
+                            listTable.reload();
+                        }
+                    });
+                } else {
+                    core.error("请选择一条记录");
+                }
+            },
+            handleSearchTable: function () {
+                listTable.reload({
+                    where: vm.searchData,
+                    page: {curr: 1}
+                });
+            }
+        },
+        created: function () {
+            this.initLoad = true;
+        },
+        mounted: function () {
+            //性别
+            var sys_user_sex = JSON.parse('${data.sys_user_sex}');
+            //学历
+            var sys_user_education = JSON.parse('${data.sys_user_education}');
+            //职位
+            var logistics_job_position = JSON.parse('${data.logistics_job_position}');
+            layui.use(['table'], function () {
+                table = layui.table;
+                listTable = table.render({
+                    id: 'listTable',
+                    elem: '#listTable',
+                    page: true,
+                    method: 'post',
+                    url: base + '/OfficeStaff/list',
+                    height: 'full-140',
+                    limit: 50,
+                    even: false,
+                    toolbar: '#topToolbar',
+                    defaultToolbar: ['filter', 'print'],
+                    request: {
+                        pageName: 'pageNum',
+                        limitName: 'pageSize',
+                    },
+                    where: vm.searchData,
+                    cols: [[
+                        {title: '序号', type: 'numbers', width: 50},
+                        {type: 'checkbox'},
+                        {
+                            field: 'name', title: '办公室职员名称', templet: function (row) {
+                                return row.name.replace(vm.searchData.key, "<l style='color:red'>" + vm.searchData.key + "</l>");
+                            }
+                        },
+                        {
+                            field: 'education', title: '性别', templet: function (row) {
+                                return sys_user_education[row.education];
+                            }
+                        },
+                        {
+                            field: 'sex', title: '性别', templet: function (row) {
+                                return sys_user_sex[row.sex];
+                            }
+                        },
+                        {
+                            field: 'jobPosition', title: '职位', templet: function (row) {
+                                return logistics_job_position[row.jobPosition];
+                            }
+                        },
+                        {field: 'birthDay', title: '出生日期'},
+                        {field: 'salary', title: '薪水'},
+                        {field: 'phone', title: '手机号码'},
+                        {field: 'address', title: '住址'},
+                        {field: 'opAt', title: '创建时间'},
+                        {title: '操作', width: 160, align: 'center', toolbar: '#toolBarFixed'},
+                    ]],
+                });
+                table.on("tool(listTable)", function (obj) {
+                    var data = obj.data, layEvent = obj.event;
+                    if (layEvent == "edit") {
+                        vm.handleAdd(data.uuid);
+                    }
+                    if (layEvent == "view") {
+                        vm.handleView(data.uuid);
+                    }
+                });
+                table.on("toolbar(listTable)", function (obj) {
+                    var layEvent = obj.event;
+                    if (!$(this).hasClass("layui-btn-disabled")) {
+                        switch (layEvent) {
+                            case "handleAdd":
+                                vm.handleAdd();
+                                break;
+                            case "handleDel":
+                                vm.handleDel();
+                                break;
+                        }
+                    }
+                });
+            });
+        }
+    });
+</script>
+<%}%>

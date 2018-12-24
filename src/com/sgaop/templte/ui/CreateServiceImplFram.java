@@ -2,9 +2,11 @@ package com.sgaop.templte.ui;
 
 import com.intellij.ide.fileTemplates.FileTemplate;
 import com.intellij.ide.fileTemplates.FileTemplateManager;
+import com.intellij.openapi.ui.TextFieldWithBrowseButton;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.vfs.VirtualFileManager;
 import com.sgaop.idea.ProjectPluginConfig;
+import com.sgaop.idea.codegenerat.vo.JavaBaseVO;
 import com.sgaop.templte.BeetlTemplteEngine;
 import com.sgaop.templte.ITemplteEngine;
 
@@ -13,6 +15,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -23,25 +26,26 @@ import java.util.Properties;
  * 自动生成接口和实现类
  */
 public class CreateServiceImplFram extends JDialog {
+    ProjectPluginConfig pluginrInfo;
+    String entityPackage;
+    String entityName;
+    String serviceFileName;
+    String serviceImplFileName;
+    String servicePackage;
+    String serviceImplPackage;
+    String actionPackage;
+    String actionFileName;
+    String htmlPaths;
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
     private JTextField servicePackageText;
     private JTextField serviceImplPackageText;
-
-    ProjectPluginConfig pluginrInfo;
-
-    String entityPackage;
-
-    String entityName;
-
-    String serviceFileName;
-
-    String serviceImplFileName;
-
-    String servicePackage;
-
-    String serviceImplPackage;
+    private JTextField actionPackageText;
+    private JTextField htmlPathText;
+    private JCheckBox actionCheckBox;
+    private JCheckBox htmlPathCheckBox;
+    private TextFieldWithBrowseButton basePathText;
 
     public CreateServiceImplFram(ProjectPluginConfig pluginEditorInfo, String entityPackage, String entityName) {
         this.pluginrInfo = pluginEditorInfo;
@@ -49,13 +53,17 @@ public class CreateServiceImplFram extends JDialog {
         this.entityName = entityName;
         this.serviceFileName = entityName + "Service";
         this.serviceImplFileName = entityName + "ServiceImpl";
+        this.actionFileName = entityName + "Action";
         this.servicePackage = entityPackage.replace("entity", "service");
         this.serviceImplPackage = entityPackage.replace("entity", "service") + ".impl";
+        this.actionPackage = entityPackage.replace("entity", "module");
+        this.htmlPaths = File.separator + entityName + File.separator;
+
         int w = 500, h = 400;
         int x = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (w / 2));
         int y = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (h / 2));
         setContentPane(contentPane);
-        setTitle("快速创建接口及实现类");
+        setTitle("代码生成器");
         setModal(true);
         setBounds(x, y, w, h);
         getRootPane().setDefaultButton(buttonOK);
@@ -63,6 +71,8 @@ public class CreateServiceImplFram extends JDialog {
         buttonCancel.addActionListener((e) -> onCancel());
         servicePackageText.setText(this.servicePackage + "." + serviceFileName);
         serviceImplPackageText.setText(this.serviceImplPackage + "." + serviceImplFileName);
+        actionPackageText.setText(this.actionPackage + "." + actionFileName);
+        htmlPathText.setText(this.htmlPaths);
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -73,26 +83,65 @@ public class CreateServiceImplFram extends JDialog {
         });
         // call onCancel() on ESCAPE
         contentPane.registerKeyboardAction(((e) -> onCancel()), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
+        basePathText.addActionListener((e -> {
+            String basePath = pluginEditorInfo.getProject().getBasePath();
+            JFileChooser chooser = new JFileChooser();
+            chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            chooser.setMultiSelectionEnabled(false);
+            chooser.setCurrentDirectory(Paths.get(basePath).toFile());
+            int returnVal = chooser.showOpenDialog(this.rootPane);
+            System.out.println(returnVal);
+            if (returnVal == 0) {
+                String selectPath = chooser.getSelectedFile().getAbsolutePath();
+                int start = selectPath.indexOf("WEB-INF");
+                if (start == -1) {
+                    JOptionPane.showMessageDialog(this.rootPane, "请选择WEB-INF下的目录", "错误提示", JOptionPane.ERROR_MESSAGE, null);
+                } else {
+                    basePathText.setText(selectPath);
+                }
+            }
+        }));
     }
 
     private void onOK() {
         ITemplteEngine renderTemplte = new BeetlTemplteEngine();
         try {
-            String moduleBasePath = pluginrInfo.getPsiFile().getVirtualFile().getCanonicalPath();
-            String temp = entityPackage.replaceAll("\\.", "/");
-            moduleBasePath = moduleBasePath.replace(temp, "");
-            moduleBasePath = moduleBasePath.replace("/" + entityName + ".java", "");
-            HashMap bindData = getBindData();
-            FileTemplateManager fileTemplateManager = FileTemplateManager.getInstance(pluginrInfo.getProject());
-            FileTemplate service = fileTemplateManager.getTemplate("service");
-            FileTemplate serviceImpl = fileTemplateManager.getTemplate("serviceImpl");
-            final String finalmoduleBasePath = moduleBasePath;
-            VirtualFile value = VirtualFileManager.getInstance().findFileByUrl(Paths.get(moduleBasePath).toUri().toString());
-            renderTemplte.renderToFile(service.getText(), bindData, getPath(finalmoduleBasePath, this.servicePackageText.getText()));
-            renderTemplte.renderToFile(serviceImpl.getText(), bindData, getPath(finalmoduleBasePath, this.serviceImplPackageText.getText()));
-            value.refresh(true, true);
+            if (this.htmlPathCheckBox.isSelected() && this.basePathText.getText().trim().length() == 0) {
+                JOptionPane.showMessageDialog(this.rootPane, "请选择HTML目录", "错误提示", JOptionPane.ERROR_MESSAGE, null);
+            } else {
+                String moduleBasePath = pluginrInfo.getPsiFile().getVirtualFile().getCanonicalPath();
+                String temp = entityPackage.replaceAll("\\.", "/");
+                moduleBasePath = moduleBasePath.replace(temp, "");
+                moduleBasePath = moduleBasePath.replace("/" + entityName + ".java", "");
+                HashMap bindData = getBindData();
+                Properties sys = System.getProperties();
+                JavaBaseVO baseVO = new JavaBaseVO();
+                baseVO.setEntityName(this.entityName);
+                baseVO.setEntityPackage(this.entityPackage);
+                baseVO.setServiceFileName(this.serviceFileName);
+                baseVO.setServicePackage(this.servicePackage);
+                baseVO.setServiceImplFileName(this.serviceImplFileName);
+                baseVO.setServiceImplPackage(this.serviceImplPackage);
+                baseVO.setActionFileName(this.actionFileName);
+                baseVO.setActionPackage(this.actionPackage);
+                baseVO.setUser(sys.getProperty("user.name"));
+                bindData.put("base", baseVO);
+                bindData.put("fields", pluginrInfo.getJavaFields());
+
+                FileTemplateManager fileTemplateManager = FileTemplateManager.getInstance(pluginrInfo.getProject());
+                FileTemplate service = fileTemplateManager.getTemplate("NutzFw.Service");
+                FileTemplate serviceImpl = fileTemplateManager.getTemplate("NutzFw.ServiceImpl");
+                FileTemplate actionImpl = fileTemplateManager.getTemplate("NutzFw.Action");
+                final String finalmoduleBasePath = moduleBasePath;
+                VirtualFile value = VirtualFileManager.getInstance().findFileByUrl(Paths.get(moduleBasePath).toUri().toString());
+                renderTemplte.renderToFile(service.getText(), bindData, getPath(finalmoduleBasePath, this.servicePackageText.getText()));
+                renderTemplte.renderToFile(serviceImpl.getText(), bindData, getPath(finalmoduleBasePath, this.serviceImplPackageText.getText()));
+                renderTemplte.renderToFile(actionImpl.getText(), bindData, getPath(finalmoduleBasePath, this.actionPackageText.getText()));
+                value.refresh(true, true);
+            }
+
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "错误提示", JOptionPane.ERROR_MESSAGE, null);
+            JOptionPane.showMessageDialog(this.rootPane, ex.getMessage(), "错误提示", JOptionPane.ERROR_MESSAGE, null);
         }
         dispose();
     }
@@ -109,6 +158,14 @@ public class CreateServiceImplFram extends JDialog {
 
         bindData.put("serviceImplFileName", this.serviceImplFileName);
         bindData.put("serviceImplPackage", this.serviceImplPackage);
+
+        bindData.put("actionFileName", this.actionFileName);
+        bindData.put("actionPackage", this.actionPackage);
+        //功能名称
+        bindData.put("funName", this.actionPackage);
+        //WEB-INF/view
+        bindData.put("templatePath", this.actionPackage);
+
         bindData.put("user", sys.getProperty("user.name"));
         return bindData;
     }

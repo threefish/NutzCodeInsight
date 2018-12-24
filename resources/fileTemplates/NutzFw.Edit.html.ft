@@ -1,0 +1,118 @@
+<%
+var title="办公室职员编辑";
+layout("/layouts/blank.html",{title:title}){
+%>
+<style type="text/css">
+    .title-lable {
+        height: 35px;
+    }
+</style>
+<section class="content" id="container" v-if="initLoad">
+    <div role="form">
+        <!-- text input -->
+        <div class="form-group col-xs-6">
+            <label>姓名</label>
+            <input type="text" v-model="fromData.name" :disabled="!fromDataEdit" class="form-control"
+                   placeholder="请输入 ...">
+        </div>
+        <div class="form-group col-xs-6">
+            <label>性别</label>
+            ${dict("sys_user_sex",false,'v-model="fromData.sex"','class="form-control"',':disabled="!fromDataEdit"')}
+        </div>
+        <div class="form-group col-xs-6">
+            <label>学历</label>
+            ${dict
+            ("sys_user_education",false,'v-model="fromData.education"','class="form-control"',':disabled="!fromDataEdit"')}
+        </div>
+        <div class="form-group col-xs-6">
+            <label>职位</label>
+            ${dict
+            ("logistics_job_position",false,'v-model="fromData.jobPosition"','class="form-control"',':disabled="!fromDataEdit"')}
+        </div>
+        <div class="form-group col-xs-6">
+            <label>住址</label>
+            <input type="text" v-model="fromData.address" :disabled="!fromDataEdit" class="form-control"
+                   placeholder="请输入 ...">
+        </div>
+        <div class="form-group col-xs-6">
+            <label>出生年月</label>
+            <div class="input-group">
+                <input type="text" v-model="fromData.birthDay" data-fieldname="birthDay"
+                       date-fomat="yyyy-MM-dd" date-type="date" readonly :disabled="!fromDataEdit"
+                       class="form-control"
+                       placeholder="请输入 ...">
+                <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
+            </div>
+        </div>
+        <div class="form-group col-xs-6">
+            <label>薪水</label>
+            <input type="text" v-model="fromData.salary" :disabled="!fromDataEdit" class="form-control"
+                   placeholder="请输入 ...">
+        </div>
+        <div class="form-group col-xs-6">
+            <label>手机号码</label>
+            <input type="text" v-model="fromData.phone" :disabled="!fromDataEdit" class="form-control"
+                   placeholder="请输入 ...">
+        </div>
+    </div>
+</section>
+<script type="text/javascript">
+    var vm = new Vue({
+        el: '#container',
+        data: {
+            fromData: {
+                uuid: '${data.uuid!}',
+                name: '',
+                address: '',
+                sex: '',
+                education: '',
+                jobPosition: '',
+                birth: '',
+                salary: '',
+                phone: '',
+            },
+            fromDataSubmit: false,
+            fromDataEdit: "${data.fromDataEdit}" == "true",
+            initLoad: false,
+        },
+        methods: {
+            init: function () {
+                this.initLoad = true;
+                if (this.fromData.uuid != '') {
+                    $.post(base + "/OfficeStaff/details", {uuid: this.fromData.uuid}, function (json) {
+                        vm.fromData = json.data;
+                    });
+                }
+            }
+        },
+        created: function () {
+            this.init();
+        },
+        updated: function () {
+        },
+        mounted: function () {
+            layui.use(['laydate'], function () {
+                laydate = layui.laydate;
+                $("[date-fomat]").each(function () {
+                    var fieldname = $(this).attr("data-fieldname");
+                    var format = $(this).attr("date-fomat");
+                    var type = $(this).attr("date-type");
+                    var elstr = $(this).attr("el");
+                    var el = $(this)[0];
+                    if (elstr != undefined) {
+                        el = $(elstr)[0];
+                    }
+                    laydate.render({
+                        elem: el,
+                        type: type,
+                        format: format,
+                        done: function (value) {
+                            vm.fromData[fieldname] = value;
+                        }
+                    });
+                });
+            });
+        }
+    });
+</script>
+<%}%>

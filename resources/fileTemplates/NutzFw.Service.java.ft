@@ -1,0 +1,10 @@
+package ${servicePackage}import com.nutzfw.service.BaseService;
+
+;
+${entityPackage}
+        .${entityName};
+/**
+ * @author ${user} xxx@qq.com
+ * @date ${date(), dateFormat="yyyy年MM月dd日 HH时mm分ss秒"}
+ */
+public interface ${serviceFileName} extends BaseService<${entityName}>{}
