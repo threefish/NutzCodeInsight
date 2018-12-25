@@ -1,12 +1,10 @@
-package ${serviceImplPackage}import com.nutzfw.service.impl.BaseServiceImpl;
+package ${serviceImplPackage};
+
+import ${entityPackage}.${entityName};
+import ${servicePackage}.${serviceFileName};
+import com.nutzfw.service.impl.BaseServiceImpl;
 import org.nutz.dao.Dao;
 import org.nutz.ioc.loader.annotation.IocBean;
-
-;
-${entityPackage}
-.${entityName};
-    ${servicePackage}
-        .${serviceFileName};
 
 /**
  * @author ${user} xxx@qq.com

@@ -15,7 +15,6 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -36,6 +35,7 @@ public class CreateServiceImplFram extends JDialog {
     String actionPackage;
     String actionFileName;
     String htmlPaths;
+    String funName;
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
@@ -46,6 +46,7 @@ public class CreateServiceImplFram extends JDialog {
     private JCheckBox actionCheckBox;
     private JCheckBox htmlPathCheckBox;
     private TextFieldWithBrowseButton basePathText;
+    private JTextField funNameText;
 
     public CreateServiceImplFram(ProjectPluginConfig pluginEditorInfo, String entityPackage, String entityName) {
         this.pluginrInfo = pluginEditorInfo;
@@ -57,8 +58,8 @@ public class CreateServiceImplFram extends JDialog {
         this.servicePackage = entityPackage.replace("entity", "service");
         this.serviceImplPackage = entityPackage.replace("entity", "service") + ".impl";
         this.actionPackage = entityPackage.replace("entity", "module");
-        this.htmlPaths = File.separator + entityName + File.separator;
-
+        this.htmlPaths = "/" + entityName + "/";
+        this.funName = funNameText.getText();
         int w = 500, h = 400;
         int x = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (w / 2));
         int y = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (h / 2));
@@ -97,6 +98,7 @@ public class CreateServiceImplFram extends JDialog {
                 if (start == -1) {
                     JOptionPane.showMessageDialog(this.rootPane, "请选择WEB-INF下的目录", "错误提示", JOptionPane.ERROR_MESSAGE, null);
                 } else {
+                    selectPath = selectPath.substring(start).replace("\\\\", "/").replace("\\", "/");
                     basePathText.setText(selectPath);
                 }
             }
@@ -113,7 +115,6 @@ public class CreateServiceImplFram extends JDialog {
                 String temp = entityPackage.replaceAll("\\.", "/");
                 moduleBasePath = moduleBasePath.replace(temp, "");
                 moduleBasePath = moduleBasePath.replace("/" + entityName + ".java", "");
-                HashMap bindData = getBindData();
                 Properties sys = System.getProperties();
                 JavaBaseVO baseVO = new JavaBaseVO();
                 baseVO.setEntityName(this.entityName);
@@ -124,10 +125,12 @@ public class CreateServiceImplFram extends JDialog {
                 baseVO.setServiceImplPackage(this.serviceImplPackage);
                 baseVO.setActionFileName(this.actionFileName);
                 baseVO.setActionPackage(this.actionPackage);
+                baseVO.setFunName(this.funName);
+                baseVO.setTemplatePath(this.basePathText.getText() + htmlPaths);
                 baseVO.setUser(sys.getProperty("user.name"));
+                HashMap bindData = getBindData(baseVO);
                 bindData.put("base", baseVO);
                 bindData.put("fields", pluginrInfo.getJavaFields());
-
                 FileTemplateManager fileTemplateManager = FileTemplateManager.getInstance(pluginrInfo.getProject());
                 FileTemplate service = fileTemplateManager.getTemplate("NutzFw.Service");
                 FileTemplate serviceImpl = fileTemplateManager.getTemplate("NutzFw.ServiceImpl");
@@ -139,7 +142,6 @@ public class CreateServiceImplFram extends JDialog {
                 renderTemplte.renderToFile(actionImpl.getText(), bindData, getPath(finalmoduleBasePath, this.actionPackageText.getText()));
                 value.refresh(true, true);
             }
-
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this.rootPane, ex.getMessage(), "错误提示", JOptionPane.ERROR_MESSAGE, null);
         }
@@ -147,26 +149,19 @@ public class CreateServiceImplFram extends JDialog {
     }
 
 
-    private HashMap getBindData() {
-        Properties sys = System.getProperties();
-        HashMap bindData = new HashMap(7);
-        bindData.put("entityName", this.entityName);
-        bindData.put("entityPackage", this.entityPackage);
-
-        bindData.put("serviceFileName", this.serviceFileName);
-        bindData.put("servicePackage", this.servicePackage);
-
-        bindData.put("serviceImplFileName", this.serviceImplFileName);
-        bindData.put("serviceImplPackage", this.serviceImplPackage);
-
-        bindData.put("actionFileName", this.actionFileName);
-        bindData.put("actionPackage", this.actionPackage);
-        //功能名称
-        bindData.put("funName", this.actionPackage);
-        //WEB-INF/view
-        bindData.put("templatePath", this.actionPackage);
-
-        bindData.put("user", sys.getProperty("user.name"));
+    private HashMap getBindData(JavaBaseVO baseVO) {
+        HashMap bindData = new HashMap(11);
+        bindData.put("entityName", baseVO.getEntityName());
+        bindData.put("entityPackage", baseVO.getEntityPackage());
+        bindData.put("serviceFileName", baseVO.getServiceFileName());
+        bindData.put("servicePackage", baseVO.getServicePackage());
+        bindData.put("serviceImplFileName", baseVO.getServiceImplFileName());
+        bindData.put("serviceImplPackage", baseVO.getServiceImplPackage());
+        bindData.put("actionFileName", baseVO.getActionFileName());
+        bindData.put("actionPackage", baseVO.getActionPackage());
+        bindData.put("funName", baseVO.getFunName());
+        bindData.put("templatePath", baseVO.getTemplatePath());
+        bindData.put("user", baseVO.getUser());
         return bindData;
     }
 
