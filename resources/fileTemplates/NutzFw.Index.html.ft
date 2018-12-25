@@ -1,5 +1,5 @@
 <%
-var title="办公室职员管理";
+var title="#[funName]管理";
 layout("/layouts/blank.html",{title:title}){
 %>
 <style type="text/css">
@@ -29,16 +29,16 @@ layout("/layouts/blank.html",{title:title}){
     </div>
 </section>
 <script type="text/html" id="toolBarFixed">
-    <%if(so.hasPermission("OfficeStaff.index.edit")){%>
+    <%if(so.hasPermission("#[entityName].index.edit")){%>
     <div class="layui-btn layui-btn-sm layui-btn-normal" lay-event="edit">编辑</div>
     <%}%>
     <div class="layui-btn layui-btn-sm layui-btn-normal" lay-event="view">查看</div>
 </script>
 <script type="text/html" id="topToolbar">
-    <%if(so.hasPermission("OfficeStaff.index.edit")){%>
-    <div class="btn toptoolbar layui-btn-primary layui-btn-sm" lay-event="handleAdd">新增办公室职员</div>
+    <%if(so.hasPermission("#[entityName].index.edit")){%>
+    <div class="btn toptoolbar layui-btn-primary layui-btn-sm" lay-event="handleAdd">新增</div>
     <%}%>
-    <%if(so.hasPermission(" OfficeStaff.index.del")){%>
+    <%if(so.hasPermission("#[entityName].index.del")){%>
     <div class="btn toptoolbar layui-btn-primary layui-btn-sm" lay-event="handleDel">批量删除</div>
     <%}%>
 </script>
@@ -58,17 +58,17 @@ layout("/layouts/blank.html",{title:title}){
         },
         methods: {
             handleView: function (uuid) {
-                parent.core.openUrlOk("/OfficeStaff/view?uuid=" + uuid, "查看办公室职员信息", '60%', '500px', function (body, index) {
+                parent.core.openUrlOk("/#[entityName]/view?uuid=" + uuid, "查看#[funName]信息", '60%', '500px', function (body, index) {
                     parent.layer.closeAll();
                 });
             },
             handleAdd: function (uuid) {
                 uuid = uuid || '';
-                parent.core.openUrlOk("/OfficeStaff/edit?uuid=" + uuid, "编辑办公室职员信息", '60%', '500px', function (body, index) {
+                parent.core.openUrlOk("/#[entityName]/edit?uuid=" + uuid, "编辑#[funName]信息", '60%', '500px', function (body, index) {
                     var iframeVm = parent.window.frames['layui-layer-iframe' + index].window.vm;
                     if (iframeVm.fromDataSubmit == false) {
                         iframeVm.fromDataSubmit = true;
-                        $.post(base + "/OfficeStaff/save", {
+                        $.post(base + "/#[entityName]/save", {
                             fromData: iframeVm.fromData,
                         }, function (data) {
                             iframeVm.fromDataSubmit = false;
@@ -93,7 +93,7 @@ layout("/layouts/blank.html",{title:title}){
                         for (var i in  checkStatus.data) {
                             uuids.push(checkStatus.data[i].uuid);
                         }
-                        var jsonre = core.postJSON("/OfficeStaff/del", {uuids: uuids});
+                        var jsonre = core.postJSON("/#[entityName]/del", {uuids: uuids});
                         core.msg(jsonre);
                         if (jsonre.ok) {
                             listTable.reload();
@@ -114,12 +114,10 @@ layout("/layouts/blank.html",{title:title}){
             this.initLoad = true;
         },
         mounted: function () {
-            //性别
-            var sys_user_sex = JSON.parse('${data.sys_user_sex}');
-            //学历
-            var sys_user_education = JSON.parse('${data.sys_user_education}');
-            //职位
-            var logistics_job_position = JSON.parse('${data.logistics_job_position}');
+                <## for(field in fields){ ##>
+                <## if(field.dict){ ##>
+            var #[field.dictCode] = JSON.parse('${data.#[field.dictCode]');
+                <##}}##>
             layui.use(['table'], function () {
                 table = layui.table;
                 listTable = table.render({
@@ -127,7 +125,7 @@ layout("/layouts/blank.html",{title:title}){
                     elem: '#listTable',
                     page: true,
                     method: 'post',
-                    url: base + '/OfficeStaff/list',
+                    url: base + '/#[entityName]/list',
                     height: 'full-140',
                     limit: 50,
                     even: false,
@@ -141,30 +139,15 @@ layout("/layouts/blank.html",{title:title}){
                     cols: [[
                         {title: '序号', type: 'numbers', width: 50},
                         {type: 'checkbox'},
-                        {
-                            field: 'name', title: '办公室职员名称', templet: function (row) {
-                                return row.name.replace(vm.searchData.key, "<l style='color:red'>" + vm.searchData.key + "</l>");
-                            }
-                        },
-                        {
-                            field: 'education', title: '性别', templet: function (row) {
-                                return sys_user_education[row.education];
-                            }
-                        },
-                        {
-                            field: 'sex', title: '性别', templet: function (row) {
-                                return sys_user_sex[row.sex];
-                            }
-                        },
-                        {
-                            field: 'jobPosition', title: '职位', templet: function (row) {
-                                return logistics_job_position[row.jobPosition];
-                            }
-                        },
-                        {field: 'birthDay', title: '出生日期'},
-                        {field: 'salary', title: '薪水'},
-                        {field: 'phone', title: '手机号码'},
-                        {field: 'address', title: '住址'},
+                        <## for(field in fields){ ##>
+                           <## if(field.dict){ ##>
+                            {field: '#[field.name]', title: '#[field.comment]', templet: function (row) {
+                                    return #[field.dictCode][row.#[field.name]];
+                                }
+                            },
+                            <##}else{##>
+                            {field: '#[field.name]', title: '#[field.comment]'},
+                        <##}}##>
                         {field: 'opAt', title: '创建时间'},
                         {title: '操作', width: 160, align: 'center', toolbar: '#toolBarFixed'},
                     ]],

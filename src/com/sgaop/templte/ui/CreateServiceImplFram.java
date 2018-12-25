@@ -98,7 +98,8 @@ public class CreateServiceImplFram extends JDialog {
                 if (start == -1) {
                     JOptionPane.showMessageDialog(this.rootPane, "请选择WEB-INF下的目录", "错误提示", JOptionPane.ERROR_MESSAGE, null);
                 } else {
-                    selectPath = selectPath.substring(start).replace("\\\\", "/").replace("\\", "/");
+//                    selectPath = selectPath.substring(start);
+                    selectPath = selectPath.replace("\\\\", "/").replace("\\", "/");
                     basePathText.setText(selectPath);
                 }
             }
@@ -135,11 +136,19 @@ public class CreateServiceImplFram extends JDialog {
                 FileTemplate service = fileTemplateManager.getTemplate("NutzFw.Service");
                 FileTemplate serviceImpl = fileTemplateManager.getTemplate("NutzFw.ServiceImpl");
                 FileTemplate actionImpl = fileTemplateManager.getTemplate("NutzFw.Action");
+                FileTemplate indexHtml = fileTemplateManager.getTemplate("NutzFw.Index");
+                FileTemplate editHtml = fileTemplateManager.getTemplate("NutzFw.Edit");
                 final String finalmoduleBasePath = moduleBasePath;
                 VirtualFile value = VirtualFileManager.getInstance().findFileByUrl(Paths.get(moduleBasePath).toUri().toString());
                 renderTemplte.renderToFile(service.getText(), bindData, getPath(finalmoduleBasePath, this.servicePackageText.getText()));
                 renderTemplte.renderToFile(serviceImpl.getText(), bindData, getPath(finalmoduleBasePath, this.serviceImplPackageText.getText()));
-                renderTemplte.renderToFile(actionImpl.getText(), bindData, getPath(finalmoduleBasePath, this.actionPackageText.getText()));
+                if (this.actionCheckBox.isSelected()) {
+                    renderTemplte.renderToFile(actionImpl.getText(), bindData, getPath(finalmoduleBasePath, this.actionPackageText.getText()));
+                }
+                if (this.htmlPathCheckBox.isSelected()) {
+                    renderTemplte.renderToFile(indexHtml.getText(), bindData, Paths.get(this.basePathText.getText(), this.htmlPaths, "index.html"));
+                    renderTemplte.renderToFile(editHtml.getText(), bindData, Paths.get(this.basePathText.getText(), this.htmlPaths, "edit.html"));
+                }
                 value.refresh(true, true);
             }
         } catch (Exception ex) {

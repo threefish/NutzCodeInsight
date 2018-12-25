@@ -12,7 +12,7 @@ import java.util.Map;
 
 /**
  * Created with IntelliJ IDEA.
- * 创建人: 黄川
+ * @author : 黄川
  * 创建时间: 2017/12/4  10:59
  * 描述此类：
  */
@@ -28,6 +28,11 @@ public class BeetlTemplteEngine implements ITemplteEngine {
     public BeetlTemplteEngine() {
         try {
             cfg = Configuration.defaultConfiguration();
+            cfg.setPlaceholderStart("#[");
+            cfg.setPlaceholderEnd("]");
+            cfg.setStatementStart("<##");
+            cfg.setStatementEnd("##>");
+            cfg.setHtmlTagSupport(false);
             gt = new GroupTemplate(resourceLoader, cfg);
             gt.registerFunctionPackage("sp", new StringExt());
         } catch (IOException e) {
