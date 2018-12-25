@@ -11,21 +11,18 @@ import java.nio.file.Path;
 import java.util.Map;
 
 /**
- * Created with IntelliJ IDEA.
- * @author : 黄川
- * 创建时间: 2017/12/4  10:59
- * 描述此类：
+ * @author 黄川 huchuc@vip.qq.com
+ * @date 2017/12/30 0030
  */
 public class BeetlTemplteEngine implements ITemplteEngine {
 
+    static final StringTemplateResourceLoader resourceLoader = new StringTemplateResourceLoader();
 
-    final StringTemplateResourceLoader resourceLoader = new StringTemplateResourceLoader();
+    static Configuration cfg;
 
-    Configuration cfg;
+    static GroupTemplate gt;
 
-    GroupTemplate gt;
-
-    public BeetlTemplteEngine() {
+    static {
         try {
             cfg = Configuration.defaultConfiguration();
             cfg.setPlaceholderStart("#[");
@@ -38,6 +35,10 @@ public class BeetlTemplteEngine implements ITemplteEngine {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public BeetlTemplteEngine() {
+
     }
 
     /**

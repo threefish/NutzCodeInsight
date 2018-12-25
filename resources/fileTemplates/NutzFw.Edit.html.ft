@@ -16,7 +16,7 @@ layout("/layouts/blank.html",{title:title}){
             <label>#[field.comment]</label>
             ${dict("#[field.name]",false,'v-model="fromData.#[field.name]"','class="form-control"',':disabled="!fromDataEdit"')}
         </div>
-        <##}else if(field.date)){##>
+        <##}else if(field.date){##>
         <div class="form-group col-xs-6">
             <label>#[field.comment]</label>
             <div class="input-group">
@@ -27,7 +27,7 @@ layout("/layouts/blank.html",{title:title}){
                 <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
             </div>
         </div>
-        <##}else if(!field.primaryKey)){##>
+        <##}else if(!field.primaryKey){##>
         <div class="form-group col-xs-6">
             <label>#[field.comment]</label>
             <input type="text" v-model="fromData.#[field.name]" :disabled="!fromDataEdit" class="form-control"
@@ -41,15 +41,12 @@ layout("/layouts/blank.html",{title:title}){
         el: '#container',
         data: {
             fromData: {
-                uuid: '${data.uuid!}',
-                name: '',
-                address: '',
-                sex: '',
-                education: '',
-                jobPosition: '',
-                birth: '',
-                salary: '',
-                phone: '',
+                <## for(field in fields){ ##>
+                <## if(field.primaryKey){ ##>
+                #[field.name]: '${data.#[field.name]!}',
+                <##}else{##>
+                #[field.name]: '',
+                <##}}##>
             },
             fromDataSubmit: false,
             fromDataEdit: "${data.fromDataEdit}" == "true",

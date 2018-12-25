@@ -2,12 +2,8 @@ package com.sgaop.templte;
 
 
 /**
- * Created with IntelliJ IDEA.
- *
- * @author 306955302@qq.com
- * 创建人：黄川
- * 创建时间: 2017/12/8  10:59
- * 描述此类：
+ * @author 黄川 huchuc@vip.qq.com
+ * @date 2017/12/30 0030
  */
 public class StringExt {
 

@@ -42,7 +42,7 @@ public class #[actionFileName] {
      * @return
      */
     @At("/index")
-    @Ok("btl:#[templatePath].index.html")
+    @Ok("btl:#[templatePath]index.html")
     @RequiresPermissions("#[entityName].index")
     @AutoCreateMenuAuth(name = "#[funName]管理", icon = "fa-cogs", parentPermission = "sys.loggistics")
     public NutMap index() {
@@ -84,7 +84,7 @@ public class #[actionFileName] {
      * @return
      */
     @At("/edit")
-    @Ok("btl:#[templatePath].edit.html")
+    @Ok("btl:#[templatePath]edit.html")
     @RequiresPermissions("#[entityName].index.edit")
     @AutoCreateMenuAuth(name = "新增/编辑#[funName]", type = AutoCreateMenuAuth.RESOURCE, icon = "fa-cogs", parentPermission = "#[entityName].index")
     public NutMap edit(@Param("uuid") String uuid) {
@@ -98,7 +98,7 @@ public class #[actionFileName] {
      * @return
      */
     @At("/view")
-    @Ok("btl:#[templatePath].edit.html")
+    @Ok("btl:#[templatePath]edit.html")
     @RequiresPermissions("#[entityName].index.edit")
     @AutoCreateMenuAuth(name = "查看详情", type = AutoCreateMenuAuth.RESOURCE, icon = "fa-cogs", parentPermission = "#[entityName].index")
     public NutMap view(@Param("uuid") String uuid) {

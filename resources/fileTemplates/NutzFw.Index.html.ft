@@ -145,7 +145,7 @@ layout("/layouts/blank.html",{title:title}){
                                 return #[field.dictCode][row.#[field.name]];
                             }
                         },
-                        <##}else if(!field.primaryKey)){##>
+                        <##}else if(!field.primaryKey){##>
                         {field: '#[field.name]', title: '#[field.comment]'},
                         <##}}##>
                         {field: 'opAt', title: '创建时间'},

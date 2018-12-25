@@ -74,7 +74,6 @@ public class CreateServiceImplFram extends JDialog {
         serviceImplPackageText.setText(this.serviceImplPackage + "." + serviceImplFileName);
         actionPackageText.setText(this.actionPackage + "." + actionFileName);
         htmlPathText.setText(this.htmlPaths);
-        // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             @Override
@@ -82,7 +81,6 @@ public class CreateServiceImplFram extends JDialog {
                 onCancel();
             }
         });
-        // call onCancel() on ESCAPE
         contentPane.registerKeyboardAction(((e) -> onCancel()), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
         basePathText.addActionListener((e -> {
             String basePath = pluginEditorInfo.getProject().getBasePath();
@@ -91,14 +89,12 @@ public class CreateServiceImplFram extends JDialog {
             chooser.setMultiSelectionEnabled(false);
             chooser.setCurrentDirectory(Paths.get(basePath).toFile());
             int returnVal = chooser.showOpenDialog(this.rootPane);
-            System.out.println(returnVal);
             if (returnVal == 0) {
                 String selectPath = chooser.getSelectedFile().getAbsolutePath();
                 int start = selectPath.indexOf("WEB-INF");
                 if (start == -1) {
                     JOptionPane.showMessageDialog(this.rootPane, "请选择WEB-INF下的目录", "错误提示", JOptionPane.ERROR_MESSAGE, null);
                 } else {
-//                    selectPath = selectPath.substring(start);
                     selectPath = selectPath.replace("\\\\", "/").replace("\\", "/");
                     basePathText.setText(selectPath);
                 }
@@ -127,7 +123,9 @@ public class CreateServiceImplFram extends JDialog {
                 baseVO.setActionFileName(this.actionFileName);
                 baseVO.setActionPackage(this.actionPackage);
                 baseVO.setFunName(this.funName);
-                baseVO.setTemplatePath(this.basePathText.getText() + htmlPaths);
+                String templatePath = this.basePathText.getText();
+                int start = templatePath.indexOf("WEB-INF");
+                baseVO.setTemplatePath(templatePath.substring(start) + htmlPaths);
                 baseVO.setUser(sys.getProperty("user.name"));
                 HashMap bindData = getBindData(baseVO);
                 bindData.put("base", baseVO);
@@ -151,7 +149,7 @@ public class CreateServiceImplFram extends JDialog {
                 }
                 value.refresh(true, true);
             }
-        } catch (Exception ex) {
+        } catch (Throwable ex) {
             JOptionPane.showMessageDialog(this.rootPane, ex.getMessage(), "错误提示", JOptionPane.ERROR_MESSAGE, null);
         }
         dispose();
