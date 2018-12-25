@@ -4,6 +4,7 @@ import com.sgaop.util.FileUtil;
 import org.beetl.core.Configuration;
 import org.beetl.core.GroupTemplate;
 import org.beetl.core.Template;
+import org.beetl.core.exception.BeetlException;
 import org.beetl.core.resource.StringTemplateResourceLoader;
 
 import java.io.IOException;
@@ -30,6 +31,7 @@ public class BeetlTemplteEngine implements ITemplteEngine {
             cfg.setStatementStart("<##");
             cfg.setStatementEnd("##>");
             cfg.setHtmlTagSupport(false);
+            cfg.setErrorHandlerClass("com.sgaop.templte.TemplateErrorHandler");
             gt = new GroupTemplate(resourceLoader, cfg);
             gt.registerFunctionPackage("sp", new StringExt());
         } catch (IOException e) {
@@ -49,7 +51,7 @@ public class BeetlTemplteEngine implements ITemplteEngine {
      * @return
      */
     @Override
-    public String render(String templeText, Map bindData) {
+    public String render(String templeText, Map bindData) throws BeetlException {
         Template template = gt.getTemplate(templeText);
         template.binding(bindData);
         return template.render();
@@ -65,7 +67,7 @@ public class BeetlTemplteEngine implements ITemplteEngine {
      * @return
      */
     @Override
-    public void renderToFile(String templeText, Map bindData, Path path) {
+    public void renderToFile(String templeText, Map bindData, Path path) throws BeetlException{
         Path floderPath = path.getParent();
         if (!floderPath.toFile().exists()) {
             floderPath.toFile().mkdirs();

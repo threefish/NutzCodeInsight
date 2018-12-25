@@ -35,7 +35,6 @@ public class CreateServiceImplFram extends JDialog {
     String actionPackage;
     String actionFileName;
     String htmlPaths;
-    String funName;
     private JPanel contentPane;
     private JButton buttonOK;
     private JButton buttonCancel;
@@ -59,7 +58,6 @@ public class CreateServiceImplFram extends JDialog {
         this.serviceImplPackage = entityPackage.replace("entity", "service") + ".impl";
         this.actionPackage = entityPackage.replace("entity", "module");
         this.htmlPaths = "/" + entityName + "/";
-        this.funName = funNameText.getText();
         int w = 500, h = 400;
         int x = (int) (Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2 - (w / 2));
         int y = (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2 - (h / 2));
@@ -122,7 +120,7 @@ public class CreateServiceImplFram extends JDialog {
                 baseVO.setServiceImplPackage(this.serviceImplPackage);
                 baseVO.setActionFileName(this.actionFileName);
                 baseVO.setActionPackage(this.actionPackage);
-                baseVO.setFunName(this.funName);
+                baseVO.setFunName(this.funNameText.getText());
                 String templatePath = this.basePathText.getText();
                 int start = templatePath.indexOf("WEB-INF");
                 baseVO.setTemplatePath(templatePath.substring(start) + htmlPaths);
@@ -148,11 +146,11 @@ public class CreateServiceImplFram extends JDialog {
                     renderTemplte.renderToFile(editHtml.getText(), bindData, Paths.get(this.basePathText.getText(), this.htmlPaths, "edit.html"));
                 }
                 value.refresh(true, true);
+                dispose();
             }
         } catch (Throwable ex) {
             JOptionPane.showMessageDialog(this.rootPane, ex.getMessage(), "错误提示", JOptionPane.ERROR_MESSAGE, null);
         }
-        dispose();
     }
 
 
