@@ -79,6 +79,8 @@ public class CreateServiceImplAction extends DumbAwareAction {
                 if (dbName != null) {
                     JavaField javaField = new JavaField();
                     javaField.setName(field.getName());
+                    javaField.setPrimaryKey(JavaFieldUtil.isPrimaryKey(field));
+                    javaField.setDate(JavaFieldUtil.isDate(field));
                     javaField.setDbName(dbName);
                     javaField.setComment(JavaFieldUtil.getComment(field));
                     javaField.setType(field.getType().getPresentableText());

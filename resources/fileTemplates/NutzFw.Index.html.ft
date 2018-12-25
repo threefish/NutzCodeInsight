@@ -140,13 +140,13 @@ layout("/layouts/blank.html",{title:title}){
                         {title: '序号', type: 'numbers', width: 50},
                         {type: 'checkbox'},
                         <## for(field in fields){ ##>
-                           <## if(field.dict){ ##>
-                            {field: '#[field.name]', title: '#[field.comment]', templet: function (row) {
-                                    return #[field.dictCode][row.#[field.name]];
-                                }
-                            },
-                            <##}else{##>
-                            {field: '#[field.name]', title: '#[field.comment]'},
+                            <## if(field.dict){ ##>
+                        {field: '#[field.name]', title: '#[field.comment]', templet: function (row) {
+                                return #[field.dictCode][row.#[field.name]];
+                            }
+                        },
+                        <##}else if(!field.primaryKey)){##>
+                        {field: '#[field.name]', title: '#[field.comment]'},
                         <##}}##>
                         {field: 'opAt', title: '创建时间'},
                         {title: '操作', width: 160, align: 'center', toolbar: '#toolBarFixed'},

@@ -10,48 +10,30 @@ layout("/layouts/blank.html",{title:title}){
 <section class="content" id="container" v-if="initLoad">
     <div role="form">
         <!-- text input -->
+        <## for(field in fields){ ##>
+         <## if(field.dict){ ##>
         <div class="form-group col-xs-6">
-            <label>姓名</label>
-            <input type="text" v-model="fromData.name" :disabled="!fromDataEdit" class="form-control"
-                   placeholder="请输入 ...">
+            <label>#[field.comment]</label>
+            ${dict("#[field.name]",false,'v-model="fromData.#[field.name]"','class="form-control"',':disabled="!fromDataEdit"')}
         </div>
+        <##}else if(field.date)){##>
         <div class="form-group col-xs-6">
-            <label>性别</label>
-            ${dict("sys_user_sex",false,'v-model="fromData.sex"','class="form-control"',':disabled="!fromDataEdit"')}
-        </div>
-        <div class="form-group col-xs-6">
-            <label>学历</label>
-            ${dict("sys_user_education",false,'v-model="fromData.education"','class="form-control"',':disabled="!fromDataEdit"')}
-        </div>
-        <div class="form-group col-xs-6">
-            <label>职位</label>
-            ${dict("logistics_job_position",false,'v-model="fromData.jobPosition"','class="form-control"',':disabled="!fromDataEdit"')}
-        </div>
-        <div class="form-group col-xs-6">
-            <label>住址</label>
-            <input type="text" v-model="fromData.address" :disabled="!fromDataEdit" class="form-control"
-                   placeholder="请输入 ...">
-        </div>
-        <div class="form-group col-xs-6">
-            <label>出生年月</label>
+            <label>#[field.comment]</label>
             <div class="input-group">
-                <input type="text" v-model="fromData.birthDay" data-fieldname="birthDay"
+                <input type="text" v-model="fromData.#[field.name]" data-fieldname="#[field.name]"
                        date-fomat="yyyy-MM-dd" date-type="date" readonly :disabled="!fromDataEdit"
                        class="form-control"
                        placeholder="请输入 ...">
                 <span class="input-group-addon"><i class="fa fa-clock-o"></i></span>
             </div>
         </div>
+        <##}else if(!field.primaryKey)){##>
         <div class="form-group col-xs-6">
-            <label>薪水</label>
-            <input type="text" v-model="fromData.salary" :disabled="!fromDataEdit" class="form-control"
+            <label>#[field.comment]</label>
+            <input type="text" v-model="fromData.#[field.name]" :disabled="!fromDataEdit" class="form-control"
                    placeholder="请输入 ...">
         </div>
-        <div class="form-group col-xs-6">
-            <label>手机号码</label>
-            <input type="text" v-model="fromData.phone" :disabled="!fromDataEdit" class="form-control"
-                   placeholder="请输入 ...">
-        </div>
+        <##}}##>
     </div>
 </section>
 <script type="text/javascript">

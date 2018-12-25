@@ -19,6 +19,18 @@ public class JavaFieldUtil {
 
     private static final String DICT = "com.nutzfw.annotation.Dict";
 
+    public static boolean isDate(PsiField field) {
+        String type = field.getType().getPresentableText();
+        return "Date".equals(type) || "Timestamp".equals(type);
+    }
+
+    public static boolean isPrimaryKey(PsiField field) {
+        PsiAnnotation annotation0 = field.getAnnotation(IS_FIELD[0]);
+        PsiAnnotation annotation1 = field.getAnnotation(IS_FIELD[1]);
+        return annotation0 != null || annotation1 != null;
+    }
+
+
     public static String getDbNameAndIsColumn(PsiField field) {
         PsiAnnotation annotation0 = field.getAnnotation(IS_FIELD[0]);
         PsiAnnotation annotation1 = field.getAnnotation(IS_FIELD[1]);
@@ -56,4 +68,6 @@ public class JavaFieldUtil {
         }
         return null;
     }
+
+
 }

@@ -11,6 +11,11 @@ public class JavaField {
     String name;
 
     /**
+     * 主键
+     */
+    boolean primaryKey;
+
+    /**
      * 字段描述
      */
     String comment;
@@ -31,6 +36,11 @@ public class JavaField {
     String fullType;
 
     /**
+     * 日期
+     */
+    boolean date;
+
+    /**
      * 是字典
      */
     boolean dict;
@@ -40,6 +50,22 @@ public class JavaField {
     String dictCode;
 
     public JavaField() {
+    }
+
+    public boolean isPrimaryKey() {
+        return primaryKey;
+    }
+
+    public void setPrimaryKey(boolean primaryKey) {
+        this.primaryKey = primaryKey;
+    }
+
+    public boolean isDate() {
+        return date;
+    }
+
+    public void setDate(boolean date) {
+        this.date = date;
     }
 
     public boolean isDict() {
@@ -62,10 +88,14 @@ public class JavaField {
     public String toString() {
         return "JavaField{" +
                 "name='" + name + '\'' +
+                ", primaryKey=" + primaryKey +
                 ", comment='" + comment + '\'' +
                 ", dbName='" + dbName + '\'' +
                 ", type='" + type + '\'' +
                 ", fullType='" + fullType + '\'' +
+                ", date=" + date +
+                ", dict=" + dict +
+                ", dictCode='" + dictCode + '\'' +
                 '}';
     }
 
