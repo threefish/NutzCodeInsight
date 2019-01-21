@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>com.sgaop.idea.codeinsight.plugin</id>
     <name>NutzCodeInsight</name>
-    <version>2.0.5</version>
+    <version>2.0.6</version>
     <vendor email="huchuc@vip.qq.com" url="https://github.com/threefish/NutzCodeInsight">threefish</vendor>
     <description><![CDATA[
       <h1>Intellij idea plugin for <a href="https://github.com/nutzam/nutz">Nutz</a></h1>
@@ -45,10 +45,11 @@
     ]]>
     </description>
     <change-notes><![CDATA[
-        <b>2.0.5</b>
+        <b>2.0.6</b>
        <ul>
         <li>Add: Class File Symbol can quickly find the mapped address, faster than "Find Nutz At Mapping Url"</li>
         <li>Update: Cancel the asynchronous scanning At Mapping mechanism, but continue to use the cache, to some extent, to quickly find the mapped address</li>
+        <li>移除：快速生成接口和实现类 如需要可以下载 <a href='https://plugins.jetbrains.com/plugin/11575-nutzfw'>NutzFwCodeGenerat</a>使用</li>
         <li>添加：Class  File  Symbol 中可以快速查找映射地址，速度优于"Find Nutz At Mapping Url"</li>
         <li>更新：取消异步扫描AtMapping机制，但继续使用缓存，一定程度上达到快速查找映射地址</li>
        </ul>
@@ -107,12 +108,6 @@
         <action id="GoToRequestMapping" class="com.sgaop.idea.actions.GoToNutzAtMappingAction"
                 text="Find Nutz @At Mapping Url" description="Find Nutz At Mapping Url">
             <add-to-group group-id="GoToTargetEx" anchor="first"/>
-        </action>
-        <!--快速生成接口和实现类-->
-        <action id="createServiceImplAction" icon="/fileTypes/java.png"
-                class="com.sgaop.idea.actions.CreateServiceImplAction" text="快速创建接口及实现类" description="快速创建接口及实现类">
-            <add-to-group group-id="GenerateGroup" anchor="last"/>
-            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
         </action>
     </actions>
 
