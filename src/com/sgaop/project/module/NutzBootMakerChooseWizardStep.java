@@ -7,7 +7,6 @@ import com.intellij.ide.wizard.CommitStepException;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.ui.Messages;
 import com.sgaop.project.HttpUtil;
-import com.sgaop.project.module.NutzBootModuleBuilder;
 import com.sgaop.project.module.vo.NutzBootGroupVO;
 import com.sgaop.project.module.vo.NutzBootItemVO;
 import com.sgaop.project.module.vo.NutzBootProsVO;
@@ -15,9 +14,9 @@ import com.sgaop.project.module.vo.NutzBootVO;
 import com.sgaop.project.ui.action.EnableGroupAction;
 import com.sgaop.project.ui.gui.DataCheckBox;
 import com.sgaop.util.FileUtil;
+import com.sgaop.util.Strings;
 import org.apache.http.HttpResponse;
 import org.apache.http.entity.BasicHttpEntity;
-import org.fest.util.Strings;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -33,6 +32,7 @@ import java.util.Vector;
  */
 public class NutzBootMakerChooseWizardStep extends ModuleWizardStep {
 
+    protected WizardContext wizardContext;
     private JPanel root;
     private JTextField packageName;
     private JTextField groupId;
@@ -43,11 +43,7 @@ public class NutzBootMakerChooseWizardStep extends ModuleWizardStep {
     private JScrollPane scrollPanel;
     private JTextField makerUrl;
     private JButton reloadButton;
-
     private Vector<UiCatch> uiCatches = new Vector<>();
-
-    protected WizardContext wizardContext;
-
     private String downLoadKey;
 
     private NutzBootModuleBuilder moduleBuilder;
@@ -207,6 +203,9 @@ public class NutzBootMakerChooseWizardStep extends ModuleWizardStep {
         return data;
     }
 
+    public JPanel getRoot() {
+        return root;
+    }
 
     public class UiCatch {
 
@@ -244,10 +243,6 @@ public class NutzBootMakerChooseWizardStep extends ModuleWizardStep {
         public void setCheckBoxes(Vector<DataCheckBox> checkBoxes) {
             this.checkBoxes = checkBoxes;
         }
-    }
-
-    public JPanel getRoot() {
-        return root;
     }
 
 }
