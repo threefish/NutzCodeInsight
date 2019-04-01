@@ -47,6 +47,10 @@
     ]]>
     </description>
     <change-notes><![CDATA[
+      <b>2.0.6.fix</b>
+       <ul>
+        <li>fix bug: https://github.com/nutzam/nutzboot/issues/157 </li>
+       </ul>
         <b>2.0.6</b>
        <ul>
         <li>Add: Class File Symbol can quickly find the mapped address, faster than "Find Nutz At Mapping Url"</li>
