@@ -103,9 +103,9 @@
                 implementation="com.sgaop.idea.codeinsight.reference.NutzInjectToPropsReferenceContributor"/>
         <!--配置文件折叠-结束-->
         <!--语言中代码提示-->
-        <completion.contributor language="SQL"
-                                implementationClass="com.sgaop.idea.contributor.SqlParamCompletionContributor"
-                                order="first"/>
+        <!--<completion.contributor language="SQL"-->
+                                <!--implementationClass="com.sgaop.idea.contributor.SqlParamCompletionContributor"-->
+                                <!--order="first"/>-->
         <!--语言注入-->
         <multiHostInjector implementation="com.sgaop.idea.NutzJavaSqlMultiHostInjector"/>
         <multiHostInjector implementation="com.sgaop.idea.NutzTplXmlSqlMultiHostInjector"/>
