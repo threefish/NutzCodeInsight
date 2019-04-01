@@ -14,7 +14,7 @@ import java.util.List;
  * @author 黄川 huchuc@vip.qq.com
  * @date: 2019/4/1
  */
-public class NutzSqlMultiHostInjector implements MultiHostInjector {
+public class NutzJavaSqlMultiHostInjector implements MultiHostInjector {
 
     static final Language SQL_LANGUAGE = Language.findLanguageByID("SQL");
 
@@ -22,16 +22,14 @@ public class NutzSqlMultiHostInjector implements MultiHostInjector {
 
     @Override
     public void getLanguagesToInject(@NotNull MultiHostRegistrar registrar, @NotNull PsiElement psiElement) {
-        if (psiElement.getParent() != null) {
-            if (psiElement.getParent().getParent() != null) {
-                PsiElement ann = psiElement.getParent().getParent().getParent();
-                if (ann != null && ann instanceof PsiAnnotation) {
-                    String qualName = ((PsiAnnotation) ann).getQualifiedName();
-                    if (SQLS.contains(qualName)) {
-                        registrar.startInjecting(SQL_LANGUAGE);
-                        registrar.addPlace(null, null, (PsiLanguageInjectionHost) psiElement, ElementManipulators.getValueTextRange(psiElement));
-                        registrar.doneInjecting();
-                    }
+        if (psiElement.getParent() != null && psiElement.getParent().getParent() != null) {
+            PsiElement parent = psiElement.getParent().getParent().getParent();
+            if (parent != null && parent instanceof PsiAnnotation) {
+                String qualifiedName = ((PsiAnnotation) parent).getQualifiedName();
+                if (SQLS.contains(qualifiedName)) {
+                    registrar.startInjecting(SQL_LANGUAGE);
+                    registrar.addPlace(null, null, (PsiLanguageInjectionHost) psiElement, ElementManipulators.getValueTextRange(psiElement));
+                    registrar.doneInjecting();
                 }
             }
         }
