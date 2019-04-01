@@ -6,6 +6,7 @@ import com.intellij.lang.injection.MultiHostRegistrar;
 import com.intellij.psi.*;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,6 +15,11 @@ import java.util.List;
  * @date: 2019/4/1
  */
 public class NutzSqlMultiHostInjector implements MultiHostInjector {
+
+    static final Language SQL_LANGUAGE = Language.findLanguageByID("SQL");
+
+    static final List<String> SQLS = Arrays.asList("org.nutz.dao.entity.annotation.SQL");
+
     @Override
     public void getLanguagesToInject(@NotNull MultiHostRegistrar registrar, @NotNull PsiElement psiElement) {
         if (psiElement.getParent() != null) {
@@ -21,8 +27,8 @@ public class NutzSqlMultiHostInjector implements MultiHostInjector {
                 PsiElement ann = psiElement.getParent().getParent().getParent();
                 if (ann != null && ann instanceof PsiAnnotation) {
                     String qualName = ((PsiAnnotation) ann).getQualifiedName();
-                    if ("org.nutz.dao.entity.annotation.SQL".equals(qualName)) {
-                        registrar.startInjecting(Language.findLanguageByID("SQL"));
+                    if (SQLS.contains(qualName)) {
+                        registrar.startInjecting(SQL_LANGUAGE);
                         registrar.addPlace(null, null, (PsiLanguageInjectionHost) psiElement, ElementManipulators.getValueTextRange(psiElement));
                         registrar.doneInjecting();
                     }
