@@ -21,14 +21,14 @@ import java.util.List;
 public class NutzTplXmlSqlMultiHostInjector implements MultiHostInjector {
 
     static final Language SQL_LANGUAGE = Language.findLanguageByID("SQL");
+    static final String TAG = "sql";
 
     @Override
     public void getLanguagesToInject(@NotNull MultiHostRegistrar registrar, @NotNull PsiElement psiElement) {
         if (DomUtils.isNutzSqlFile(psiElement.getContainingFile())) {
             if (psiElement instanceof XmlTag) {
                 XmlTag tag = (XmlTag) psiElement;
-                if ("sql".equals(tag.getName())) {
-                    System.out.println(tag.getValue().getTrimmedText());
+                if (TAG.equals(tag.getName())) {
                     PsiElement element = getXmlText(psiElement.getChildren());
                     if (element != null) {
                         registrar.startInjecting(SQL_LANGUAGE);
@@ -43,7 +43,6 @@ public class NutzTplXmlSqlMultiHostInjector implements MultiHostInjector {
     private PsiElement getXmlText(PsiElement[] psiElements) {
         for (PsiElement psiElement : psiElements) {
             if (psiElement instanceof XmlText) {
-                System.out.println(psiElement.getText());
                 return psiElement;
             }
         }
