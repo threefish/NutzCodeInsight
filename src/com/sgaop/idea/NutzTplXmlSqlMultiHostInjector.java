@@ -11,6 +11,7 @@ import com.intellij.psi.xml.XmlText;
 import com.sgaop.util.DomUtils;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -29,10 +30,10 @@ public class NutzTplXmlSqlMultiHostInjector implements MultiHostInjector {
             if (psiElement instanceof XmlTag) {
                 XmlTag tag = (XmlTag) psiElement;
                 if (TAG.equals(tag.getName())) {
-                    PsiElement element = getXmlText(psiElement.getChildren());
-                    if (element != null) {
+                    List<PsiElement> els = findXmlTexts(psiElement.getChildren());
+                    if (els.size() > 0) {
                         registrar.startInjecting(SQL_LANGUAGE);
-                        registrar.addPlace(null, null, (PsiLanguageInjectionHost) element, ElementManipulators.getValueTextRange(element));
+                        els.forEach(el -> registrar.addPlace(null, null, (PsiLanguageInjectionHost) el, ElementManipulators.getValueTextRange(el)));
                         registrar.doneInjecting();
                     }
                 }
@@ -40,13 +41,14 @@ public class NutzTplXmlSqlMultiHostInjector implements MultiHostInjector {
         }
     }
 
-    private PsiElement getXmlText(PsiElement[] psiElements) {
+    private List<PsiElement> findXmlTexts(PsiElement[] psiElements) {
+        List<PsiElement> xmlTexts = new ArrayList<>();
         for (PsiElement psiElement : psiElements) {
             if (psiElement instanceof XmlText) {
-                return psiElement;
+                xmlTexts.add(psiElement);
             }
         }
-        return null;
+        return xmlTexts;
     }
 
     @NotNull
