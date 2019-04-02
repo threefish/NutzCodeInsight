@@ -30,7 +30,7 @@ public class JavaSqlsXmlLineMarkerProvider extends LineMarkerProviderDescriptor 
     @Nullable
     @Override
     public LineMarkerInfo getLineMarkerInfo(@NotNull PsiElement psiElement) {
-        if(SqlsXmlLineUtil.isSqlsXml(psiElement)){
+        if (SqlsXmlLineUtil.isSqlsXml(psiElement)) {
             Icon icon = AllIcons.Javaee.Application_xml;
             return new LineMarkerInfo<>(psiElement, psiElement.getTextRange(), icon,
                     Pass.LINE_MARKERS, new FunctionTooltip(), new SqlsXmlNavigationHandler(),

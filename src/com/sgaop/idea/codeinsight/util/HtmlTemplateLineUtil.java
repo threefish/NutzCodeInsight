@@ -56,7 +56,6 @@ public class HtmlTemplateLineUtil {
     }
 
 
-
     private static boolean endWithRes(String path) {
         Iterator<String> iterable = resNames.iterator();
         while (iterable.hasNext()) {

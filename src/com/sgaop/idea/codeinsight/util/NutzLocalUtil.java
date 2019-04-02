@@ -7,20 +7,17 @@ import com.intellij.psi.impl.java.stubs.index.JavaAnnotationIndex;
 import com.intellij.psi.impl.source.tree.java.PsiAnnotationParamListImpl;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.sgaop.idea.codeinsight.NutzCons;
-import com.sgaop.project.ToolCfiguration;
 
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.*;
-import java.util.regex.Pattern;
 
 /**
  * Created with IntelliJ IDEA.
  *
  * @author 黄川 huchuc@vip.qq.com
-
+ * <p>
  * 创建时间: 2018/1/3  14:26
-
  */
 public class NutzLocalUtil {
 

@@ -1,4 +1,4 @@
-package com.sgaop.idea;
+package com.sgaop.idea.injector;
 
 import com.intellij.lang.Language;
 import com.intellij.lang.injection.MultiHostInjector;
@@ -7,7 +7,6 @@ import com.intellij.psi.*;
 import com.sgaop.idea.codeinsight.NutzCons;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 

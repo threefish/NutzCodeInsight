@@ -42,21 +42,20 @@ public class SqlsXmlLineUtil {
         return false;
     }
 
-    public static List<VirtualFile> findTemplteFileList(PsiElement psiAnnotation) {
+    public static List<VirtualFile> findTemplteFileList(PsiElement psiAnnotationParamList) {
         Object value = null;
-        PsiElement psiAnnotationParamList = psiAnnotation.getNextSibling();
         if (psiAnnotationParamList instanceof PsiAnnotationParamListImpl) {
-            Collection<PsiLiteralExpression> literalExpressions = PsiTreeUtil.findChildrenOfType(psiAnnotation.getNextSibling(), PsiLiteralExpressionImpl.class);
+            Collection<PsiLiteralExpression> literalExpressions = PsiTreeUtil.findChildrenOfType(psiAnnotationParamList, PsiLiteralExpressionImpl.class);
             if (literalExpressions.size() == 1) {
                 value = literalExpressions.iterator().next().getValue();
             }
         }
         if (value == null) {
-            value = psiAnnotation.getContainingFile().getName().replace(".java", ".xml");
+            value = psiAnnotationParamList.getContainingFile().getName().replace(".java", ".xml");
         }
         ArrayList<VirtualFile> arrayList = new ArrayList<>();
-        String xmlPath = psiAnnotation.getContainingFile().getParent().getVirtualFile().getPath() + "/" + value;
-        Collection<VirtualFile> virtualFiles = FilenameIndex.getAllFilesByExt(psiAnnotation.getProject(), "xml", GlobalSearchScope.projectScope(psiAnnotation.getProject()));
+        String xmlPath = psiAnnotationParamList.getContainingFile().getParent().getVirtualFile().getPath() + "/" + value;
+        Collection<VirtualFile> virtualFiles = FilenameIndex.getAllFilesByExt(psiAnnotationParamList.getProject(), "xml", GlobalSearchScope.projectScope(psiAnnotationParamList.getProject()));
         Optional<VirtualFile> optional = virtualFiles.stream().filter(virtualFile -> virtualFile.getPath().equals(xmlPath)).findFirst();
         if (optional.isPresent()) {
             arrayList.add(optional.get());

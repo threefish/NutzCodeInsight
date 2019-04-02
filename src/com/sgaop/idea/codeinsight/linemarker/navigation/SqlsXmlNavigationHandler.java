@@ -19,7 +19,7 @@ public class SqlsXmlNavigationHandler extends AbstractNavigationHandler {
 
     @Override
     public List<VirtualFile> findTemplteFileList(PsiElement psiElement) {
-        return SqlsXmlLineUtil.findTemplteFileList(psiElement);
+        return SqlsXmlLineUtil.findTemplteFileList(psiElement.getNextSibling());
     }
 
 }

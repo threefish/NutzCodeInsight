@@ -3,7 +3,6 @@ package com.sgaop.idea.codeinsight.util;
 import com.intellij.lang.folding.FoldingDescriptor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.TextRange;
-import com.intellij.openapi.util.text.DelimitedListProcessor;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.impl.source.tree.LeafPsiElement;
@@ -26,9 +25,8 @@ import java.util.regex.Pattern;
  */
 public class BeetlHtmlLineUtil {
 
-    private static ToolCfiguration cfiguration = ToolCfiguration.getInstance();
-
     private static final Pattern FUN_PATTERN = Pattern.compile("(\"|')(.*?)(\"|')");
+    private static ToolCfiguration cfiguration = ToolCfiguration.getInstance();
 
     public static List<FoldingDescriptor> showNutzLocalization(Project project, PsiElement root) {
         List<FoldingDescriptor> descriptors = new ArrayList<>();

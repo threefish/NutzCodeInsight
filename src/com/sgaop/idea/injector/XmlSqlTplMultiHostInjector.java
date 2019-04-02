@@ -1,4 +1,4 @@
-package com.sgaop.idea;
+package com.sgaop.idea.injector;
 
 import com.intellij.lang.Language;
 import com.intellij.lang.injection.MultiHostInjector;
@@ -19,7 +19,7 @@ import java.util.List;
  * @author 黄川 huchuc@vip.qq.com
  * @date: 2019/4/1
  */
-public class NutzTplXmlSqlMultiHostInjector implements MultiHostInjector {
+public class XmlSqlTplMultiHostInjector implements MultiHostInjector {
 
     static final Language SQL_LANGUAGE = Language.findLanguageByID("SQL");
     static final String TAG = "sql";
