@@ -13,7 +13,7 @@
       </b>
       </p>
       <p>
-      <b>English</b>
+       <b>English</b>
        <ul>
          <li> 1、Support the Nutz Boot project to build quickly</li>
          <li> 2、Click on the template icon in front of @Ok in Nutz Action to quickly open or switch to an already opened template file.</li>
@@ -25,6 +25,9 @@
          <li> 8、@Inject("java:$conf.get('attach.savePath')") You can jump to each other in java files and configuration files by ctrl+click or ctrl+b</li>
          <li> 9、Quickly create interfaces and implementation classes in the support entity class (shortcut: Alt + insert )</li>
          <li> 10、@SQL sql supports dynamic language highlighting and prompts</li>
+         <li> 11、Dynamic highlighting and prompting of sql language in SQL template in <a href="https://github.com/threefish/nutz-sqltpl">Nutz-sqltpl</a> xml</li>
+         <li> 12、<a href="https://github.com/threefish/nutz-sqltpl">Nutz-sqltpl</a> supports xml and java files to jump to each other</li>
+         <li> 13、<a href="https://github.com/threefish/nutz-sqltpl">Nutz-sqltpl</a> quickly generates the corresponding xml template for the @SqlsXml annotation that has not yet created the xml template file (shortcut: Alt + insert )</li>
        </ul>
        <b>中文</b>
        <ul>
@@ -38,15 +41,28 @@
          <li> 8、@Inject("java:$conf.get('attach.savePath')") 可以通过 ctrl+click 或 ctrl+b 在java文件与配置文件中互相跳转</li>
          <li> 9、支持实体类中快速创建接口与实现类（快捷键：Alt+insert）</li>
          <li> 10、@SQL中的sql支持动态语言高亮和提示</li>
+         <li> 11、<a href="https://github.com/threefish/nutz-sqltpl">Nutz-sqltpl</a> xml中的SQL模板中sql语言的动态高亮和提示</li>
+         <li> 12、<a href="https://github.com/threefish/nutz-sqltpl">Nutz-sqltpl</a> 支持xml与java文件互相跳转</li>
+         <li> 13、<a href="https://github.com/threefish/nutz-sqltpl">Nutz-sqltpl</a> 为还未创建xml模板文件的@SqlsXml注解快速生成对应xml模板 （快捷键：Alt+insert</li>
        </ul>
       </p>
       <br/>
       <p><img src="https://raw.githubusercontent.com/threefish/NutzCodeInsight/master/image/NutzCodeInsight.gif" alt="NutzCodeInsight.gif"/></p>
+      <p><img src="https://raw.githubusercontent.com/threefish/NutzCodeInsight/master/image/ReferenceContributor.gif" alt="ReferenceContributor.gif"/></p>
+      <p><img src="https://raw.githubusercontent.com/threefish/NutzCodeInsight/master/image/NutzSqlTpl.gif" alt="NutzSqlTpl.gif"/></p>
       <br/>
       <p><a href="https://github.com/threefish/NutzCodeInsight/issues">Send feedback</a></p>
     ]]>
     </description>
     <change-notes><![CDATA[
+    <b>2.0.7</b>
+       <ul>
+         <li> 1、添加 <a href="https://github.com/threefish/nutz-sqltpl">Nutz-sqltpl</a> xml中的SQL模板中sql语言的动态高亮和提示</li>
+         <li> 2、添加 <a href="https://github.com/threefish/nutz-sqltpl">Nutz-sqltpl</a> 支持xml与java文件互相跳转</li>
+         <li> 3、添加 <a href="https://github.com/threefish/nutz-sqltpl">Nutz-sqltpl</a> 为还未创建xml模板文件的@SqlsXml注解快速生成对应xml模板 </li>
+         <li> 4、fix bug https://github.com/nutzam/nutzboot/issues/157  </li>
+       </ul>
+       <p>
       <b>2.0.6.fix</b>
        <ul>
         <li>fix bug: https://github.com/nutzam/nutzboot/issues/157 </li>

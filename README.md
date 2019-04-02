@@ -45,3 +45,5 @@
 
 ![NutzCodeInsight](image/ReferenceContributor.gif)
 
+![NutzCodeInsight](image/NutzSqlTpl.gif)
+
