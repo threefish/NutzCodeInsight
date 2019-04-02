@@ -88,6 +88,9 @@
         <!--模版文件快速跳转资源文件-->
         <codeInsight.lineMarkerProvider language="HTML"
                                         implementationClass="com.sgaop.idea.codeinsight.HtmlTemplateLineMarkerProvider"/>
+        <!--@SqlXml快速跳转sql模版文件-->
+        <codeInsight.lineMarkerProvider language="JAVA"
+                                        implementationClass="com.sgaop.idea.codeinsight.JavaSqlsXmlLineMarkerProvider"/>
         <!--代码折叠生成器-->
         <!--国际化语言折叠-开始-->
         <lang.foldingBuilder language="JAVA"
