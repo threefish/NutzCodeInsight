@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
  * @author 黄川 huchuc@vip.qq.com
  * @date: 2019/4/1
  */
-public class DomUtils {
+public class DomUtil {
 
     public static boolean isNutzSqlFile(PsiFile file) {
         if (!isXmlFile(file)) {

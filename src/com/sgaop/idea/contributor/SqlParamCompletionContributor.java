@@ -7,7 +7,7 @@ import com.intellij.codeInsight.completion.CompletionType;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.impl.source.tree.injected.InjectedLanguageUtil;
-import com.sgaop.util.DomUtils;
+import com.sgaop.util.DomUtil;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
@@ -22,7 +22,7 @@ public class SqlParamCompletionContributor extends CompletionContributor {
         }
         PsiElement position = parameters.getPosition();
         PsiFile topLevelFile = InjectedLanguageUtil.getTopLevelFile(position);
-        if (DomUtils.isNutzSqlFile(topLevelFile)) {
+        if (DomUtil.isNutzSqlFile(topLevelFile)) {
             if (shouldAddElement(position.getContainingFile(), parameters.getOffset())) {
                 System.out.println(topLevelFile);
                 System.out.println(result);

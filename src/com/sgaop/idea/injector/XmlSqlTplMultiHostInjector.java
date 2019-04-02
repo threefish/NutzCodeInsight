@@ -8,7 +8,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLanguageInjectionHost;
 import com.intellij.psi.xml.XmlTag;
 import com.intellij.psi.xml.XmlText;
-import com.sgaop.util.DomUtils;
+import com.sgaop.util.DomUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -26,7 +26,7 @@ public class XmlSqlTplMultiHostInjector implements MultiHostInjector {
 
     @Override
     public void getLanguagesToInject(@NotNull MultiHostRegistrar registrar, @NotNull PsiElement psiElement) {
-        if (DomUtils.isNutzSqlFile(psiElement.getContainingFile())) {
+        if (DomUtil.isNutzSqlFile(psiElement.getContainingFile())) {
             if (psiElement instanceof XmlTag) {
                 XmlTag tag = (XmlTag) psiElement;
                 if (TAG.equals(tag.getName())) {

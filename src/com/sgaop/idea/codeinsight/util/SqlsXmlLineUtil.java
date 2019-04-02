@@ -42,7 +42,7 @@ public class SqlsXmlLineUtil {
         return false;
     }
 
-    public static List<VirtualFile> findTemplteFileList(PsiElement psiAnnotationParamList) {
+    public static Object getTemplteFileName(PsiElement psiAnnotationParamList) {
         Object value = null;
         if (psiAnnotationParamList instanceof PsiAnnotationParamListImpl) {
             Collection<PsiLiteralExpression> literalExpressions = PsiTreeUtil.findChildrenOfType(psiAnnotationParamList, PsiLiteralExpressionImpl.class);
@@ -53,6 +53,11 @@ public class SqlsXmlLineUtil {
         if (value == null) {
             value = psiAnnotationParamList.getContainingFile().getName().replace(".java", ".xml");
         }
+        return value;
+    }
+
+    public static List<VirtualFile> findTemplteFileList(PsiElement psiAnnotationParamList) {
+        Object value = getTemplteFileName(psiAnnotationParamList);
         ArrayList<VirtualFile> arrayList = new ArrayList<>();
         String xmlPath = psiAnnotationParamList.getContainingFile().getParent().getVirtualFile().getPath() + "/" + value;
         Collection<VirtualFile> virtualFiles = FilenameIndex.getAllFilesByExt(psiAnnotationParamList.getProject(), "xml", GlobalSearchScope.projectScope(psiAnnotationParamList.getProject()));
