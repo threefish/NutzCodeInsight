@@ -4,7 +4,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
-import com.sgaop.idea.codeinsight.JavaNutzTemplateVO;
+import com.sgaop.idea.codeinsight.linemarker.JavaNutzTemplateVO;
 import com.sgaop.idea.codeinsight.NutzCons;
 import com.sgaop.project.ToolCfiguration;
 

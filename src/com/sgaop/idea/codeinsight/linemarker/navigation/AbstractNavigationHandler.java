@@ -1,4 +1,4 @@
-package com.sgaop.idea.codeinsight.navigation;
+package com.sgaop.idea.codeinsight.linemarker.navigation;
 
 import com.intellij.codeInsight.daemon.GutterIconNavigationHandler;
 import com.intellij.openapi.fileEditor.FileEditorManager;

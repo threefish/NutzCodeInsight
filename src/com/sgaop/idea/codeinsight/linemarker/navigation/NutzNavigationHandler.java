@@ -1,4 +1,4 @@
-package com.sgaop.idea.codeinsight.navigation;
+package com.sgaop.idea.codeinsight.linemarker.navigation;
 
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;

@@ -1,4 +1,4 @@
-package com.sgaop.idea.codeinsight;
+package com.sgaop.idea.codeinsight.linemarker;
 
 /**
  * Created with IntelliJ IDEA.

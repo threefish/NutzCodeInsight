@@ -84,13 +84,13 @@
                             serviceImplementation="com.sgaop.project.ToolCfiguration"/>
         <!--NutzAction快速跳转模版文件-->
         <codeInsight.lineMarkerProvider language="JAVA"
-                                        implementationClass="com.sgaop.idea.codeinsight.JavaNutzLineMarkerProvider"/>
+                                        implementationClass="com.sgaop.idea.codeinsight.linemarker.JavaNutzLineMarkerProvider"/>
         <!--模版文件快速跳转资源文件-->
         <codeInsight.lineMarkerProvider language="HTML"
-                                        implementationClass="com.sgaop.idea.codeinsight.HtmlTemplateLineMarkerProvider"/>
+                                        implementationClass="com.sgaop.idea.codeinsight.linemarker.HtmlTemplateLineMarkerProvider"/>
         <!--@SqlXml快速跳转sql模版文件-->
         <codeInsight.lineMarkerProvider language="JAVA"
-                                        implementationClass="com.sgaop.idea.codeinsight.JavaSqlsXmlLineMarkerProvider"/>
+                                        implementationClass="com.sgaop.idea.codeinsight.linemarker.JavaSqlsXmlLineMarkerProvider"/>
         <!--代码折叠生成器-->
         <!--国际化语言折叠-开始-->
         <lang.foldingBuilder language="JAVA"

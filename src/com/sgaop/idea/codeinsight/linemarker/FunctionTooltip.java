@@ -1,4 +1,4 @@
-package com.sgaop.idea.codeinsight;
+package com.sgaop.idea.codeinsight.linemarker;
 
 import com.intellij.util.Function;
 
