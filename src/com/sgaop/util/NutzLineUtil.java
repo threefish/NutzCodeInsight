@@ -1,11 +1,11 @@
-package com.sgaop.idea.codeinsight.util;
+package com.sgaop.util;
 
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
-import com.sgaop.idea.codeinsight.NutzCons;
-import com.sgaop.idea.codeinsight.linemarker.JavaNutzTemplateVO;
+import com.sgaop.idea.NutzCons;
+import com.sgaop.idea.linemarker.JavaNutzTemplateVO;
 import com.sgaop.project.ToolCfiguration;
 
 import javax.swing.*;

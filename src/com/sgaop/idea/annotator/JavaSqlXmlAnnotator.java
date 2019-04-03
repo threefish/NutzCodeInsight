@@ -4,7 +4,7 @@ import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
-import com.sgaop.idea.codeinsight.util.SqlsXmlLineUtil;
+import com.sgaop.util.SqlsXmlLineUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;

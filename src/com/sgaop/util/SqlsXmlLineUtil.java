@@ -1,4 +1,4 @@
-package com.sgaop.idea.codeinsight.util;
+package com.sgaop.util;
 
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
@@ -10,7 +10,7 @@ import com.intellij.psi.impl.source.tree.java.PsiLiteralExpressionImpl;
 import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.sgaop.idea.codeinsight.NutzCons;
+import com.sgaop.idea.NutzCons;
 
 import java.util.ArrayList;
 import java.util.Collection;

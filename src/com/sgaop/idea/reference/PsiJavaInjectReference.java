@@ -1,4 +1,4 @@
-package com.sgaop.idea.codeinsight.reference;
+package com.sgaop.idea.reference;
 
 import com.intellij.openapi.util.TextRange;
 import com.intellij.psi.PsiElement;

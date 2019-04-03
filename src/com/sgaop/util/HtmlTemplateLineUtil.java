@@ -1,4 +1,4 @@
-package com.sgaop.idea.codeinsight.util;
+package com.sgaop.util;
 
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -7,7 +7,6 @@ import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlToken;
-import com.sgaop.util.Strings;
 
 import javax.swing.*;
 import java.util.*;

@@ -4,7 +4,7 @@ import com.intellij.lang.Language;
 import com.intellij.lang.injection.MultiHostInjector;
 import com.intellij.lang.injection.MultiHostRegistrar;
 import com.intellij.psi.*;
-import com.sgaop.idea.codeinsight.NutzCons;
+import com.sgaop.idea.NutzCons;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;

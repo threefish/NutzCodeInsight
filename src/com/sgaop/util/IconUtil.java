@@ -1,4 +1,4 @@
-package com.sgaop.idea.codeinsight.util;
+package com.sgaop.util;
 
 import com.intellij.icons.AllIcons;
 

@@ -1,4 +1,4 @@
-package com.sgaop.idea.codeinsight.util;
+package com.sgaop.util;
 
 import com.intellij.lang.properties.IProperty;
 import com.intellij.lang.properties.psi.impl.PropertiesFileImpl;

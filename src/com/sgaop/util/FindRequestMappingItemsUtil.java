@@ -1,11 +1,11 @@
-package com.sgaop.idea.codeinsight.util;
+package com.sgaop.util;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.java.stubs.index.JavaAnnotationIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.sgaop.idea.actions.AtMappingItem;
-import com.sgaop.idea.codeinsight.NutzCons;
+import com.sgaop.idea.NutzCons;
 
 import java.util.ArrayList;
 import java.util.Collection;

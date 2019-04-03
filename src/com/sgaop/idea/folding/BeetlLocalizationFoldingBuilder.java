@@ -1,11 +1,11 @@
-package com.sgaop.idea.codeinsight.folding;
+package com.sgaop.idea.folding;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.folding.FoldingBuilderEx;
 import com.intellij.lang.folding.FoldingDescriptor;
 import com.intellij.openapi.editor.Document;
 import com.intellij.psi.PsiElement;
-import com.sgaop.idea.codeinsight.util.BeetlHtmlLineUtil;
+import com.sgaop.util.BeetlHtmlLineUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

@@ -1,4 +1,4 @@
-package com.sgaop.idea.codeinsight.folding;
+package com.sgaop.idea.folding;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.folding.FoldingBuilderEx;
@@ -12,7 +12,7 @@ import com.intellij.psi.PsiLiteralExpression;
 import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
-import com.sgaop.idea.codeinsight.util.NutzInjectConfUtil;
+import com.sgaop.util.NutzInjectConfUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

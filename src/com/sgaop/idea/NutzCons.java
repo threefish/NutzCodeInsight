@@ -1,4 +1,4 @@
-package com.sgaop.idea.codeinsight;
+package com.sgaop.idea;
 
 import java.util.Arrays;
 import java.util.List;

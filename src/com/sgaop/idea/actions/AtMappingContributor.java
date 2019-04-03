@@ -5,7 +5,7 @@ import com.intellij.navigation.NavigationItem;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
-import com.sgaop.idea.codeinsight.util.FindRequestMappingItemsUtil;
+import com.sgaop.util.FindRequestMappingItemsUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.sgaop.idea.codeinsight.folding;
+package com.sgaop.idea.folding;
 
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.folding.FoldingDescriptor;

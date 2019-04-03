@@ -1,4 +1,4 @@
-package com.sgaop.idea.codeinsight.util;
+package com.sgaop.util;
 
 import com.intellij.lang.folding.FoldingDescriptor;
 import com.intellij.openapi.project.Project;
@@ -10,7 +10,7 @@ import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlToken;
-import com.sgaop.idea.codeinsight.folding.NutzLocalizationFoldingDescriptor;
+import com.sgaop.idea.folding.NutzLocalizationFoldingDescriptor;
 import com.sgaop.project.ToolCfiguration;
 
 import java.util.ArrayList;

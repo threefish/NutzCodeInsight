@@ -100,26 +100,26 @@
                             serviceImplementation="com.sgaop.project.ToolCfiguration"/>
         <!--NutzAction快速跳转模版文件-->
         <codeInsight.lineMarkerProvider language="JAVA"
-                                        implementationClass="com.sgaop.idea.codeinsight.linemarker.JavaNutzLineMarkerProvider"/>
+                                        implementationClass="com.sgaop.idea.linemarker.JavaNutzLineMarkerProvider"/>
         <!--模版文件快速跳转资源文件-->
         <codeInsight.lineMarkerProvider language="HTML"
-                                        implementationClass="com.sgaop.idea.codeinsight.linemarker.HtmlTemplateLineMarkerProvider"/>
+                                        implementationClass="com.sgaop.idea.linemarker.HtmlTemplateLineMarkerProvider"/>
         <!--@SqlXml快速跳转sql模版文件-->
         <codeInsight.lineMarkerProvider language="JAVA"
-                                        implementationClass="com.sgaop.idea.codeinsight.linemarker.JavaSqlsXmlLineMarkerProvider"/>
+                                        implementationClass="com.sgaop.idea.linemarker.JavaSqlsXmlLineMarkerProvider"/>
         <!--代码折叠生成器-->
         <!--国际化语言折叠-开始-->
         <lang.foldingBuilder language="JAVA"
-                             implementationClass="com.sgaop.idea.codeinsight.folding.NutzLocalizationFoldingBuilder"/>
+                             implementationClass="com.sgaop.idea.folding.NutzLocalizationFoldingBuilder"/>
         <lang.foldingBuilder language="HTML"
-                             implementationClass="com.sgaop.idea.codeinsight.folding.BeetlLocalizationFoldingBuilder"/>
+                             implementationClass="com.sgaop.idea.folding.BeetlLocalizationFoldingBuilder"/>
         <!--国际化语言折叠-结束-->
         <!--配置文件注入折叠-开始-->
         <lang.foldingBuilder language="JAVA"
-                             implementationClass="com.sgaop.idea.codeinsight.folding.NutzInjectConfFoldingBuilder"/>
+                             implementationClass="com.sgaop.idea.folding.NutzInjectConfFoldingBuilder"/>
         <!--配置文件引用-->
         <psi.referenceContributor
-                implementation="com.sgaop.idea.codeinsight.reference.NutzInjectToPropsReferenceContributor"/>
+                implementation="com.sgaop.idea.reference.NutzInjectToPropsReferenceContributor"/>
         <!--配置文件折叠-结束-->
         <!--语言中代码提示-->
         <!--<completion.contributor language="SQL"-->

@@ -1,12 +1,12 @@
-package com.sgaop.idea.codeinsight.linemarker;
+package com.sgaop.idea.linemarker;
 
 import com.intellij.codeHighlighting.Pass;
 import com.intellij.codeInsight.daemon.LineMarkerInfo;
 import com.intellij.codeInsight.daemon.LineMarkerProviderDescriptor;
 import com.intellij.openapi.editor.markup.GutterIconRenderer;
 import com.intellij.psi.PsiElement;
-import com.sgaop.idea.codeinsight.linemarker.navigation.NutzNavigationHandler;
-import com.sgaop.idea.codeinsight.util.NutzLineUtil;
+import com.sgaop.idea.linemarker.navigation.NutzNavigationHandler;
+import com.sgaop.util.NutzLineUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

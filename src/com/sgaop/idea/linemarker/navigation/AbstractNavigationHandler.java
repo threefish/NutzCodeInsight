@@ -1,4 +1,4 @@
-package com.sgaop.idea.codeinsight.linemarker.navigation;
+package com.sgaop.idea.linemarker.navigation;
 
 import com.intellij.codeInsight.daemon.GutterIconNavigationHandler;
 import com.intellij.openapi.fileEditor.FileEditorManager;
@@ -10,7 +10,7 @@ import com.intellij.ui.awt.RelativePoint;
 import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBList;
 import com.intellij.util.ui.JBUI;
-import com.sgaop.idea.codeinsight.util.NutzLineUtil;
+import com.sgaop.util.NutzLineUtil;
 
 import javax.swing.*;
 import java.awt.event.MouseEvent;

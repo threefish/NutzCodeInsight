@@ -1,4 +1,4 @@
-package com.sgaop.idea.codeinsight.reference;
+package com.sgaop.idea.reference;
 
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
@@ -9,7 +9,7 @@ import com.intellij.psi.*;
 import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.util.ProcessingContext;
-import com.sgaop.idea.codeinsight.util.NutzInjectConfUtil;
+import com.sgaop.util.NutzInjectConfUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
