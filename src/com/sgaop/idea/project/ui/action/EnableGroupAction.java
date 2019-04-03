@@ -1,7 +1,7 @@
-package com.sgaop.project.ui.action;
+package com.sgaop.idea.project.ui.action;
 
-import com.sgaop.project.module.NutzBootMakerChooseWizardStep;
-import com.sgaop.project.ui.gui.DataCheckBox;
+import com.sgaop.idea.project.module.NutzBootMakerChooseWizardStep;
+import com.sgaop.idea.project.ui.gui.DataCheckBox;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

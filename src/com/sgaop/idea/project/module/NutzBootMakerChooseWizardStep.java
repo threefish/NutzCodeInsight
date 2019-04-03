@@ -1,4 +1,4 @@
-package com.sgaop.project.module;
+package com.sgaop.idea.project.module;
 
 import com.google.gson.Gson;
 import com.intellij.ide.util.projectWizard.ModuleWizardStep;
@@ -6,13 +6,13 @@ import com.intellij.ide.util.projectWizard.WizardContext;
 import com.intellij.ide.wizard.CommitStepException;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.ui.Messages;
-import com.sgaop.project.HttpUtil;
-import com.sgaop.project.module.vo.NutzBootGroupVO;
-import com.sgaop.project.module.vo.NutzBootItemVO;
-import com.sgaop.project.module.vo.NutzBootProsVO;
-import com.sgaop.project.module.vo.NutzBootVO;
-import com.sgaop.project.ui.action.EnableGroupAction;
-import com.sgaop.project.ui.gui.DataCheckBox;
+import com.sgaop.util.HttpUtil;
+import com.sgaop.idea.project.module.vo.NutzBootGroupVO;
+import com.sgaop.idea.project.module.vo.NutzBootItemVO;
+import com.sgaop.idea.project.module.vo.NutzBootProsVO;
+import com.sgaop.idea.project.module.vo.NutzBootVO;
+import com.sgaop.idea.project.ui.action.EnableGroupAction;
+import com.sgaop.idea.project.ui.gui.DataCheckBox;
 import com.sgaop.util.FileUtil;
 import com.sgaop.util.Strings;
 import org.apache.http.HttpResponse;

@@ -1,4 +1,4 @@
-package com.sgaop.project.module.vo;
+package com.sgaop.idea.project.module.vo;
 
 /**
  * @author 黄川 huchuc@vip.qq.com

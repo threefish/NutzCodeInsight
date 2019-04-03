@@ -1,8 +1,8 @@
-package com.sgaop.project;
+package com.sgaop.idea.project;
 
 import com.google.gson.Gson;
 import com.intellij.openapi.options.Configurable;
-import com.sgaop.project.ui.SettingConfigUi;
+import com.sgaop.idea.project.ui.SettingConfigUi;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.Nullable;
 

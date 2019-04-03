@@ -1,4 +1,4 @@
-package com.sgaop.project;
+package com.sgaop.util;
 
 import com.sgaop.util.FileUtil;
 import org.apache.http.HttpResponse;

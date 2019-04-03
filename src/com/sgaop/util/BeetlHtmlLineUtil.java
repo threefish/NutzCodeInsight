@@ -11,7 +11,7 @@ import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlToken;
 import com.sgaop.idea.folding.NutzLocalizationFoldingDescriptor;
-import com.sgaop.project.ToolCfiguration;
+import com.sgaop.idea.project.ToolCfiguration;
 
 import java.util.ArrayList;
 import java.util.Collection;

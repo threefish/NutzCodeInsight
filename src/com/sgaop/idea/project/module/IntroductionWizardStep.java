@@ -1,7 +1,7 @@
-package com.sgaop.project.module;
+package com.sgaop.idea.project.module;
 
 import com.intellij.ide.util.projectWizard.ModuleWizardStep;
-import com.sgaop.project.ui.SwingUtils;
+import com.sgaop.idea.project.ui.SwingUtils;
 
 import javax.swing.*;
 

@@ -1,4 +1,4 @@
-package com.sgaop.project.ui;
+package com.sgaop.idea.project.ui;
 
 import com.intellij.openapi.ui.Messages;
 

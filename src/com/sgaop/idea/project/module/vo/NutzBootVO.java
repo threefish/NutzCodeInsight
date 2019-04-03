@@ -1,4 +1,4 @@
-package com.sgaop.project.module.vo;
+package com.sgaop.idea.project.module.vo;
 
 import java.util.Arrays;
 import java.util.List;

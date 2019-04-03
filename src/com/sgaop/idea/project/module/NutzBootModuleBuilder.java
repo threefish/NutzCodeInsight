@@ -1,4 +1,4 @@
-package com.sgaop.project.module;
+package com.sgaop.idea.project.module;
 
 import com.intellij.ide.util.projectWizard.*;
 import com.intellij.openapi.Disposable;

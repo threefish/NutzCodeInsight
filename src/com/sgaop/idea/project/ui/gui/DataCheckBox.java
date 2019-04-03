@@ -1,6 +1,6 @@
-package com.sgaop.project.ui.gui;
+package com.sgaop.idea.project.ui.gui;
 
-import com.sgaop.project.module.vo.NutzBootItemVO;
+import com.sgaop.idea.project.module.vo.NutzBootItemVO;
 
 import javax.swing.*;
 

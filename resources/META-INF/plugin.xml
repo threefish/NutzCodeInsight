@@ -95,9 +95,9 @@
     <depends>com.intellij.properties</depends>
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
-        <applicationConfigurable instance="com.sgaop.project.ToolConfigurable"/>
-        <applicationService serviceInterface="com.sgaop.project.ToolCfiguration"
-                            serviceImplementation="com.sgaop.project.ToolCfiguration"/>
+        <applicationConfigurable instance="com.sgaop.idea.project.ToolConfigurable"/>
+        <applicationService serviceInterface="com.sgaop.idea.project.ToolCfiguration"
+                            serviceImplementation="com.sgaop.idea.project.ToolCfiguration"/>
         <!--NutzAction快速跳转模版文件-->
         <codeInsight.lineMarkerProvider language="JAVA"
                                         implementationClass="com.sgaop.idea.linemarker.JavaNutzLineMarkerProvider"/>
@@ -131,7 +131,7 @@
         <annotator language="JAVA" implementationClass="com.sgaop.idea.annotator.JavaSqlXmlAnnotator"/>
         <annotator language="XML" implementationClass="com.sgaop.idea.annotator.XmlExpTagAnnotator"/>
         <!--创建NutzBoot项目-->
-        <moduleBuilder builderClass="com.sgaop.project.module.NutzBootModuleBuilder"/>
+        <moduleBuilder builderClass="com.sgaop.idea.project.module.NutzBootModuleBuilder"/>
         <!--快速定位至NutzAction-->
         <gotoSymbolContributor implementation="com.sgaop.idea.actions.AtMappingContributor"/>
         <gotoClassContributor implementation="com.sgaop.idea.actions.AtMappingContributor"/>

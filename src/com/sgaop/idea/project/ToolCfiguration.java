@@ -1,4 +1,4 @@
-package com.sgaop.project;
+package com.sgaop.idea.project;
 
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.ServiceManager;

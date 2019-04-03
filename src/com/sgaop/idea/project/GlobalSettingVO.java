@@ -1,4 +1,4 @@
-package com.sgaop.project;
+package com.sgaop.idea.project;
 
 import com.google.gson.Gson;
 

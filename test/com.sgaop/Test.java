@@ -2,10 +2,10 @@ package com.sgaop;
 
 import com.google.gson.Gson;
 import com.intellij.openapi.util.text.DelimitedListProcessor;
-import com.sgaop.project.module.vo.NutzBootGroupVO;
-import com.sgaop.project.module.vo.NutzBootItemVO;
-import com.sgaop.project.module.vo.NutzBootProsVO;
-import com.sgaop.project.module.vo.NutzBootVO;
+import com.sgaop.idea.project.module.vo.NutzBootGroupVO;
+import com.sgaop.idea.project.module.vo.NutzBootItemVO;
+import com.sgaop.idea.project.module.vo.NutzBootProsVO;
+import com.sgaop.idea.project.module.vo.NutzBootVO;
 
 import java.util.ArrayList;
 import java.util.Arrays;
