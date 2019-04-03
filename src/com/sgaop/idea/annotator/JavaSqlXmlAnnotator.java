@@ -1,6 +1,7 @@
 package com.sgaop.idea.annotator;
 
 import com.intellij.lang.annotation.AnnotationHolder;
+import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.sgaop.util.SqlsXmlLineUtil;
@@ -31,7 +32,11 @@ public class JavaSqlXmlAnnotator extends AbstractSqlXmlAnnotator {
     public void process(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
         List<VirtualFile> virtualFileList = SqlsXmlLineUtil.findTemplteFileList(psiElement);
         if (virtualFileList.size() == 0) {
-            annotationHolder.createErrorAnnotation(psiElement.getTextRange(), errMsg);
+            if (psiElement.getNextSibling().getChildren().length == 0) {
+                annotationHolder.createErrorAnnotation(psiElement.getTextRange(), errMsg);
+            } else {
+                annotationHolder.createErrorAnnotation(new TextRange(psiElement.getTextRange().getStartOffset(), psiElement.getNextSibling().getTextRange().getEndOffset()), errMsg);
+            }
         }
     }
 }

@@ -129,18 +129,23 @@
         <multiHostInjector implementation="com.sgaop.idea.injector.XmlSqlTplMultiHostInjector"/>
         <!--语言扩展点-注解者 -->
         <annotator language="JAVA" implementationClass="com.sgaop.idea.annotator.JavaSqlXmlAnnotator"/>
-        <annotator language="XML" implementationClass="com.sgaop.idea.annotator.XmlExpTagAnnotator"/>
+        <!--<annotator language="XML" implementationClass="com.sgaop.idea.annotator.XmlExpTagAnnotator"/>-->
         <!--创建NutzBoot项目-->
         <moduleBuilder builderClass="com.sgaop.idea.project.module.NutzBootModuleBuilder"/>
         <!--快速定位至NutzAction-->
         <gotoSymbolContributor implementation="com.sgaop.idea.actions.AtMappingContributor"/>
         <gotoClassContributor implementation="com.sgaop.idea.actions.AtMappingContributor"/>
         <gotoFileContributor implementation="com.sgaop.idea.actions.AtMappingContributor"/>
+
+        <localInspection language="JAVA" shortName="create Sql Xml"
+                         displayName="生成xml模板文件"
+                         groupName="nutz-sqltpl" enabledByDefault="true" level="ERROR"
+                         implementationClass="com.sgaop.idea.inspection.GenerateSqlXmlInspection"/>
         <!--意图行动-->
         <intentionAction order="first">
             <className>com.sgaop.idea.intention.GenerateSqlXmlIntention</className>
         </intentionAction>
-        <fileTemplateGroup id="NutzSqlTpl" implementation="com.sgaop.idea.template.SqlTplFileTemplateGroupFactory"></fileTemplateGroup>
+        <fileTemplateGroup id="NutzSqlTpl" implementation="com.sgaop.idea.template.SqlTplFileTemplateGroupFactory"/>
     </extensions>
     <actions>
         <!--快速定位至NutzAction-->

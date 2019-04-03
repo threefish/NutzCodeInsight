@@ -45,16 +45,25 @@ public class SqlsXmlLineUtil {
     public static Object getTemplteFileName(PsiElement psiAnnotationParamList) {
         Object value = null;
         if (psiAnnotationParamList instanceof PsiAnnotationParamListImpl) {
-            Collection<PsiLiteralExpression> literalExpressions = PsiTreeUtil.findChildrenOfType(psiAnnotationParamList, PsiLiteralExpressionImpl.class);
-            if (literalExpressions.size() == 1) {
-                value = literalExpressions.iterator().next().getValue();
-            }
+            value = getAnnotationValue((PsiAnnotationParamListImpl) psiAnnotationParamList);
+        } else if (psiAnnotationParamList instanceof PsiJavaCodeReferenceElement && psiAnnotationParamList.getNextSibling() instanceof PsiAnnotationParamListImpl) {
+            value = getAnnotationValue((PsiAnnotationParamListImpl) psiAnnotationParamList.getNextSibling());
         }
         if (value == null) {
             value = psiAnnotationParamList.getContainingFile().getName().replace(".java", ".xml");
         }
         return value;
     }
+
+    private static Object getAnnotationValue(PsiAnnotationParamListImpl psiAnnotationParamList) {
+        Object value = null;
+        Collection<PsiLiteralExpression> literalExpressions = PsiTreeUtil.findChildrenOfType(psiAnnotationParamList, PsiLiteralExpressionImpl.class);
+        if (literalExpressions.size() == 1) {
+            value = literalExpressions.iterator().next().getValue();
+        }
+        return value;
+    }
+
 
     public static List<VirtualFile> findTemplteFileList(PsiElement psiAnnotationParamList) {
         Object value = getTemplteFileName(psiAnnotationParamList);
