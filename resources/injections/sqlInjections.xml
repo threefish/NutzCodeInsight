@@ -1,8 +1,0 @@
-<!--<?xml version="1.0" encoding="UTF-8"?>-->
-<!--<component name="LanguageInjectionConfiguration">-->
-    <!--<injection language="SQL" injector-id="java">-->
-        <!--<display-name>MyBatis: @SQL</display-name>-->
-        <!--<place><![CDATA[psiMethod().withName("value").withParameters().definedInClass("org.nutz.dao.entity.annotation.SQL")]]></place>-->
-        <!--<place><![CDATA[psiMethod().withName("value").withParameters().definedInClass("com.nutzfw.annotation.Sql")]]></place>-->
-    <!--</injection>-->
-<!--</component>-->
