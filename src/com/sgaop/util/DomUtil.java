@@ -1,9 +1,14 @@
 package com.sgaop.util;
 
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.xml.XmlFile;
 import com.intellij.psi.xml.XmlTag;
+import com.intellij.psi.xml.XmlText;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
@@ -21,5 +26,15 @@ public class DomUtil {
 
     static boolean isXmlFile(@NotNull PsiFile file) {
         return file instanceof XmlFile;
+    }
+
+    public static List<PsiElement> findXmlTexts(PsiElement[] psiElements) {
+        List<PsiElement> xmlTexts = new ArrayList<>();
+        for (PsiElement psiElement : psiElements) {
+            if (psiElement instanceof XmlText) {
+                xmlTexts.add(psiElement);
+            }
+        }
+        return xmlTexts;
     }
 }

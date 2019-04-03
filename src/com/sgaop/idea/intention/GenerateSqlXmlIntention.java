@@ -11,7 +11,7 @@ import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
 import com.sgaop.util.SqlsXmlLineUtil;
-import com.sgaop.idea.fileTemplateGroup.SqlTplFileTemplateGroupFactory;
+import com.sgaop.idea.template.SqlTplFileTemplateGroupFactory;
 import com.sgaop.util.TemplateFileUtil;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;

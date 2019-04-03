@@ -1,4 +1,4 @@
-package com.sgaop.idea.fileTemplateGroup;
+package com.sgaop.idea.template;
 
 import com.intellij.ide.fileTemplates.FileTemplateDescriptor;
 import com.intellij.ide.fileTemplates.FileTemplateGroupDescriptor;

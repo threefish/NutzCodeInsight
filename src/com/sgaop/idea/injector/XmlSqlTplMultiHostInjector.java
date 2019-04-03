@@ -3,6 +3,7 @@ package com.sgaop.idea.injector;
 import com.intellij.lang.Language;
 import com.intellij.lang.injection.MultiHostInjector;
 import com.intellij.lang.injection.MultiHostRegistrar;
+import com.intellij.openapi.fileTypes.PlainTextLanguage;
 import com.intellij.psi.ElementManipulators;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLanguageInjectionHost;
@@ -22,34 +23,32 @@ import java.util.List;
 public class XmlSqlTplMultiHostInjector implements MultiHostInjector {
 
     static final Language SQL_LANGUAGE = Language.findLanguageByID("SQL");
-    static final String TAG = "sql";
+    static final String SQL_TAG = "sql";
+    static final String EXP_TAG = "exp";
 
     @Override
     public void getLanguagesToInject(@NotNull MultiHostRegistrar registrar, @NotNull PsiElement psiElement) {
         if (DomUtil.isNutzSqlFile(psiElement.getContainingFile())) {
             if (psiElement instanceof XmlTag) {
                 XmlTag tag = (XmlTag) psiElement;
-                if (TAG.equals(tag.getName())) {
-                    List<PsiElement> els = findXmlTexts(psiElement.getChildren());
-                    if (els.size() > 0) {
-                        registrar.startInjecting(SQL_LANGUAGE);
-                        els.forEach(el -> registrar.addPlace(null, null, (PsiLanguageInjectionHost) el, ElementManipulators.getValueTextRange(el)));
-                        registrar.doneInjecting();
-                    }
+                if (SQL_TAG.equals(tag.getName())) {
+                    registrarInjecting(SQL_LANGUAGE, registrar, DomUtil.findXmlTexts(psiElement.getChildren()));
+                } else if (EXP_TAG.equals(tag.getName())) {
+                    registrarInjecting(PlainTextLanguage.INSTANCE, registrar, DomUtil.findXmlTexts(psiElement.getChildren()));
                 }
             }
         }
     }
 
-    private List<PsiElement> findXmlTexts(PsiElement[] psiElements) {
-        List<PsiElement> xmlTexts = new ArrayList<>();
-        for (PsiElement psiElement : psiElements) {
-            if (psiElement instanceof XmlText) {
-                xmlTexts.add(psiElement);
-            }
+    private void registrarInjecting(Language language, MultiHostRegistrar registrar, List<PsiElement> els) {
+        if (els.size() > 0) {
+            registrar.startInjecting(language);
+            els.forEach(el -> registrar.addPlace(null, null, (PsiLanguageInjectionHost) el, ElementManipulators.getValueTextRange(el)));
+            registrar.doneInjecting();
         }
-        return xmlTexts;
     }
+
+
 
     @NotNull
     @Override

@@ -122,15 +122,15 @@
                 implementation="com.sgaop.idea.reference.NutzInjectToPropsReferenceContributor"/>
         <!--配置文件折叠-结束-->
         <!--语言中代码提示-->
-        <!--<completion.contributor language="SQL"-->
-        <!--implementationClass="com.sgaop.idea.contributor.SqlParamCompletionContributor"-->
+        <!--<completion.contributor language="SQL" implementationClass="com.sgaop.idea.contributor.SqlParamCompletionContributor"-->
         <!--order="first"/>-->
         <!--语言注入-->
         <multiHostInjector implementation="com.sgaop.idea.injector.NutzJavaSqlMultiHostInjector"/>
         <multiHostInjector implementation="com.sgaop.idea.injector.XmlSqlTplMultiHostInjector"/>
         <!--语言扩展点-注解者 -->
         <annotator language="JAVA" implementationClass="com.sgaop.idea.annotator.JavaSqlXmlAnnotator"/>
-        <!--控制显示新创建NutzBoot项目-->
+        <annotator language="XML" implementationClass="com.sgaop.idea.annotator.XmlExpTagAnnotator"/>
+        <!--创建NutzBoot项目-->
         <moduleBuilder builderClass="com.sgaop.project.module.NutzBootModuleBuilder"/>
         <!--快速定位至NutzAction-->
         <gotoSymbolContributor implementation="com.sgaop.idea.actions.AtMappingContributor"/>
@@ -140,7 +140,7 @@
         <intentionAction order="first">
             <className>com.sgaop.idea.intention.GenerateSqlXmlIntention</className>
         </intentionAction>
-        <fileTemplateGroup id="NutzSqlTpl" implementation="com.sgaop.idea.fileTemplateGroup.SqlTplFileTemplateGroupFactory"></fileTemplateGroup>
+        <fileTemplateGroup id="NutzSqlTpl" implementation="com.sgaop.idea.template.SqlTplFileTemplateGroupFactory"></fileTemplateGroup>
     </extensions>
     <actions>
         <!--快速定位至NutzAction-->
