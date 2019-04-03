@@ -4,18 +4,13 @@ import com.intellij.lang.Language;
 import com.intellij.lang.injection.MultiHostInjector;
 import com.intellij.lang.injection.MultiHostRegistrar;
 import com.intellij.lang.xml.XMLLanguage;
-import com.intellij.openapi.fileTypes.PlainTextLanguage;
 import com.intellij.psi.ElementManipulators;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLanguageInjectionHost;
 import com.intellij.psi.xml.XmlTag;
-import com.intellij.psi.xml.XmlText;
 import com.sgaop.util.DomUtil;
-import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -35,9 +30,9 @@ public class XmlSqlTplMultiHostInjector implements MultiHostInjector {
             if (psiElement instanceof XmlTag) {
                 XmlTag tag = (XmlTag) psiElement;
                 if (SQL_TAG.equals(tag.getName())) {
-                    registrarInjecting(SQL_LANGUAGE, registrar, DomUtil.findXmlTexts(psiElement.getChildren()),null,null);
+                    registrarInjecting(SQL_LANGUAGE, registrar, DomUtil.findXmlTexts(psiElement.getChildren()), null, null);
                 } else if (EXP_TAG.equals(tag.getName())) {
-                    registrarInjecting(XMLLanguage.INSTANCE, registrar, DomUtil.findXmlTexts(psiElement.getChildren()),"<!--","-->");
+                    registrarInjecting(XMLLanguage.INSTANCE, registrar, DomUtil.findXmlTexts(psiElement.getChildren()), "<!--", "-->");
                 }
             }
         }
@@ -50,7 +45,6 @@ public class XmlSqlTplMultiHostInjector implements MultiHostInjector {
             registrar.doneInjecting();
         }
     }
-
 
 
     @NotNull

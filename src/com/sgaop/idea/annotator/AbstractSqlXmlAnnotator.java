@@ -3,7 +3,6 @@ package com.sgaop.idea.annotator;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.Annotator;
 import com.intellij.psi.PsiElement;
-import com.sgaop.util.SqlsXmlLineUtil;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -20,14 +19,12 @@ public abstract class AbstractSqlXmlAnnotator implements Annotator {
     }
 
     /**
-     *
      * @param psiElement
      * @return
      */
     public abstract boolean isSqlsXml(@NotNull PsiElement psiElement);
 
     /**
-     *
      * @param psiElement
      * @param annotationHolder
      */

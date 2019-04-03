@@ -1,15 +1,8 @@
 package com.sgaop.util;
 
 
-import com.intellij.ide.fileTemplates.FileTemplate;
-import com.intellij.ide.fileTemplates.FileTemplateManager;
-import com.intellij.ide.fileTemplates.FileTemplateUtil;
-import com.intellij.psi.PsiDirectory;
-import com.intellij.psi.PsiElement;
-
 import java.io.*;
 import java.nio.charset.Charset;
-import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -76,6 +69,7 @@ public class FileUtil {
 
     /**
      * 输入流转字符串
+     *
      * @param inputStream
      * @param charsetName
      * @return

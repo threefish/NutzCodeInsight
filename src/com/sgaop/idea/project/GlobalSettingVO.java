@@ -10,6 +10,24 @@ import java.util.HashMap;
  */
 public class GlobalSettingVO {
 
+    private HashMap<String, String> tableData;
+    /**
+     * beetl模版中匹配layout
+     */
+    private String beetlLayoutRegular;
+    /**
+     * beetl模版中匹配include得正则表达式
+     */
+    private String beetlIncludeRegular;
+    /**
+     * beetl模版中匹配语言国际化
+     */
+    private String i18nRegular;
+    /**
+     * beetl模版中国际化取KEY
+     */
+    private String i18nKeyRegular;
+
     public static GlobalSettingVO loadDefualt() {
         GlobalSettingVO globalSettingVO = new GlobalSettingVO();
         globalSettingVO.setTableData(new HashMap<>(0));
@@ -23,27 +41,6 @@ public class GlobalSettingVO {
         globalSettingVO.setI18nKeyRegular("\\((\"|')(.*?)(\"|')\\)");
         return globalSettingVO;
     }
-
-    private HashMap<String, String> tableData;
-
-    /**
-     * beetl模版中匹配layout
-     */
-    private String beetlLayoutRegular;
-    /**
-     * beetl模版中匹配include得正则表达式
-     */
-    private String beetlIncludeRegular;
-
-    /**
-     * beetl模版中匹配语言国际化
-     */
-    private String i18nRegular;
-
-    /**
-     * beetl模版中国际化取KEY
-     */
-    private String i18nKeyRegular;
 
     public String getI18nKeyRegular() {
         return i18nKeyRegular;

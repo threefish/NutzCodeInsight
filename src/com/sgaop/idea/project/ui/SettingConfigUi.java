@@ -12,9 +12,8 @@ import java.util.Set;
  * Created with IntelliJ IDEA.
  *
  * @author 黄川 huchuc@vip.qq.com
-
+ * <p>
  * 创建时间: 2017/12/11  14:13
-
  */
 public class SettingConfigUi {
 
@@ -26,10 +25,6 @@ public class SettingConfigUi {
     private JTextField i18nRegular;
     private JLabel issues;
     private JTextField i18nKeyRegular;
-
-    public JTextField getI18nKeyRegular() {
-        return i18nKeyRegular;
-    }
 
     public SettingConfigUi() {
         SwingUtils.addMouseListenerAndSetUrl(issues, "https://github.com/threefish/NutzCodeInsight/issues");
@@ -73,6 +68,9 @@ public class SettingConfigUi {
         });
     }
 
+    public JTextField getI18nKeyRegular() {
+        return i18nKeyRegular;
+    }
 
     public JTextField getLayoutRegular() {
         return layoutRegular;

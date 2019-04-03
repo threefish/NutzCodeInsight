@@ -15,6 +15,7 @@ import java.util.Properties;
 public class TemplateFileUtil {
     /**
      * 按照idea默认模版引擎生成文件
+     *
      * @param fileTemplateName
      * @param fileName
      * @param properties

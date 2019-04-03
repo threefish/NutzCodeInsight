@@ -4,6 +4,7 @@ import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
+import com.sgaop.idea.intention.GenerateSqlXmlIntention;
 import com.sgaop.util.SqlsXmlLineUtil;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,9 +34,11 @@ public class JavaSqlXmlAnnotator extends AbstractSqlXmlAnnotator {
         List<VirtualFile> virtualFileList = SqlsXmlLineUtil.findTemplteFileList(psiElement);
         if (virtualFileList.size() == 0) {
             if (psiElement.getNextSibling().getChildren().length == 0) {
-                annotationHolder.createErrorAnnotation(psiElement.getTextRange(), errMsg);
+                annotationHolder.createErrorAnnotation(psiElement.getTextRange(), errMsg)
+                        .registerFix(new GenerateSqlXmlIntention());
             } else {
-                annotationHolder.createErrorAnnotation(new TextRange(psiElement.getTextRange().getStartOffset(), psiElement.getNextSibling().getTextRange().getEndOffset()), errMsg);
+                annotationHolder.createErrorAnnotation(new TextRange(psiElement.getTextRange().getStartOffset(), psiElement.getNextSibling().getTextRange().getEndOffset()), errMsg)
+                        .registerFix(new GenerateSqlXmlIntention());
             }
         }
     }
