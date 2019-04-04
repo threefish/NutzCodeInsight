@@ -22,7 +22,7 @@ public class XmlSqlTplMultiHostInjector implements MultiHostInjector {
 
     static final Language SQL_LANGUAGE = Language.findLanguageByID("SQL");
     static final String SQL_TAG = "sql";
-    static final String EXP_TAG = "exp";
+//    static final String EXP_TAG = "exp";
 
     @Override
     public void getLanguagesToInject(@NotNull MultiHostRegistrar registrar, @NotNull PsiElement psiElement) {
@@ -31,9 +31,10 @@ public class XmlSqlTplMultiHostInjector implements MultiHostInjector {
                 XmlTag tag = (XmlTag) psiElement;
                 if (SQL_TAG.equals(tag.getName())) {
                     registrarInjecting(SQL_LANGUAGE, registrar, DomUtil.findXmlTexts(psiElement.getChildren()), null, null);
-                } else if (EXP_TAG.equals(tag.getName())) {
-                    registrarInjecting(XMLLanguage.INSTANCE, registrar, DomUtil.findXmlTexts(psiElement.getChildren()), "<!--", "-->");
                 }
+//                else if (EXP_TAG.equals(tag.getName())) {
+//                    registrarInjecting(XMLLanguage.INSTANCE, registrar, DomUtil.findXmlTexts(psiElement.getChildren()), "<!--", "-->");
+//                }
             }
         }
     }
