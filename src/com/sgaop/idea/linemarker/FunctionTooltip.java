@@ -19,6 +19,7 @@ public class FunctionTooltip implements Function {
         this.msg = msg;
     }
 
+
     @Override
     public Object fun(Object o) {
         return msg;
