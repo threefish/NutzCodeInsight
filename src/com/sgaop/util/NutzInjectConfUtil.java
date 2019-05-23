@@ -26,22 +26,7 @@ public class NutzInjectConfUtil {
     private static final List<String> qualifiedNames = Arrays.asList("org.nutz.ioc.loader.annotation.Inject");
 
     public static List<String> findProperties(Project project, Collection<VirtualFile> virtualFiles, String key) {
-        List<String> result = new ArrayList<>();
-        for (VirtualFile virtualFile : virtualFiles) {
-            PsiFile psiFile = PsiManager.getInstance(project).findFile(virtualFile);
-            Properties properties = new Properties();
-            try (StringReader reader = new StringReader(psiFile.getText())) {
-                properties.load(reader);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            properties.forEach((name, val) -> {
-                if (name.equals(key)) {
-                    result.add(String.valueOf(val));
-                }
-            });
-        }
-        return result;
+        return PsiFileUtil.findProperties(project, virtualFiles, key);
     }
 
 

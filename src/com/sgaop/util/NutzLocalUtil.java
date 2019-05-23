@@ -40,7 +40,7 @@ public class NutzLocalUtil {
     private static boolean isInit = false;
 
     public static List<String> findProperties(Project project, Collection<VirtualFile> virtualFiles, String localizationPackage, String key) {
-        List<String> result = new ArrayList<>();
+        List<String> result = PsiFileUtil.findProperties(project, virtualFiles, key);
         for (VirtualFile virtualFile : virtualFiles) {
             if (virtualFile.toString().indexOf(localizationPackage) == -1) {
                 continue;

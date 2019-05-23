@@ -85,7 +85,7 @@
     ]]>
     </change-notes>
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-    <idea-version since-build="145.0"/>
+    <idea-version since-build="191.4214.41"/>
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
     <!-- uncomment to enable plugin in all products
@@ -107,6 +107,9 @@
         <!--@SqlXml快速跳转sql模版文件-->
         <codeInsight.lineMarkerProvider language="JAVA"
                                         implementationClass="com.sgaop.idea.linemarker.JavaSqlsXmlLineMarkerProvider"/>
+        <!--受Ioc控制的bean接口文件快速跳转至实现类-->
+        <codeInsight.lineMarkerProvider language="JAVA"
+                                        implementationClass="com.sgaop.idea.linemarker.IocBeanInterfaceLineMarkerProvider"/>
         <!--代码折叠生成器-->
         <!--国际化语言折叠-开始-->
         <lang.foldingBuilder language="JAVA"
