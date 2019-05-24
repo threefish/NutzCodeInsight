@@ -103,6 +103,9 @@
         <!--受Ioc控制的bean接口文件快速跳转至实现类-->
         <codeInsight.lineMarkerProvider language="JAVA"
                                         implementationClass="com.sgaop.idea.linemarker.IocBeanInterfaceLineMarkerProvider"/>
+        <!--受Ioc控制的bean接口文件快速跳转至实现类-->
+        <codeInsight.lineMarkerProvider language="JAVA"
+                                        implementationClass="com.sgaop.idea.linemarker.OkJsonUpdateLineMarkerProvider"/>
         <!--代码折叠生成器-->
         <!--国际化语言折叠-开始-->
         <lang.foldingBuilder language="JAVA"
