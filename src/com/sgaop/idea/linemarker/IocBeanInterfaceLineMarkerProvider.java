@@ -1,5 +1,6 @@
 package com.sgaop.idea.linemarker;
 
+import com.intellij.codeHighlighting.Pass;
 import com.intellij.codeInsight.daemon.LineMarkerInfo;
 import com.intellij.codeInsight.daemon.LineMarkerProviderDescriptor;
 import com.intellij.icons.AllIcons;
@@ -46,6 +47,7 @@ public class IocBeanInterfaceLineMarkerProvider extends LineMarkerProviderDescri
             List<PsiElement> list = getImplListElements(name, psiElement);
             if (list.size() > 0) {
                 return new LineMarkerInfo<>(psiTypeElement, psiTypeElement.getTextRange(), icon,
+                        Pass.LINE_MARKERS,
                         new FunctionTooltip(MessageFormat.format("快速跳转至 {0} 的 @IocBean 实现类", name)),
                         new IocBeanInterfaceNavigationHandler(name, list),
                         GutterIconRenderer.Alignment.LEFT);

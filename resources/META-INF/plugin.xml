@@ -3,7 +3,8 @@
     <id>com.sgaop.idea.codeinsight.plugin</id>
     <name>NutzCodeInsight</name>
     <version>2.0.8</version>
-    <idea-version since-build="191.4214.41"/>
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+    <idea-version since-build="181"/>
     <vendor email="huchuc@vip.qq.com" url="https://github.com/threefish/NutzCodeInsight">threefish</vendor>
     <description><![CDATA[
       <h1>Intellij idea plugin for <a href="https://github.com/nutzam/nutz">Nutz</a></h1>
@@ -78,7 +79,6 @@
        <p>
     ]]>
     </change-notes>
-    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
     <!-- uncomment to enable plugin in all products

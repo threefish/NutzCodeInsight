@@ -1,5 +1,6 @@
 package com.sgaop.idea.linemarker;
 
+import com.intellij.codeHighlighting.Pass;
 import com.intellij.codeInsight.daemon.LineMarkerInfo;
 import com.intellij.codeInsight.daemon.LineMarkerProviderDescriptor;
 import com.intellij.openapi.editor.markup.GutterIconRenderer;
@@ -24,6 +25,7 @@ public class HtmlTemplateLineMarkerProvider extends LineMarkerProviderDescriptor
     public LineMarkerInfo getLineMarkerInfo(@NotNull PsiElement bindingElement) {
         if (HtmlTemplateLineUtil.isRes(bindingElement)) {
             return new LineMarkerInfo<>(bindingElement, bindingElement.getTextRange(), HtmlTemplateLineUtil.getTemplateIcon(bindingElement),
+                    Pass.LINE_MARKERS,
                     new FunctionTooltip(), new HtmlTemplateNavigationHandler(),
                     GutterIconRenderer.Alignment.LEFT);
         }
