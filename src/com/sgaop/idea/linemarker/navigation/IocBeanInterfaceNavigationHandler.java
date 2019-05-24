@@ -27,7 +27,11 @@ public class IocBeanInterfaceNavigationHandler implements GutterIconNavigationHa
 
     @Override
     public void navigate(MouseEvent mouseEvent, PsiElement psiElement) {
-        NavigationUtil.getPsiElementPopup(implListElements.toArray(new PsiElement[0]), MessageFormat.format("请选择 {0} 的实现类", name)).show(new RelativePoint(mouseEvent));
+        if (implListElements.size() == 1) {
+            NavigationUtil.activateFileWithPsiElement(implListElements.get(0), true);
+        } else {
+            NavigationUtil.getPsiElementPopup(implListElements.toArray(new PsiElement[0]), MessageFormat.format("请选择 {0} 的实现类", name)).show(new RelativePoint(mouseEvent));
+        }
     }
 
 }

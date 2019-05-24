@@ -34,7 +34,6 @@ public class IocBeanInterfaceLineMarkerProvider extends LineMarkerProviderDescri
 
     static final String IOCBEAN_QUALI_FIED_NAME = "org.nutz.ioc.loader.annotation.IocBean";
 
-
     Icon icon = AllIcons.Javaee.InterceptorClass;
 
     @Nullable
