@@ -1,17 +1,18 @@
 # NutzCodeInsight
-- 1、支持NutzBoot项目快速搭建</li>
-- 2、在 Nutz Action 中点击 @Ok 前面的模版图标即可快速打开或切换至已经打开的模版文件</li>
-- 3、支持以HTML、JSP等格式文件作为模版的框架资源文件的快速定位（支持动态配置）</li>
-- 4、Navigate菜单中增加查找@At映射地址快捷方式</li>
-- 5、Nutz web环境中支持折叠显示国际化配置文件变量值（快捷键：Alt++或Alt+-）</li>
-- 6、Beetl模版中也支持国际化配置文件折叠(${i18n("login.sucess")}或者${i18n("login.sucess","参数1","参数N")} )（快捷键：Alt++或Alt+-）</li>
-- 7、Nutz 支持折叠显示java类中注入配置文件变量值 @Inject("java:$conf.get('attach.savePath')")（快捷键：Alt++或Alt+-）</li>
-- 8、@Inject("java:$conf.get('attach.savePath')") 可以通过 ctrl+click 或 ctrl+b 在java文件与配置文件中互相跳转</li>
+- 1、支持NutzBoot项目快速搭建
+- 2、在 Nutz Action 中点击 @Ok 前面的模版图标即可快速打开或切换至已经打开的模版文件
+- 3、支持以HTML、JSP等格式文件作为模版的框架资源文件的快速定位（支持动态配置）
+- 4、Navigate菜单中增加查找@At映射地址快捷方式
+- 5、Nutz web环境中支持折叠显示国际化配置文件变量值（快捷键：Alt++或Alt+-）
+- 6、Beetl模版中也支持国际化配置文件折叠(${i18n("login.sucess")}或者${i18n("login.sucess","参数1","参数N")} )（快捷键：Alt++或Alt+-）
+- 7、Nutz 支持折叠显示java类中注入配置文件变量值 @Inject("java:$conf.get('attach.savePath')")（快捷键：Alt++或Alt+-）
+- 8、@Inject("java:$conf.get('attach.savePath')") 可以通过 ctrl+click 或 ctrl+b 在java文件与配置文件中互相跳转
 - 9、支持实体类中快速创建接口与实现类（快捷键：Alt+insert）
 - 10、@SQL中的sql支持动态语言高亮和提示
 - 11、<a href="https://github.com/threefish/nutz-sqltpl">Nutz-sqltpl</a> xml中的SQL模板中sql语言的动态高亮和提示
 - 12、<a href="https://github.com/threefish/nutz-sqltpl">Nutz-sqltpl</a> 支持xml与java文件互相跳转
-- 13、<a href="https://github.com/threefish/nutz-sqltpl">Nutz-sqltpl</a> 为还未创建xml模板文件的@SqlsXml注解快速生成对应xml模板 （快捷键：Alt+insert
+- 13、<a href="https://github.com/threefish/nutz-sqltpl">Nutz-sqltpl</a> 为还未创建xml模板文件的@SqlsXml注解快速生成对应xml模板 （快捷键：Alt+insert）
+- 14、为添加@Inject字段注入接口提供快速跳转至实现类或选择多个实现类
 
 >idea插件仓库[https://plugins.jetbrains.com/plugin/10311-nutzcodeinsight](https://plugins.jetbrains.com/plugin/10311-nutzcodeinsight "真实项目")
 
