@@ -5,12 +5,10 @@ import com.intellij.openapi.application.Application;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.EditorFactory;
-import com.intellij.openapi.editor.impl.EditorImpl;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
 import com.sgaop.idea.linemarker.navigation.runnable.DocumentReplace;
 
 import java.awt.event.MouseEvent;
@@ -33,19 +31,8 @@ public class OkJsonUpdateNavigationHandler implements GutterIconNavigationHandle
         Application applicationManager = ApplicationManager.getApplication();
         CommandProcessor processor = CommandProcessor.getInstance();
         Project project = psiElement.getProject();
-        VirtualFile virtualFile = psiElement.getContainingFile().getVirtualFile();
-        //下来再想想办法
-        Editor[] editors = EditorFactory.getInstance().getAllEditors();
-        Editor editor = null;
-        sw:
-        for (Editor edit : editors) {
-            if (((EditorImpl) edit).getVirtualFile() == virtualFile) {
-                editor = edit;
-                break sw;
-            }
-        }
-        //当前所在文档
-        Document document = editor.getDocument();
+        PsiFile psiFile = psiElement.getContainingFile();
+        Document document = PsiDocumentManager.getInstance(project).getDocument(psiFile);
         int startOffset = psiElement.getTextRange().getStartOffset();
         int endOffset = psiElement.getTextRange().getEndOffset();
         applicationManager.runWriteAction(() -> processor.executeCommand(project, new DocumentReplace(document, startOffset, endOffset, "@Ok(\"json:{nullAsEmtry:true}\")"), "", document));

@@ -10,6 +10,6 @@ import javax.swing.*;
  */
 public class IconsUtil {
 
-    public static final Icon NUTZ = IconLoader.findIcon("/icons/nutz.svg");
+    public static final Icon NUTZ = IconLoader.findIcon("/icons/nutz.png");
 
 }
