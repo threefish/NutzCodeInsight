@@ -25,7 +25,7 @@ public class AppStartProjectComponent implements ProjectComponent {
         }));
         notification.addAction(NotificationAction.createSimple("我要捐赠", () -> {
             try {
-                Desktop.getDesktop().browse(new java.net.URI("https://github.com/threefish/NutzCodeInsight#donation"));
+                Desktop.getDesktop().browse(new java.net.URI("https://gitee.com/threefish/NutzCodeInsight/#donation"));
             } catch (Exception e1) {
             }
         }));
