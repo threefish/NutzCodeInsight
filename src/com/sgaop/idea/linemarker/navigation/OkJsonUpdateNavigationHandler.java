@@ -1,15 +1,19 @@
 package com.sgaop.idea.linemarker.navigation;
 
+import com.google.gson.Gson;
 import com.intellij.codeInsight.daemon.GutterIconNavigationHandler;
 import com.intellij.openapi.application.Application;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.Messages;
 import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.sgaop.idea.linemarker.navigation.runnable.DocumentReplace;
+import com.sgaop.idea.linemarker.navigation.ui.JsonFormat;
+import com.sgaop.idea.linemarker.navigation.ui.OkJsonFastEditor;
 
 import java.awt.event.MouseEvent;
 
@@ -19,7 +23,10 @@ import java.awt.event.MouseEvent;
  */
 public class OkJsonUpdateNavigationHandler implements GutterIconNavigationHandler {
 
+    static final String JSON_PREFIX = "json:";
+    static final Gson gson = new Gson();
     private String value;
+
 
     public OkJsonUpdateNavigationHandler(String value) {
         this.value = value;
@@ -28,6 +35,15 @@ public class OkJsonUpdateNavigationHandler implements GutterIconNavigationHandle
     @Override
     public void navigate(MouseEvent mouseEvent, PsiElement psiElement) {
         System.out.println(value);
+        JsonFormat jsonFormat = new JsonFormat();
+        if (value.startsWith(JSON_PREFIX)) {
+            value = value.substring(JSON_PREFIX.length());
+            try {
+                jsonFormat = gson.fromJson(value, JsonFormat.class);
+            } catch (Exception e) {
+                Messages.showErrorDialog("json格式化信息书写错误！", "错误提示");
+            }
+        }
         Application applicationManager = ApplicationManager.getApplication();
         CommandProcessor processor = CommandProcessor.getInstance();
         Project project = psiElement.getProject();
@@ -35,6 +51,12 @@ public class OkJsonUpdateNavigationHandler implements GutterIconNavigationHandle
         Document document = PsiDocumentManager.getInstance(project).getDocument(psiFile);
         int startOffset = psiElement.getTextRange().getStartOffset();
         int endOffset = psiElement.getTextRange().getEndOffset();
-        applicationManager.runWriteAction(() -> processor.executeCommand(project, new DocumentReplace(document, startOffset, endOffset, "@Ok(\"json:{nullAsEmtry:true}\")"), "", document));
+        OkJsonFastEditor dialog = new OkJsonFastEditor(jsonFormat, (json) ->
+                applicationManager.runWriteAction(() ->
+                        processor.executeCommand(project, new DocumentReplace(document, startOffset, endOffset, json), "", document)
+                )
+        );
+        dialog.pack();
+        dialog.setVisible(true);
     }
 }

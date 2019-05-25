@@ -4,12 +4,12 @@ import com.intellij.codeInsight.daemon.GutterIconNavigationHandler;
 import com.intellij.codeInsight.navigation.NavigationUtil;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiManager;
 import com.intellij.ui.awt.RelativePoint;
 
-import javax.swing.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -54,7 +54,7 @@ public abstract class AbstractNavigationHandler implements GutterIconNavigationH
                 NavigationUtil.getPsiElementPopup(elements.toArray(new PsiElement[0]), title).show(new RelativePoint(mouseEvent));
             } else {
                 if (fileList == null || fileList.size() <= 0) {
-                    JOptionPane.showMessageDialog(null, "没有找到这个资源文件，请检查！", "错误提示", JOptionPane.ERROR_MESSAGE, null);
+                    Messages.showErrorDialog("没有找到这个资源文件，请检查！", "错误提示");
                 }
             }
         }
