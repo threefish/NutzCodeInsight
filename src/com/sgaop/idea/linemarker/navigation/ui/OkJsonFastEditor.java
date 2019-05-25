@@ -1,6 +1,5 @@
 package com.sgaop.idea.linemarker.navigation.ui;
 
-import com.google.gson.Gson;
 import com.intellij.openapi.ui.ComboBoxWithWidePopup;
 
 import javax.swing.*;

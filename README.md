@@ -12,7 +12,8 @@
 - 11、<a href="https://github.com/threefish/nutz-sqltpl">Nutz-sqltpl</a> xml中的SQL模板中sql语言的动态高亮和提示
 - 12、<a href="https://github.com/threefish/nutz-sqltpl">Nutz-sqltpl</a> 支持xml与java文件互相跳转
 - 13、<a href="https://github.com/threefish/nutz-sqltpl">Nutz-sqltpl</a> 为还未创建xml模板文件的@SqlsXml注解快速生成对应xml模板 （快捷键：Alt+insert）
-- 14、为添加@Inject字段注入接口提供快速跳转至实现类或选择多个实现类
+- 14、为@Inject字段注入接口提供快速跳转至实现类或选择多个实现类
+- 14、为@OK("json")提供GUI并快速修改json格式化信息
 
 >idea插件仓库[https://plugins.jetbrains.com/plugin/10311-nutzcodeinsight](https://plugins.jetbrains.com/plugin/10311-nutzcodeinsight "真实项目")
 

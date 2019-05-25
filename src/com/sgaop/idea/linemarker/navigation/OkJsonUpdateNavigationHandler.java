@@ -34,12 +34,10 @@ public class OkJsonUpdateNavigationHandler implements GutterIconNavigationHandle
 
     @Override
     public void navigate(MouseEvent mouseEvent, PsiElement psiElement) {
-        System.out.println(value);
         JsonFormat jsonFormat = new JsonFormat();
         if (value.startsWith(JSON_PREFIX)) {
-            value = value.substring(JSON_PREFIX.length());
             try {
-                jsonFormat = gson.fromJson(value, JsonFormat.class);
+                jsonFormat = gson.fromJson(value.substring(JSON_PREFIX.length()), JsonFormat.class);
             } catch (Exception e) {
                 Messages.showErrorDialog("json格式化信息书写错误！", "错误提示");
             }
