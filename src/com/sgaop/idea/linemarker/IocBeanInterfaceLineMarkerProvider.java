@@ -10,7 +10,6 @@ import com.intellij.psi.*;
 import com.intellij.psi.impl.java.stubs.index.JavaAnnotationIndex;
 import com.intellij.psi.impl.java.stubs.index.JavaSuperClassNameOccurenceIndex;
 import com.intellij.psi.impl.source.PsiClassImpl;
-import com.intellij.psi.impl.source.PsiFieldImpl;
 import com.intellij.psi.impl.source.PsiTypeElementImpl;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTypesUtil;
@@ -21,7 +20,10 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.text.MessageFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author huchuc@vip.qq.com
@@ -30,9 +32,8 @@ import java.util.*;
 public class IocBeanInterfaceLineMarkerProvider extends LineMarkerProviderDescriptor {
 
     static final String INJECT_QUALI_FIED_NAME = "org.nutz.ioc.loader.annotation.Inject";
-
     static final String IOCBEAN_QUALI_FIED_NAME = "org.nutz.ioc.loader.annotation.IocBean";
-    static final int SENSITIVE_MAX = 10;
+    static final int SENSITIVE_MAX = 3;
     static int sensitive = 0;
     static HashMap<String, List<PsiElement>> methodIocBeans = new HashMap<>();
     Icon icon = AllIcons.Javaee.InterceptorClass;
@@ -40,11 +41,11 @@ public class IocBeanInterfaceLineMarkerProvider extends LineMarkerProviderDescri
     @Nullable
     @Override
     public LineMarkerInfo getLineMarkerInfo(@NotNull PsiElement psiElement) {
-        PsiAnnotation psiAnnotation = this.getPsiAnnotation(psiElement);
-        if (psiAnnotation != null) {
+        PsiField psiFiled = this.getPsiFiled(psiElement);
+        PsiAnnotation psiAnnotation = this.getPsiAnnotation(psiFiled);
+        if (psiFiled != null && psiAnnotation != null) {
             GlobalSearchScope moduleScope = ((ModuleWithDependenciesScope) psiElement.getResolveScope()).getModule().getModuleScope();
-            this.init(psiElement, moduleScope);
-            PsiTypeElementImpl psiTypeElement = this.getPsiTypeElement(psiElement);
+            PsiTypeElementImpl psiTypeElement = this.getPsiTypeElement(psiAnnotation);
             PsiClass psiClass = PsiTypesUtil.getPsiClass(psiTypeElement.getType());
             String name = psiClass.getName();
             List<PsiElement> list = this.getImplListElements(name, psiClass.getQualifiedName(), psiElement, moduleScope);
@@ -58,8 +59,45 @@ public class IocBeanInterfaceLineMarkerProvider extends LineMarkerProviderDescri
         return null;
     }
 
+
+    private PsiField getPsiFiled(@NotNull PsiElement psiElement) {
+        if (psiElement instanceof PsiIdentifier) {
+            if (psiElement.getParent() instanceof PsiJavaCodeReferenceElement) {
+                if (psiElement.getParent().getParent() instanceof PsiTypeElement) {
+                    if (psiElement.getParent().getParent().getParent() instanceof PsiField) {
+                        return (PsiField) psiElement.getParent().getParent().getParent();
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    private PsiAnnotation getPsiAnnotation(PsiField psiField) {
+        if (psiField != null) {
+            PsiAnnotation psiAnnotation = psiField.getAnnotation(INJECT_QUALI_FIED_NAME);
+            if (psiAnnotation != null) {
+                return psiAnnotation;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void collectSlowLineMarkers(@NotNull List<PsiElement> elements, @NotNull Collection<LineMarkerInfo> result) {
+        if (elements.size() > 0) {
+            try {
+                PsiElement psiElement = elements.get(0).getContext();
+                GlobalSearchScope moduleScope = ((ModuleWithDependenciesScope) psiElement.getResolveScope()).getModule().getModuleScope();
+                this.init(psiElement, moduleScope);
+            } catch (Exception e) {
+            }
+        }
+    }
+
     private void init(@NotNull PsiElement psiElement, GlobalSearchScope moduleScope) {
-        if (methodIocBeans.size() == 0 && sensitive == 0) {
+        if (sensitive == 0) {
+            sensitive++;
             methodIocBeans = this.getMethodIocBeans(psiElement.getProject(), moduleScope);
         } else {
             sensitive++;
@@ -85,11 +123,9 @@ public class IocBeanInterfaceLineMarkerProvider extends LineMarkerProviderDescri
                 elements.add(psiClassImpl);
             }
         }
-        methodIocBeans.forEach((returnQualifiedName, psiElements) -> {
-            if (Objects.equals(qualifiedName, returnQualifiedName)) {
-                elements.addAll(psiElements);
-            }
-        });
+        if (methodIocBeans.containsKey(qualifiedName)) {
+            elements.addAll(methodIocBeans.get(qualifiedName));
+        }
         return elements;
     }
 
@@ -115,7 +151,7 @@ public class IocBeanInterfaceLineMarkerProvider extends LineMarkerProviderDescri
     }
 
     private PsiTypeElementImpl getPsiTypeElement(PsiElement psiElement) {
-        PsiElement[] psiElements = psiElement.getChildren();
+        PsiElement[] psiElements = psiElement.getParent().getParent().getChildren();
         for (PsiElement element : psiElements) {
             if (element instanceof PsiTypeElement) {
                 return (PsiTypeElementImpl) element;
@@ -124,26 +160,6 @@ public class IocBeanInterfaceLineMarkerProvider extends LineMarkerProviderDescri
         return null;
     }
 
-    private PsiAnnotation getPsiAnnotation(@NotNull PsiElement psiElement) {
-        if (psiElement instanceof PsiField) {
-            PsiFieldImpl field = ((PsiFieldImpl) psiElement);
-            PsiAnnotation psiAnnotation = field.getAnnotation(INJECT_QUALI_FIED_NAME);
-            if (psiAnnotation != null) {
-                return psiAnnotation;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public void collectSlowLineMarkers(@NotNull List<PsiElement> elements, @NotNull Collection<LineMarkerInfo> result) {
-//        LineMarkerInfo lineMarkerInfo = new LineMarkerInfo(elements.get(0), elements.get(0).getTextRange(), AllIcons.Javaee.Remote,
-//                new FunctionTooltip("快速跳转至 {0} 的 @IocBean 实现类"),
-//                new IocBeanInterfaceNavigationHandler("xx", new ArrayList<>()),
-//                GutterIconRenderer.Alignment.RIGHT);
-//        result.add(lineMarkerInfo);
-//        System.out.println(elements.size() + ">>" + result.size());
-    }
 
     @Nls(capitalization = Nls.Capitalization.Sentence)
     @Nullable("null means disabled")
