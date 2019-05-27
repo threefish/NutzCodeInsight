@@ -147,7 +147,6 @@
         <!--<className>com.sgaop.idea.intention.GenerateSqlXmlIntention</className>-->
         <!--</intentionAction>-->
         <fileTemplateGroup id="NutzSqlTpl" implementation="com.sgaop.idea.template.SqlTplFileTemplateGroupFactory"/>
-        <stubIndex implementation="com.sgaop.idea.psi.java.stubs.index.JavaMethodReturnNameIndex"/>
     </extensions>
     <actions>
         <!--快速定位至NutzAction-->
