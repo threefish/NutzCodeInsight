@@ -4,7 +4,7 @@
     <name>NutzCodeInsight</name>
     <version>2.0.9</version>
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-    <idea-version since-build="181"/>
+    <idea-version since-build="191.4212.41"/>
     <vendor email="huchuc@vip.qq.com" url="https://github.com/threefish/NutzCodeInsight">threefish</vendor>
     <description><![CDATA[
       <h1>Intellij idea plugin for <a href="https://github.com/nutzam/nutz">Nutz</a></h1>
@@ -147,8 +147,7 @@
         <!--<className>com.sgaop.idea.intention.GenerateSqlXmlIntention</className>-->
         <!--</intentionAction>-->
         <fileTemplateGroup id="NutzSqlTpl" implementation="com.sgaop.idea.template.SqlTplFileTemplateGroupFactory"/>
-        <projectOpenProcessor
-                implementation="com.intellij.platform.PlatformProjectOpenProcessor"></projectOpenProcessor>
+        <stubIndex implementation="com.sgaop.idea.psi.java.stubs.index.JavaMethodReturnNameIndex"/>
     </extensions>
     <actions>
         <!--快速定位至NutzAction-->

@@ -1,6 +1,5 @@
 package com.sgaop.idea.linemarker;
 
-import com.intellij.codeHighlighting.Pass;
 import com.intellij.codeInsight.daemon.LineMarkerInfo;
 import com.intellij.codeInsight.daemon.LineMarkerProvider;
 import com.intellij.openapi.editor.markup.GutterIconRenderer;
@@ -8,16 +7,13 @@ import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLiteralExpression;
 import com.intellij.psi.PsiMethod;
-import com.intellij.psi.impl.source.PsiClassImpl;
 import com.intellij.psi.impl.source.PsiMethodImpl;
 import com.sgaop.idea.NutzCons;
-import com.sgaop.idea.linemarker.navigation.IocBeanInterfaceNavigationHandler;
 import com.sgaop.idea.linemarker.navigation.OkJsonUpdateNavigationHandler;
 import com.sgaop.util.IconsUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.text.MessageFormat;
 import java.util.Collection;
 import java.util.List;
 
@@ -38,7 +34,6 @@ public class OkJsonUpdateLineMarkerProvider implements LineMarkerProvider {
             String value = String.valueOf(literalExpression.getValue());
             if (value.startsWith(JSON_PREFIX)) {
                 return new LineMarkerInfo<>(psiAnnotation, psiAnnotation.getTextRange(), IconsUtil.NUTZ,
-                        Pass.LINE_MARKERS,
                         new FunctionTooltip("快速配置"),
                         new OkJsonUpdateNavigationHandler(value),
                         GutterIconRenderer.Alignment.LEFT);

@@ -1,6 +1,5 @@
 package com.sgaop.idea.linemarker;
 
-import com.intellij.codeHighlighting.Pass;
 import com.intellij.codeInsight.daemon.LineMarkerInfo;
 import com.intellij.codeInsight.daemon.LineMarkerProviderDescriptor;
 import com.intellij.icons.AllIcons;
@@ -33,7 +32,6 @@ public class JavaSqlsXmlLineMarkerProvider extends LineMarkerProviderDescriptor 
         if (SqlsXmlLineUtil.isSqlsXml(psiElement)) {
             Icon icon = AllIcons.FileTypes.Xml;
             return new LineMarkerInfo<>(psiElement, psiElement.getTextRange(), icon,
-                    Pass.LINE_MARKERS,
                     new FunctionTooltip(), new SqlsXmlNavigationHandler(),
                     GutterIconRenderer.Alignment.LEFT);
         }
