@@ -84,10 +84,6 @@ public class AtMappingModel extends FilteringGotoByModel<FileType> implements Du
 
     @Override
     public boolean matches(@NotNull String popupItem, @NotNull String userPattern) {
-        if (popupItem.indexOf(userPattern) > -1) {
-            return true;
-        } else {
-            return false;
-        }
+        return popupItem.indexOf(userPattern) > -1;
     }
 }

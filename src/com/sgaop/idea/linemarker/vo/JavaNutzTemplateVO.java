@@ -1,4 +1,4 @@
-package com.sgaop.idea.linemarker;
+package com.sgaop.idea.linemarker.vo;
 
 /**
  * Created with IntelliJ IDEA.

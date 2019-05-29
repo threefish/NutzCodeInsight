@@ -22,10 +22,14 @@ public class HtmlTemplateLineMarkerProvider extends LineMarkerProviderDescriptor
 
     @Override
     public LineMarkerInfo getLineMarkerInfo(@NotNull PsiElement bindingElement) {
-        if (HtmlTemplateLineUtil.isRes(bindingElement)) {
-            return new LineMarkerInfo<>(bindingElement, bindingElement.getTextRange(), HtmlTemplateLineUtil.getTemplateIcon(bindingElement),
-                    new FunctionTooltip(), new HtmlTemplateNavigationHandler(),
-                    GutterIconRenderer.Alignment.LEFT);
+        try {
+            if (HtmlTemplateLineUtil.isRes(bindingElement)) {
+                return new LineMarkerInfo<>(bindingElement, bindingElement.getTextRange(), HtmlTemplateLineUtil.getTemplateIcon(bindingElement),
+                        new FunctionTooltip(), new HtmlTemplateNavigationHandler(),
+                        GutterIconRenderer.Alignment.LEFT);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }

@@ -28,16 +28,20 @@ public class OkJsonUpdateLineMarkerProvider implements LineMarkerProvider {
     @Nullable
     @Override
     public LineMarkerInfo getLineMarkerInfo(@NotNull PsiElement psiElement) {
-        PsiAnnotation psiAnnotation = this.getPsiAnnotation(psiElement);
-        if (psiAnnotation != null) {
-            PsiLiteralExpression literalExpression = (PsiLiteralExpression) psiAnnotation.findAttributeValue("value");
-            String value = String.valueOf(literalExpression.getValue());
-            if (value.startsWith(JSON_PREFIX)) {
-                return new LineMarkerInfo<>(psiAnnotation, psiAnnotation.getTextRange(), IconsUtil.NUTZ,
-                        new FunctionTooltip("快速配置"),
-                        new OkJsonUpdateNavigationHandler(value),
-                        GutterIconRenderer.Alignment.LEFT);
+        try {
+            PsiAnnotation psiAnnotation = this.getPsiAnnotation(psiElement);
+            if (psiAnnotation != null) {
+                PsiLiteralExpression literalExpression = (PsiLiteralExpression) psiAnnotation.findAttributeValue("value");
+                String value = String.valueOf(literalExpression.getValue());
+                if (value.startsWith(JSON_PREFIX)) {
+                    return new LineMarkerInfo<>(psiAnnotation, psiAnnotation.getTextRange(), IconsUtil.NUTZ,
+                            new FunctionTooltip("快速配置"),
+                            new OkJsonUpdateNavigationHandler(value),
+                            GutterIconRenderer.Alignment.LEFT);
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -47,9 +51,7 @@ public class OkJsonUpdateLineMarkerProvider implements LineMarkerProvider {
         if (psiElement instanceof PsiMethod) {
             PsiMethodImpl field = ((PsiMethodImpl) psiElement);
             PsiAnnotation psiAnnotation = field.getAnnotation(NutzCons.OK);
-            if (psiAnnotation != null) {
-                return psiAnnotation;
-            }
+            return psiAnnotation;
         }
         return null;
     }

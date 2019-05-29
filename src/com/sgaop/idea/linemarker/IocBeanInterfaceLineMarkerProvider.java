@@ -41,20 +41,24 @@ public class IocBeanInterfaceLineMarkerProvider extends LineMarkerProviderDescri
     @Nullable
     @Override
     public LineMarkerInfo getLineMarkerInfo(@NotNull PsiElement psiElement) {
-        PsiField psiFiled = this.getPsiFiled(psiElement);
-        PsiAnnotation psiAnnotation = this.getPsiAnnotation(psiFiled);
-        if (psiFiled != null && psiAnnotation != null) {
-            GlobalSearchScope moduleScope = ((ModuleWithDependenciesScope) psiElement.getResolveScope()).getModule().getModuleScope();
-            PsiTypeElementImpl psiTypeElement = this.getPsiTypeElement(psiAnnotation);
-            PsiClass psiClass = PsiTypesUtil.getPsiClass(psiTypeElement.getType());
-            String name = psiClass.getName();
-            List<PsiElement> list = this.getImplListElements(name, psiClass.getQualifiedName(), psiElement, moduleScope);
-            if (list.size() > 0) {
-                return new LineMarkerInfo<>(psiTypeElement, psiTypeElement.getTextRange(), icon,
-                        new FunctionTooltip(MessageFormat.format("快速跳转至 {0} 的 @IocBean 实现类", name)),
-                        new IocBeanInterfaceNavigationHandler(name, list),
-                        GutterIconRenderer.Alignment.LEFT);
+        try {
+            PsiField psiFiled = this.getPsiFiled(psiElement);
+            PsiAnnotation psiAnnotation = this.getPsiAnnotation(psiFiled);
+            if (psiFiled != null && psiAnnotation != null) {
+                GlobalSearchScope moduleScope = ((ModuleWithDependenciesScope) psiElement.getResolveScope()).getModule().getModuleScope();
+                PsiTypeElementImpl psiTypeElement = this.getPsiTypeElement(psiAnnotation);
+                PsiClass psiClass = PsiTypesUtil.getPsiClass(psiTypeElement.getType());
+                String name = psiClass.getName();
+                List<PsiElement> list = this.getImplListElements(name, psiClass.getQualifiedName(), psiElement, moduleScope);
+                if (list.size() > 0) {
+                    return new LineMarkerInfo<>(psiTypeElement, psiTypeElement.getTextRange(), icon,
+                            new FunctionTooltip(MessageFormat.format("快速跳转至 {0} 的 @IocBean 实现类", name)),
+                            new IocBeanInterfaceNavigationHandler(name, list),
+                            GutterIconRenderer.Alignment.LEFT);
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }
@@ -76,9 +80,7 @@ public class IocBeanInterfaceLineMarkerProvider extends LineMarkerProviderDescri
     private PsiAnnotation getPsiAnnotation(PsiField psiField) {
         if (psiField != null) {
             PsiAnnotation psiAnnotation = psiField.getAnnotation(INJECT_QUALI_FIED_NAME);
-            if (psiAnnotation != null) {
-                return psiAnnotation;
-            }
+            return psiAnnotation;
         }
         return null;
     }

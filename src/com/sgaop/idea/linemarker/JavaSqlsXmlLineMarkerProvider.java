@@ -29,11 +29,15 @@ public class JavaSqlsXmlLineMarkerProvider extends LineMarkerProviderDescriptor 
     @Nullable
     @Override
     public LineMarkerInfo getLineMarkerInfo(@NotNull PsiElement psiElement) {
-        if (SqlsXmlLineUtil.isSqlsXml(psiElement)) {
-            Icon icon = AllIcons.FileTypes.Xml;
-            return new LineMarkerInfo<>(psiElement, psiElement.getTextRange(), icon,
-                    new FunctionTooltip(), new SqlsXmlNavigationHandler(),
-                    GutterIconRenderer.Alignment.LEFT);
+        try {
+            if (SqlsXmlLineUtil.isSqlsXml(psiElement)) {
+                Icon icon = AllIcons.FileTypes.Xml;
+                return new LineMarkerInfo<>(psiElement, psiElement.getTextRange(), icon,
+                        new FunctionTooltip(), new SqlsXmlNavigationHandler(),
+                        GutterIconRenderer.Alignment.LEFT);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return null;
     }
