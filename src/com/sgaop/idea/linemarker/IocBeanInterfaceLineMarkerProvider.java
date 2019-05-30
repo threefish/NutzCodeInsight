@@ -45,7 +45,7 @@ public class IocBeanInterfaceLineMarkerProvider extends LineMarkerProviderDescri
             PsiField psiFiled = this.getPsiFiled(psiElement);
             PsiAnnotation psiAnnotation = this.getPsiAnnotation(psiFiled);
             if (psiFiled != null && psiAnnotation != null) {
-                GlobalSearchScope moduleScope = ((ModuleWithDependenciesScope) psiElement.getResolveScope()).getModule().getModuleScope();
+                GlobalSearchScope moduleScope = psiElement.getResolveScope();
                 PsiTypeElementImpl psiTypeElement = this.getPsiTypeElement(psiAnnotation);
                 PsiClass psiClass = PsiTypesUtil.getPsiClass(psiTypeElement.getType());
                 String name = psiClass.getName();
