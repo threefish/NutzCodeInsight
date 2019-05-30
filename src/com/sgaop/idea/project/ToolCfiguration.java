@@ -5,7 +5,7 @@ import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.util.xmlb.XmlSerializerUtil;
-import com.sgaop.idea.linemarker.JavaNutzTemplateVO;
+import com.sgaop.idea.linemarker.vo.JavaNutzTemplateVO;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Iterator;

@@ -5,7 +5,7 @@ import com.intellij.psi.*;
 import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.sgaop.idea.NutzCons;
-import com.sgaop.idea.linemarker.JavaNutzTemplateVO;
+import com.sgaop.idea.linemarker.vo.JavaNutzTemplateVO;
 import com.sgaop.idea.project.ToolCfiguration;
 
 import javax.swing.*;

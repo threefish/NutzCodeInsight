@@ -44,9 +44,8 @@ public class IocBeanInterfaceLineMarkerProvider extends LineMarkerProviderDescri
         try {
             PsiField psiFiled = this.getPsiFiled(psiElement);
             PsiAnnotation psiAnnotation = this.getPsiAnnotation(psiFiled);
-            GlobalSearchScope searchScope = psiElement.getResolveScope();
-            if (psiFiled != null && psiAnnotation != null && searchScope instanceof ModuleWithDependenciesScope) {
-                GlobalSearchScope moduleScope = ((ModuleWithDependenciesScope) searchScope).getModule().getModuleScope();
+            if (psiFiled != null && psiAnnotation != null) {
+                GlobalSearchScope moduleScope = ((ModuleWithDependenciesScope) psiElement.getResolveScope()).getModule().getModuleScope();
                 PsiTypeElementImpl psiTypeElement = this.getPsiTypeElement(psiAnnotation);
                 PsiClass psiClass = PsiTypesUtil.getPsiClass(psiTypeElement.getType());
                 String name = psiClass.getName();
@@ -59,7 +58,7 @@ public class IocBeanInterfaceLineMarkerProvider extends LineMarkerProviderDescri
                 }
             }
         } catch (Exception e) {
-            //忽略异常
+            e.printStackTrace();
         }
         return null;
     }
@@ -81,9 +80,7 @@ public class IocBeanInterfaceLineMarkerProvider extends LineMarkerProviderDescri
     private PsiAnnotation getPsiAnnotation(PsiField psiField) {
         if (psiField != null) {
             PsiAnnotation psiAnnotation = psiField.getAnnotation(INJECT_QUALI_FIED_NAME);
-            if (psiAnnotation != null) {
-                return psiAnnotation;
-            }
+            return psiAnnotation;
         }
         return null;
     }
