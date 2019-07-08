@@ -46,9 +46,9 @@ public class NutzInjectConfFoldingBuilder extends FoldingBuilderEx {
                 if (properties.size() == 1) {
                     data = properties.get(0);
                 } else if (properties.size() > 1) {
-                    data = "NutzCodeInsight:当前键值【" + key + "】在多个配置文件中存在！";
+                    data = properties.get(0) + "[该键值存在多个配置文件中!]";
                 } else {
-                    data = "NutzCodeInsight:当前键值【" + key + "】在多个配置文件中未发现，使用时可能为Null，请注意检查！";
+                    data = "[" + key + "]不存在,使用时可能产生异常,请检查！";
                 }
                 descriptors.add(new NutzLocalizationFoldingDescriptor(literalExpression.getNode(), textRange, data));
             }
