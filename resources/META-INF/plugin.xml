@@ -67,6 +67,11 @@
     ]]>
     </description>
     <change-notes><![CDATA[
+    <b>2.1.0</b>
+       <ul>
+         <li>1、优化国际化信息取得范围及提示信息</li>
+       </ul>
+       <p>
       <b>2.0.9</b>
        <ul>
          <li>1、添加 为@OK("json")提供GUI并快速修改json格式化信息</li>
