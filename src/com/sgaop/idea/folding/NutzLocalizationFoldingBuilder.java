@@ -10,6 +10,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLiteralExpression;
 import com.intellij.psi.search.FilenameIndex;
+import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.sgaop.util.NutzLocalUtil;
 import org.jetbrains.annotations.NotNull;
@@ -38,7 +39,7 @@ public class NutzLocalizationFoldingBuilder extends FoldingBuilderEx {
             return FoldingDescriptor.EMPTY;
         }
         List<FoldingDescriptor> descriptors = new ArrayList<>();
-        Collection<VirtualFile> propertiesFiles = FilenameIndex.getAllFilesByExt(project, "properties", root.getResolveScope());
+        Collection<VirtualFile> propertiesFiles = FilenameIndex.getAllFilesByExt(project, "properties", GlobalSearchScope.projectScope(project));
         Collection<PsiLiteralExpression> literalExpressions = PsiTreeUtil.findChildrenOfType(root, PsiLiteralExpression.class);
         for (final PsiLiteralExpression literalExpression : literalExpressions) {
             if (!NutzLocalUtil.isLocal(literalExpression)) {
@@ -52,9 +53,9 @@ public class NutzLocalizationFoldingBuilder extends FoldingBuilderEx {
                 if (properties.size() == 1) {
                     value = properties.get(0);
                 } else if (properties.size() > 1) {
-                    value = "NutzCodeInsight:当前键值【" + key + "】在国际化信息中存在重复KEY请检查！";
+                    value = properties.get(0) + "[该键值存在多个配置文件中!]";
                 } else {
-                    value = "NutzCodeInsight:当前键值【" + key + "】在国际化信息中存在重复KEY请检查，使用时可能为Null，请注意检查！";
+                    value = "国际化信息中不存在[" + key + "],使用时可能产生异常,请检查！";
                 }
                 descriptors.add(new NutzLocalizationFoldingDescriptor(literalExpression.getNode(), textRange, value));
             }
