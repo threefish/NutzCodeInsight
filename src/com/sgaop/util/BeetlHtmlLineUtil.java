@@ -64,7 +64,7 @@ public class BeetlHtmlLineUtil {
             if (properties.size() == 1) {
                 descriptors.add(new NutzLocalizationFoldingDescriptor(psiElement.getNode(), new TextRange(start, end), properties.get(0)));
             } else if (properties.size() > 1) {
-                descriptors.add(new NutzLocalizationFoldingDescriptor(psiElement.getNode(), new TextRange(start, end), "NutzCodeInsight:当前键值【" + key + "】在国际化信息中存在重复KEY请检查！"));
+                descriptors.add(new NutzLocalizationFoldingDescriptor(psiElement.getNode(), new TextRange(start, end), properties.get(0) + "[该键值存在多个配置文件中!]"));
             }
         }
         return descriptors;
