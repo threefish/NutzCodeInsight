@@ -1,10 +1,13 @@
 package com.sgaop.idea.actions;
 
+import com.intellij.codeInsight.navigation.NavigationUtil;
 import com.intellij.ide.actions.GotoActionBase;
 import com.intellij.ide.util.gotoByName.ChooseByNamePopup;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.project.Project;
+import com.intellij.psi.PsiElement;
+import com.intellij.ui.awt.RelativePoint;
 
 /**
  * Created by IntelliJ IDEA.
@@ -16,8 +19,8 @@ public class GoToNutzAtMappingAction extends GotoActionBase {
     @Override
     protected void gotoActionPerformed(AnActionEvent anActionEvent) {
         Project project = anActionEvent.getData(CommonDataKeys.PROJECT);
-        AtMappingModel model = new AtMappingModel(project);
-        showNavigationPopup(anActionEvent, model, new GoToRequestMappingActionCallback(), false);
+//        NavigationUtil.getPsiElementPopup(, title).show(new RelativePoint());
+        this.showNavigationPopup(anActionEvent, new AtMappingModel(project), new GoToRequestMappingActionCallback(), true);
     }
 
     private class GoToRequestMappingActionCallback extends GotoActionBase.GotoActionCallback<String> {

@@ -15,18 +15,20 @@ import javax.swing.*;
  * @author 黄川 huchuc@vip.qq.com
  * @date 2017/12/30 0030 23:53
  */
-public class AtMappingItem implements NavigationItem {
+public class AtMappingItem implements NavigationItem, ItemPresentation {
 
     private PsiElement psiElement;
+    private PsiElement containingFilePsiElement;
     private Navigatable navigatable;
     private String urlPath;
     private String requestMethod;
 
     public AtMappingItem(PsiElement psiElement, String urlPath, String requestMethod) {
         this.psiElement = psiElement;
+        this.containingFilePsiElement = psiElement.getContainingFile().getOriginalElement();
         this.requestMethod = requestMethod;
         this.urlPath = urlPath.replaceAll("//", "/");
-        this.navigatable = (Navigatable) psiElement;
+        this.navigatable = (Navigatable) containingFilePsiElement;
     }
 
     public String getUrlPath() {
@@ -38,7 +40,6 @@ public class AtMappingItem implements NavigationItem {
     public String getName() {
         return this.urlPath + " " + this.requestMethod;
     }
-
 
     @Override
     public void navigate(boolean b) {
@@ -58,26 +59,24 @@ public class AtMappingItem implements NavigationItem {
     @Nullable
     @Override
     public ItemPresentation getPresentation() {
-
-        return new ItemPresentation() {
-            @Nullable
-            @Override
-            public String getPresentableText() {
-                return urlPath + " " + requestMethod;
-            }
-
-            @Nullable
-            @Override
-            public String getLocationString() {
-                return psiElement.getContainingFile().getName();
-            }
-
-            @Nullable
-            @Override
-            public Icon getIcon(boolean b) {
-                return IconsUtil.NUTZ;
-            }
-        };
+        return this;
     }
 
+    @Nullable
+    @Override
+    public String getPresentableText() {
+        return urlPath + " " + requestMethod;
+    }
+
+    @Nullable
+    @Override
+    public String getLocationString() {
+        return "(in " + psiElement.getContainingFile().getName() + ")";
+    }
+
+    @Nullable
+    @Override
+    public Icon getIcon(boolean b) {
+        return IconsUtil.NUTZ;
+    }
 }
