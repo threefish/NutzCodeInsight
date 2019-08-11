@@ -1,8 +1,9 @@
 package com.sgaop.idea.actions;
 
 import com.intellij.navigation.ItemPresentation;
-import com.intellij.navigation.NavigationItem;
+import com.intellij.navigation.PsiElementNavigationItem;
 import com.intellij.pom.Navigatable;
+import com.intellij.pom.PomTargetPsiElement;
 import com.intellij.psi.PsiElement;
 import com.sgaop.util.IconsUtil;
 import org.jetbrains.annotations.Nullable;
@@ -15,24 +16,26 @@ import javax.swing.*;
  * @author 黄川 huchuc@vip.qq.com
  * @date 2017/12/30 0030 23:53
  */
-public class AtMappingItem implements NavigationItem, ItemPresentation {
+public class AtMappingItem implements PsiElementNavigationItem, ItemPresentation {
 
-    private PsiElement psiElement;
+    private PsiElement targetElement;
     private PsiElement containingFilePsiElement;
     private Navigatable navigatable;
     private String urlPath;
     private String requestMethod;
 
-    public AtMappingItem(PsiElement psiElement, String urlPath, String requestMethod) {
-        this.psiElement = psiElement;
-        this.containingFilePsiElement = psiElement.getContainingFile().getOriginalElement();
-        this.requestMethod = requestMethod;
+    public AtMappingItem(PsiElement targetElement, String urlPath, String requestMethod) {
+        this.targetElement = targetElement;
+        this.navigatable = (Navigatable) targetElement;
+        this.containingFilePsiElement = targetElement.getContainingFile().getOriginalElement();
+        this.requestMethod = requestMethod.trim();
         this.urlPath = urlPath.replaceAll("//", "/");
-        this.navigatable = (Navigatable) containingFilePsiElement;
     }
 
-    public String getUrlPath() {
-        return urlPath;
+
+    @Override
+    public PsiElement getTargetElement() {
+        return targetElement;
     }
 
     @Nullable
@@ -65,18 +68,22 @@ public class AtMappingItem implements NavigationItem, ItemPresentation {
     @Nullable
     @Override
     public String getPresentableText() {
-        return urlPath + " " + requestMethod;
+        return urlPath + " (" + requestMethod + ")";
     }
 
     @Nullable
     @Override
     public String getLocationString() {
-        return "(in " + psiElement.getContainingFile().getName() + ")";
+        return "(in " + targetElement.getContainingFile().getName() + ")";
     }
 
     @Nullable
     @Override
     public Icon getIcon(boolean b) {
         return IconsUtil.NUTZ;
+    }
+
+    public String getUrlPath() {
+        return urlPath;
     }
 }

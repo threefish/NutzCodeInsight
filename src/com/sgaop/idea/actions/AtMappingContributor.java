@@ -58,7 +58,10 @@ public class AtMappingContributor implements ChooseByNameContributor, DumbAware 
     @NotNull
     @Override
     public NavigationItem[] getItemsByName(String name, String pattern, Project project, boolean includeNonProjectItems) {
-        return data.getOrDefault(project.getLocationHash(), new ArrayList<>()).stream().filter(it -> it.getUrlPath().indexOf(pattern) > -1).toArray(NavigationItem[]::new);
+        return data.getOrDefault(project.getLocationHash(), new ArrayList<>()).stream().filter(it -> matche(it.getUrlPath(), pattern)).toArray(NavigationItem[]::new);
     }
 
+    public boolean matche(String url, String pattern) {
+        return url.indexOf(pattern) > -1;
+    }
 }
