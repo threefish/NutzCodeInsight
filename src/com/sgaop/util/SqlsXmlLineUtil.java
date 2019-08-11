@@ -35,9 +35,7 @@ public class SqlsXmlLineUtil {
     public static boolean isSqlsXml(PsiElement bindingElement) {
         if (bindingElement instanceof PsiJavaCodeReferenceElement && bindingElement.getParent() instanceof PsiAnnotationImpl) {
             PsiJavaCodeReferenceElement psiJavaCodeReferenceElement = (PsiJavaCodeReferenceElement) bindingElement;
-            if (NutzCons.SQLS_XML.equals(psiJavaCodeReferenceElement.getQualifiedName())) {
-                return true;
-            }
+            return NutzCons.SQLS_XML.equals(psiJavaCodeReferenceElement.getQualifiedName());
         }
         return false;
     }

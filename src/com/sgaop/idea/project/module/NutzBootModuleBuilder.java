@@ -15,7 +15,7 @@ import com.intellij.openapi.util.Pair;
 import com.intellij.openapi.util.io.FileUtil;
 import com.intellij.openapi.vfs.LocalFileSystem;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.sgaop.util.IconsUtil;
+import com.sgaop.idea.NutzCons;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -137,7 +137,7 @@ public class NutzBootModuleBuilder extends ModuleBuilder implements SourcePathsB
 
     @Override
     public Icon getNodeIcon() {
-        return IconsUtil.NUTZ;
+        return NutzCons.NUTZ;
     }
 
     @Nullable

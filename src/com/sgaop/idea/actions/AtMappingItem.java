@@ -5,7 +5,7 @@ import com.intellij.navigation.PsiElementNavigationItem;
 import com.intellij.pom.Navigatable;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.impl.source.PsiJavaFileImpl;
-import com.sgaop.util.IconsUtil;
+import com.sgaop.idea.NutzCons;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -77,7 +77,7 @@ public class AtMappingItem implements PsiElementNavigationItem, ItemPresentation
     @Nullable
     @Override
     public Icon getIcon(boolean b) {
-        return IconsUtil.NUTZ;
+        return NutzCons.NUTZ;
     }
 
     public String getUrlPath() {

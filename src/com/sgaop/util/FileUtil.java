@@ -3,6 +3,7 @@ package com.sgaop.util;
 
 import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
@@ -14,7 +15,7 @@ import java.util.zip.ZipInputStream;
  */
 public class FileUtil {
 
-    final static Charset utf8 = Charset.forName("UTF-8");
+    final static Charset utf8 = StandardCharsets.UTF_8;
 
     final static int BUFFER = 1024;
 

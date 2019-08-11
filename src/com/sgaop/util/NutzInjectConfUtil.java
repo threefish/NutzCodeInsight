@@ -7,9 +7,10 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.source.tree.java.PsiAnnotationImpl;
 
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -58,10 +59,7 @@ public class NutzInjectConfUtil {
             return false;
         }
         String name = ((PsiAnnotationImpl) p3).getNameReferenceElement().getQualifiedName();
-        if (qualifiedNames.contains(name)) {
-            return true;
-        }
-        return false;
+        return qualifiedNames.contains(name);
     }
 
     public static String getKey(String value) {

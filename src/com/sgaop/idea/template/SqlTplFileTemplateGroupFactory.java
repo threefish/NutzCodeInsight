@@ -3,7 +3,7 @@ package com.sgaop.idea.template;
 import com.intellij.ide.fileTemplates.FileTemplateDescriptor;
 import com.intellij.ide.fileTemplates.FileTemplateGroupDescriptor;
 import com.intellij.ide.fileTemplates.FileTemplateGroupDescriptorFactory;
-import com.sgaop.util.IconsUtil;
+import com.sgaop.idea.NutzCons;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
@@ -14,7 +14,7 @@ public class SqlTplFileTemplateGroupFactory implements FileTemplateGroupDescript
 
     @Override
     public FileTemplateGroupDescriptor getFileTemplatesDescriptor() {
-        FileTemplateGroupDescriptor group = new FileTemplateGroupDescriptor("NutzSqlTpl", IconsUtil.NUTZ);
+        FileTemplateGroupDescriptor group = new FileTemplateGroupDescriptor("NutzSqlTpl", NutzCons.NUTZ);
         group.addTemplate(new FileTemplateDescriptor(NUTZ_SQL_TPL_XML));
         return group;
     }
