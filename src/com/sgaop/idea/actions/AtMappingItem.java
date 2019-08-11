@@ -3,8 +3,8 @@ package com.sgaop.idea.actions;
 import com.intellij.navigation.ItemPresentation;
 import com.intellij.navigation.PsiElementNavigationItem;
 import com.intellij.pom.Navigatable;
-import com.intellij.pom.PomTargetPsiElement;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.impl.source.PsiJavaFileImpl;
 import com.sgaop.util.IconsUtil;
 import org.jetbrains.annotations.Nullable;
 
@@ -20,18 +20,15 @@ public class AtMappingItem implements PsiElementNavigationItem, ItemPresentation
 
     private PsiElement targetElement;
     private PsiElement containingFilePsiElement;
-    private Navigatable navigatable;
     private String urlPath;
     private String requestMethod;
 
     public AtMappingItem(PsiElement targetElement, String urlPath, String requestMethod) {
         this.targetElement = targetElement;
-        this.navigatable = (Navigatable) targetElement;
         this.containingFilePsiElement = targetElement.getContainingFile().getOriginalElement();
         this.requestMethod = requestMethod.trim();
         this.urlPath = urlPath.replaceAll("//", "/");
     }
-
 
     @Override
     public PsiElement getTargetElement() {
@@ -46,12 +43,12 @@ public class AtMappingItem implements PsiElementNavigationItem, ItemPresentation
 
     @Override
     public void navigate(boolean b) {
-        navigatable.navigate(b);
+        ((Navigatable) targetElement).navigate(b);
     }
 
     @Override
     public boolean canNavigate() {
-        return navigatable.canNavigate();
+        return ((Navigatable) targetElement).canNavigate();
     }
 
     @Override
@@ -74,7 +71,7 @@ public class AtMappingItem implements PsiElementNavigationItem, ItemPresentation
     @Nullable
     @Override
     public String getLocationString() {
-        return "(in " + targetElement.getContainingFile().getName() + ")";
+        return "(in " + ((PsiJavaFileImpl) containingFilePsiElement).getPackageName() + targetElement.getContainingFile().getName() + ")";
     }
 
     @Nullable

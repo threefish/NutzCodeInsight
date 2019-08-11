@@ -1,6 +1,5 @@
 package com.sgaop.idea.actions;
 
-import com.intellij.ide.util.gotoByName.CustomMatcherModel;
 import com.intellij.ide.util.gotoByName.FilteringGotoByModel;
 import com.intellij.navigation.ChooseByNameContributor;
 import com.intellij.navigation.NavigationItem;
@@ -16,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
  * @author 黄川 huchuc@vip.qq.com
  * @date 2017/12/30 0030 23:48
  */
-public class AtMappingModel extends FilteringGotoByModel<FileType> implements DumbAware, CustomMatcherModel {
+public class AtMappingModel extends FilteringGotoByModel<FileType> implements DumbAware {
 
     public AtMappingModel(@NotNull Project project) {
         super(project, new ChooseByNameContributor[]{new AtMappingContributor()});
@@ -25,7 +24,7 @@ public class AtMappingModel extends FilteringGotoByModel<FileType> implements Du
     @Nullable
     @Override
     protected FileType filterValueFor(NavigationItem navigationItem) {
-        return null;
+        return ((AtMappingItem) navigationItem).getTargetElement().getContainingFile().getFileType();
     }
 
     @Override
@@ -80,10 +79,5 @@ public class AtMappingModel extends FilteringGotoByModel<FileType> implements Du
     @Override
     public boolean willOpenEditor() {
         return true;
-    }
-
-    @Override
-    public boolean matches(@NotNull String popupItem, @NotNull String userPattern) {
-        return popupItem.indexOf(userPattern) > -1;
     }
 }

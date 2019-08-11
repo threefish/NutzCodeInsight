@@ -62,6 +62,6 @@ public class AtMappingContributor implements ChooseByNameContributor, DumbAware 
     }
 
     public boolean matche(String url, String pattern) {
-        return url.indexOf(pattern) > -1;
+        return url.toLowerCase().indexOf(pattern.toLowerCase()) > -1;
     }
 }
