@@ -2,7 +2,7 @@
 <idea-plugin url="https://github.com/threefish/NutzCodeInsight">
     <id>com.sgaop.idea.codeinsight.plugin</id>
     <name>NutzCodeInsight</name>
-    <version>2.0.9.1</version>
+    <version>2.1.0</version>
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
     <idea-version since-build="191.4212.41"/>
     <vendor email="huchuc@vip.qq.com" url="https://github.com/threefish/NutzCodeInsight">threefish</vendor>
@@ -69,7 +69,9 @@
     <change-notes><![CDATA[
     <b>2.1.0</b>
        <ul>
-         <li>1、优化国际化信息取得范围及提示信息</li>
+         <li>1、优化: Find Nutz @At action 查找到Java类时将模块(Module)一并显示，方便区分 </li>
+         <li>2、优化: 调低打开项目时消息通知 </li>
+         <li>3、优化: 配置文件、国际化信息 折叠显示时更加友好</li>
        </ul>
        <p>
       <b>2.0.9</b>
@@ -144,9 +146,7 @@
         <!--创建NutzBoot项目-->
         <moduleBuilder builderClass="com.sgaop.idea.project.module.NutzBootModuleBuilder"/>
         <!--快速定位至NutzAction-->
-        <gotoSymbolContributor implementation="com.sgaop.idea.actions.AtMappingContributor"/>
-        <gotoClassContributor implementation="com.sgaop.idea.actions.AtMappingContributor"/>
-        <gotoFileContributor implementation="com.sgaop.idea.actions.AtMappingContributor"/>
+        <gotoClassContributor implementation="com.sgaop.idea.gotosymbol.AtMappingGotoSymbolProvider"/>
         <!--意图行动-->
         <!--<intentionAction order="first">-->
         <!--<className>com.sgaop.idea.intention.GenerateSqlXmlIntention</className>-->

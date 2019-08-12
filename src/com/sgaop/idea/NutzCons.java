@@ -1,5 +1,8 @@
 package com.sgaop.idea;
 
+import com.intellij.openapi.util.IconLoader;
+
+import javax.swing.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -19,6 +22,8 @@ public class NutzCons {
     public static final String PUT = "org.nutz.mvc.annotation.PUT";
     public static final String SQLS_XML = "com.github.threefish.nutz.sqltpl.SqlsXml";
     public static final List<String> SQLS = Arrays.asList("org.nutz.dao.entity.annotation.SQL");
+
+    public static final Icon NUTZ = IconLoader.findIcon("/icons/nutz.png");
 
 
 }

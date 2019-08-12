@@ -5,7 +5,8 @@ import com.intellij.psi.*;
 import com.intellij.psi.impl.java.stubs.index.JavaAnnotationIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.sgaop.idea.NutzCons;
-import com.sgaop.idea.actions.AtMappingItem;
+import com.sgaop.idea.gotosymbol.AtMappingNavigationItem;
+import com.sgaop.idea.gotosymbol.FindAtMappingCache;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,21 +15,22 @@ import java.util.List;
 /**
  * @author 黄川 huchuc@vip.qq.com
  * @date: 2018/11/27
- *
+ * <p>
  * 此类可以优化
- *
  */
 public class FindRequestMappingItemsUtil {
 
     /**
      * 最大尝试次数
      */
-    private static final int TRY_NUM_MAX = 200;
+    private static final int TRY_NUM_MAX = 20;
 
-    public static List<AtMappingItem> findRequestMappingItems(Project project, String annotationName) {
+    public static FindAtMappingCache findAtMappingCache = new FindAtMappingCache();
+
+    public static List<AtMappingNavigationItem> findRequestMappingItems(Project project) {
         try {
-            Collection<PsiAnnotation> psiAnnotations = JavaAnnotationIndex.getInstance().get(annotationName, project, GlobalSearchScope.projectScope(project));
-            List<AtMappingItem> mappingAnnotation = new ArrayList<>();
+            Collection<PsiAnnotation> psiAnnotations = JavaAnnotationIndex.getInstance().get("At", project, GlobalSearchScope.projectScope(project));
+            List<AtMappingNavigationItem> mappingAnnotation = new ArrayList<>();
             for (PsiAnnotation annotation : psiAnnotations) {
                 if (!NutzCons.AT.equals(annotation.getQualifiedName())) {
                     continue;
@@ -50,7 +52,7 @@ public class FindRequestMappingItemsUtil {
                                     String requestPath = nameValuePair.getLiteralValue();
                                     for (String topReq : topReqs) {
                                         if (topReq != null) {
-                                            mappingAnnotation.add(new AtMappingItem(annotation, topReq + requestPath, getMethodType(methodAanotations)));
+                                            mappingAnnotation.add(new AtMappingNavigationItem(annotation, topReq, requestPath, getMethodType(methodAanotations)));
                                         }
                                     }
                                 } else if (va instanceof PsiAnnotationMemberValue) {
@@ -62,7 +64,7 @@ public class FindRequestMappingItemsUtil {
                                         String requestPath = (String) val.getValue();
                                         for (String topReq : topReqs) {
                                             if (topReq != null) {
-                                                mappingAnnotation.add(new AtMappingItem(annotation, topReq + requestPath, getMethodType(methodAanotations)));
+                                                mappingAnnotation.add(new AtMappingNavigationItem(annotation, topReq, requestPath, getMethodType(methodAanotations)));
                                             }
                                         }
                                     }
@@ -75,7 +77,7 @@ public class FindRequestMappingItemsUtil {
                                 String requestPath = "/" + ((PsiMethod) psiMethod).getName().toLowerCase();
                                 for (String topReq : topReqs) {
                                     if (topReq != null) {
-                                        mappingAnnotation.add(new AtMappingItem(annotation, topReq + requestPath, getMethodType(methodAanotations)));
+                                        mappingAnnotation.add(new AtMappingNavigationItem(annotation, topReq, requestPath, getMethodType(methodAanotations)));
                                     }
                                 }
                             }

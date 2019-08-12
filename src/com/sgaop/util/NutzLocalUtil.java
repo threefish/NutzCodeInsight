@@ -10,7 +10,10 @@ import com.sgaop.idea.NutzCons;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
+import java.util.Properties;
 
 /**
  * Created with IntelliJ IDEA.
@@ -73,9 +76,7 @@ public class NutzLocalUtil {
                 return false;
             }
             String qualifiedName = methodCallExpression.getMethodExpression().getQualifiedName();
-            if (localQualifiedNames.contains(qualifiedName)) {
-                return true;
-            }
+            return localQualifiedNames.contains(qualifiedName);
         }
         return false;
     }

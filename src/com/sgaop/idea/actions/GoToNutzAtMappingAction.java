@@ -5,6 +5,8 @@ import com.intellij.ide.util.gotoByName.ChooseByNamePopup;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.project.Project;
+import com.sgaop.idea.gotosymbol.AtMappingModel;
+import com.sgaop.idea.gotosymbol.AtMappingNavigationItem;
 
 /**
  * Created by IntelliJ IDEA.
@@ -16,15 +18,14 @@ public class GoToNutzAtMappingAction extends GotoActionBase {
     @Override
     protected void gotoActionPerformed(AnActionEvent anActionEvent) {
         Project project = anActionEvent.getData(CommonDataKeys.PROJECT);
-        AtMappingModel model = new AtMappingModel(project);
-        showNavigationPopup(anActionEvent, model, new GoToRequestMappingActionCallback(), false);
+        this.showNavigationPopup(anActionEvent, new AtMappingModel(project), new GoToRequestMappingActionCallback(), true);
     }
 
     private class GoToRequestMappingActionCallback extends GotoActionBase.GotoActionCallback<String> {
         @Override
         public void elementChosen(ChooseByNamePopup popup, Object element) {
-            if (element instanceof AtMappingItem) {
-                AtMappingItem el = (AtMappingItem) element;
+            if (element instanceof AtMappingNavigationItem) {
+                AtMappingNavigationItem el = (AtMappingNavigationItem) element;
                 if (el.canNavigate()) {
                     el.navigate(true);
                 }

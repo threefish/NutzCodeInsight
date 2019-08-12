@@ -10,7 +10,6 @@ import com.intellij.psi.PsiMethod;
 import com.intellij.psi.impl.source.PsiMethodImpl;
 import com.sgaop.idea.NutzCons;
 import com.sgaop.idea.linemarker.navigation.OkJsonUpdateNavigationHandler;
-import com.sgaop.util.IconsUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -34,7 +33,7 @@ public class OkJsonUpdateLineMarkerProvider implements LineMarkerProvider {
                 PsiLiteralExpression literalExpression = (PsiLiteralExpression) psiAnnotation.findAttributeValue("value");
                 String value = String.valueOf(literalExpression.getValue());
                 if (value.startsWith(JSON_PREFIX)) {
-                    return new LineMarkerInfo<>(psiAnnotation, psiAnnotation.getTextRange(), IconsUtil.NUTZ,
+                    return new LineMarkerInfo<>(psiAnnotation, psiAnnotation.getTextRange(), NutzCons.NUTZ,
                             new FunctionTooltip("快速配置"),
                             new OkJsonUpdateNavigationHandler(value),
                             GutterIconRenderer.Alignment.LEFT);

@@ -33,10 +33,7 @@ public class HtmlTemplateLineUtil {
             XmlToken xmlToken = (XmlToken) bindingElement;
             List<String> layouts = BeetlHtmlLineUtil.showBeetlLayout(xmlToken);
             List<String> includes = BeetlHtmlLineUtil.showBeetlInclude(xmlToken);
-            if (layouts.size() > 0 || includes.size() > 0) {
-                return true;
-            }
-            return false;
+            return layouts.size() > 0 || includes.size() > 0;
         }
         if (!(bindingElement instanceof XmlAttribute)) {
             return false;
@@ -48,10 +45,7 @@ public class HtmlTemplateLineUtil {
         if (sp > -1) {
             path = path.substring(0, sp);
         }
-        if (resTag.contains(name) && path.startsWith("${") && endWithRes(path)) {
-            return true;
-        }
-        return false;
+        return resTag.contains(name) && path.startsWith("${") && endWithRes(path);
     }
 
 
@@ -127,7 +121,7 @@ public class HtmlTemplateLineUtil {
         }
         int sp2 = path.lastIndexOf("}");
         if (sp2 > -1) {
-            path = path.substring(sp2 + 1, path.length());
+            path = path.substring(sp2 + 1);
         }
         return path;
     }

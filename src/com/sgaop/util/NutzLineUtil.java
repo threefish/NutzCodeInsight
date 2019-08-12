@@ -50,10 +50,7 @@ public class NutzLineUtil {
         if (!NutzCons.OK.equals(((PsiJavaCodeReferenceElement) psiJavaCodeReferenceElement).getQualifiedName())) {
             return false;
         }
-        if (getTemplateFilePathAndName(bindingElement) == null) {
-            return false;
-        }
-        return true;
+        return getTemplateFilePathAndName(bindingElement) != null;
     }
 
     /**
