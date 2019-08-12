@@ -14,6 +14,7 @@ import com.intellij.psi.impl.source.PsiTypeElementImpl;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTypesUtil;
 import com.sgaop.idea.linemarker.navigation.IocBeanInterfaceNavigationHandler;
+import org.apache.commons.collections.CollectionUtils;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -50,7 +51,7 @@ public class IocBeanInterfaceLineMarkerProvider extends LineMarkerProviderDescri
                 PsiClass psiClass = PsiTypesUtil.getPsiClass(psiTypeElement.getType());
                 String name = psiClass.getName();
                 List<PsiElement> list = this.getImplListElements(name, psiClass.getQualifiedName(), psiElement, moduleScope);
-                if (list.size() > 0) {
+                if (CollectionUtils.isNotEmpty(list)) {
                     return new LineMarkerInfo<>(psiTypeElement, psiTypeElement.getTextRange(), icon,
                             new FunctionTooltip(MessageFormat.format("快速跳转至 {0} 的 @IocBean 实现类", name)),
                             new IocBeanInterfaceNavigationHandler(name, list),
@@ -119,10 +120,12 @@ public class IocBeanInterfaceLineMarkerProvider extends LineMarkerProviderDescri
         Project project = psiElement.getProject();
         Collection<PsiReferenceList> psiReferenceListCollection = JavaSuperClassNameOccurenceIndex.getInstance().get(name, project, moduleScope);
         List<PsiElement> elements = new ArrayList<>();
-        for (PsiReferenceList psiReferenceList : psiReferenceListCollection) {
-            PsiClassImpl psiClassImpl = (PsiClassImpl) psiReferenceList.getContext();
-            if (psiClassImpl.getAnnotation(IOCBEAN_QUALI_FIED_NAME) != null) {
-                elements.add(psiClassImpl);
+        for (PsiElement psiReferenceList : psiReferenceListCollection) {
+            if (psiReferenceList instanceof PsiClassImpl) {
+                PsiClassImpl psiClassImpl = (PsiClassImpl) psiReferenceList.getContext();
+                if (psiClassImpl.getAnnotation(IOCBEAN_QUALI_FIED_NAME) != null) {
+                    elements.add(psiClassImpl);
+                }
             }
         }
         if (methodIocBeans.containsKey(qualifiedName)) {

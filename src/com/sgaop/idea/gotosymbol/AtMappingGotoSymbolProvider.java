@@ -3,11 +3,9 @@ package com.sgaop.idea.gotosymbol;
 import com.intellij.navigation.NavigationItem;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiElement;
 import com.intellij.psi.util.FindClassUtil;
 import com.intellij.util.xml.model.gotosymbol.GoToSymbolProvider;
 import com.sgaop.idea.NutzCons;
-import com.sgaop.idea.actions.AtMappingItem;
 import com.sgaop.util.FindRequestMappingItemsUtil;
 import org.apache.commons.collections.CollectionUtils;
 import org.jetbrains.annotations.NotNull;
@@ -25,22 +23,18 @@ public class AtMappingGotoSymbolProvider extends GoToSymbolProvider {
 
     @Override
     protected void addNames(@NotNull Module module, Set<String> result) {
-        List<AtMappingItem> itemList = FindRequestMappingItemsUtil.findRequestMappingItems(module.getProject());
+        List<AtMappingNavigationItem> itemList = FindRequestMappingItemsUtil.findRequestMappingItems(module.getProject());
         if (CollectionUtils.isNotEmpty(itemList)) {
-            List<String> temp = itemList.stream().map(atMappingItem -> atMappingItem.getPresentableText()).distinct().collect(Collectors.toList());
+            List<String> temp = itemList.stream().map(atMappingItem -> atMappingItem.getText()).distinct().collect(Collectors.toList());
             result.addAll(temp);
         }
     }
 
     @Override
     protected void addItems(@NotNull Module module, String name, List<NavigationItem> result) {
-        List<AtMappingItem> itemList = FindRequestMappingItemsUtil.findRequestMappingItems(module.getProject());
+        List<AtMappingNavigationItem> itemList = FindRequestMappingItemsUtil.findRequestMappingItems(module.getProject());
         if (CollectionUtils.isNotEmpty(itemList)) {
-            itemList.stream().forEach(atMappingItem -> {
-                PsiElement navigationElement = atMappingItem.getTargetElement();
-                NavigationItem navigationItem = new AtMappingNavigationItem(navigationElement, atMappingItem.getPresentableText());
-                result.add(navigationItem);
-            });
+            result.addAll(itemList);
         }
     }
 

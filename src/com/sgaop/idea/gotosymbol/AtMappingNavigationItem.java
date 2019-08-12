@@ -3,8 +3,9 @@ package com.sgaop.idea.gotosymbol;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.xml.model.gotosymbol.GoToSymbolProvider;
 import com.sgaop.idea.NutzCons;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.text.MessageFormat;
 
 /**
  * @author huchuc@vip.qq.com
@@ -14,9 +15,9 @@ public class AtMappingNavigationItem extends GoToSymbolProvider.BaseNavigationIt
 
     private String text;
 
-    public AtMappingNavigationItem(@NotNull PsiElement psiElement, @NotNull String text) {
-        super(psiElement, text, NutzCons.NUTZ);
-        this.text = text;
+    public AtMappingNavigationItem(PsiElement annotation, String topReq, String requestPath, String methodType) {
+        super(annotation, MessageFormat.format("{0}{1} ({2})", topReq, requestPath, methodType.trim()), NutzCons.NUTZ);
+        this.text = getPresentableText();
     }
 
     @Override
