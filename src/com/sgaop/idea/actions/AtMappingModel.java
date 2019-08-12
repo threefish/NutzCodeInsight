@@ -24,7 +24,7 @@ public class AtMappingModel extends FilteringGotoByModel<FileType> implements Du
     @Nullable
     @Override
     protected FileType filterValueFor(NavigationItem navigationItem) {
-        return ((AtMappingItem) navigationItem).getTargetElement().getContainingFile().getFileType();
+        return null;
     }
 
     @Override

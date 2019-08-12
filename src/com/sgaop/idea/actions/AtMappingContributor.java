@@ -5,12 +5,13 @@ import com.intellij.navigation.NavigationItem;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
+import com.sgaop.idea.gotosymbol.AtMappingNavigationItem;
 import com.sgaop.util.FindRequestMappingItemsUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by IntelliJ IDEA.
@@ -24,7 +25,7 @@ public class AtMappingContributor implements ChooseByNameContributor, DumbAware 
     /**
      * 按项目进行缓存
      */
-    private HashMap<String, List<AtMappingItem>> data = new HashMap<>();
+    private ConcurrentHashMap<String, List<AtMappingItem>> data = new ConcurrentHashMap<>();
 
     public AtMappingContributor() {
     }
@@ -34,7 +35,7 @@ public class AtMappingContributor implements ChooseByNameContributor, DumbAware 
             if (lock == false) {
                 //加锁
                 lock = true;
-                List<AtMappingItem> itemList = FindRequestMappingItemsUtil.findRequestMappingItems(project, "At");
+                List<AtMappingItem> itemList = FindRequestMappingItemsUtil.findRequestMappingItems(project);
                 if (itemList != null) {
                     data.put(project.getLocationHash(), itemList);
                 }
@@ -58,7 +59,11 @@ public class AtMappingContributor implements ChooseByNameContributor, DumbAware 
     @NotNull
     @Override
     public NavigationItem[] getItemsByName(String name, String pattern, Project project, boolean includeNonProjectItems) {
-        return data.getOrDefault(project.getLocationHash(), new ArrayList<>()).stream().filter(it -> matche(it.getUrlPath(), pattern)).toArray(NavigationItem[]::new);
+        List<AtMappingNavigationItem> atMappingNavigationItems = new ArrayList<>();
+        data.getOrDefault(project.getLocationHash(), new ArrayList<>()).stream().filter(it -> matche(it.getUrlPath(), pattern)).forEach(atMappingItem -> {
+            atMappingNavigationItems.add(new AtMappingNavigationItem(atMappingItem.getTargetElement(), atMappingItem.getPresentableText()));
+        });
+        return atMappingNavigationItems.toArray(new NavigationItem[0]);
     }
 
     public boolean matche(String url, String pattern) {

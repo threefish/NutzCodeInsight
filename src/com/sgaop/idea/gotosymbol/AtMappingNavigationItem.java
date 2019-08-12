@@ -1,4 +1,4 @@
-package com.sgaop.idea.actions;
+package com.sgaop.idea.gotosymbol;
 
 import com.intellij.psi.PsiElement;
 import com.intellij.util.xml.model.gotosymbol.GoToSymbolProvider;

@@ -1,21 +1,21 @@
-package com.sgaop.idea.actions;
+package com.sgaop.idea.gotosymbol;
 
 import com.intellij.navigation.NavigationItem;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
-import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.impl.file.impl.JavaFileManager;
-import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.FindClassUtil;
 import com.intellij.util.xml.model.gotosymbol.GoToSymbolProvider;
 import com.sgaop.idea.NutzCons;
+import com.sgaop.idea.actions.AtMappingItem;
+import com.sgaop.util.FindRequestMappingItemsUtil;
+import org.apache.commons.collections.CollectionUtils;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * @author huchuc@vip.qq.com
@@ -25,22 +25,23 @@ public class AtMappingGotoSymbolProvider extends GoToSymbolProvider {
 
     @Override
     protected void addNames(@NotNull Module module, Set<String> result) {
-        List<String> temp = Arrays.asList("apm", "huang");
-        result.addAll(temp);
+        List<AtMappingItem> itemList = FindRequestMappingItemsUtil.findRequestMappingItems(module.getProject());
+        if (CollectionUtils.isNotEmpty(itemList)) {
+            List<String> temp = itemList.stream().map(atMappingItem -> atMappingItem.getPresentableText()).distinct().collect(Collectors.toList());
+            result.addAll(temp);
+        }
     }
 
     @Override
     protected void addItems(@NotNull Module module, String name, List<NavigationItem> result) {
-        PsiClass aClass = JavaFileManager.getInstance(module.getProject()).findClass("com.nutzfw.modules.common.action.FrontAction", GlobalSearchScope.allScope(module.getProject()));
-        PsiClass aClass2 = JavaFileManager.getInstance(module.getProject()).findClass("com.nutzfw.core.WebAdminInitSetup", GlobalSearchScope.allScope(module.getProject()));
-        List<PsiClass> classes = Arrays.asList(aClass, aClass2);
-        classes.forEach(psiClass -> {
-            PsiElement navigationElement = psiClass.getNavigationElement();
-            NavigationItem navigationItem = new AtMappingNavigationItem(navigationElement, "/apm/huang/" + navigationElement.getContainingFile().getName());
-            if (!result.contains(navigationItem)) {
+        List<AtMappingItem> itemList = FindRequestMappingItemsUtil.findRequestMappingItems(module.getProject());
+        if (CollectionUtils.isNotEmpty(itemList)) {
+            itemList.stream().forEach(atMappingItem -> {
+                PsiElement navigationElement = atMappingItem.getTargetElement();
+                NavigationItem navigationItem = new AtMappingNavigationItem(navigationElement, atMappingItem.getPresentableText());
                 result.add(navigationItem);
-            }
-        });
+            });
+        }
     }
 
     @NotNull

@@ -24,9 +24,9 @@ public class FindRequestMappingItemsUtil {
      */
     private static final int TRY_NUM_MAX = 200;
 
-    public static List<AtMappingItem> findRequestMappingItems(Project project, String annotationName) {
+    public static List<AtMappingItem> findRequestMappingItems(Project project) {
         try {
-            Collection<PsiAnnotation> psiAnnotations = JavaAnnotationIndex.getInstance().get(annotationName, project, GlobalSearchScope.projectScope(project));
+            Collection<PsiAnnotation> psiAnnotations = JavaAnnotationIndex.getInstance().get("At", project, GlobalSearchScope.projectScope(project));
             List<AtMappingItem> mappingAnnotation = new ArrayList<>();
             for (PsiAnnotation annotation : psiAnnotations) {
                 if (!NutzCons.AT.equals(annotation.getQualifiedName())) {
@@ -85,6 +85,7 @@ public class FindRequestMappingItemsUtil {
             return mappingAnnotation;
         } catch (Exception ex) {
             //过滤异常不提示
+            ex.printStackTrace();
         }
         return null;
     }

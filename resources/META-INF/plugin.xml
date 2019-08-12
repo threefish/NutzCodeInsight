@@ -142,7 +142,9 @@
 <!--        <gotoSymbolContributor implementation="com.sgaop.idea.actions.AtMappingContributor"/>-->
 <!--        <gotoClassContributor implementation="com.sgaop.idea.actions.AtMappingContributor"/>-->
 <!--        <gotoFileContributor implementation="com.sgaop.idea.actions.AtMappingContributor"/>-->
-        <gotoSymbolContributor implementation="com.sgaop.idea.actions.AtMappingGotoSymbolProvider"/>
+        <gotoSymbolContributor implementation="com.sgaop.idea.gotosymbol.AtMappingGotoSymbolProvider"/>
+        <gotoClassContributor implementation="com.sgaop.idea.gotosymbol.AtMappingGotoSymbolProvider"/>
+        <gotoFileContributor implementation="com.sgaop.idea.gotosymbol.AtMappingGotoSymbolProvider"/>
         <!--意图行动-->
         <!--<intentionAction order="first">-->
         <!--<className>com.sgaop.idea.intention.GenerateSqlXmlIntention</className>-->
