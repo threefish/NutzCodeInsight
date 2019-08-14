@@ -67,29 +67,18 @@
     ]]>
     </description>
     <change-notes><![CDATA[
-    <b>2.1.0</b>
+        <b>2.1.0</b>
        <ul>
+          <li><h4>English</h4></li>
+         <li>1、majorization: Find Nutz @At action: When the Java class is found, the module is displayed together, which is convenient to distinguish </li>
+         <li>2、majorization: Turn down message notification when opening a project </li>
+         <li>3、majorization: Profile, internationalization information, more friendly when folding display</li>
+       </ul>
+       <ul>
+          <li><h4>中文</h4></li>
          <li>1、优化: Find Nutz @At action 查找到Java类时将模块(Module)一并显示，方便区分 </li>
          <li>2、优化: 调低打开项目时消息通知 </li>
          <li>3、优化: 配置文件、国际化信息 折叠显示时更加友好</li>
-       </ul>
-       <p>
-      <b>2.0.9</b>
-       <ul>
-         <li>1、添加 为@OK("json")提供GUI并快速修改json格式化信息</li>
-       </ul>
-       <p>
-       <b>2.0.8</b>
-       <ul>
-         <li> 1、添加 @Inject字段注入接口提供快速跳转至实现类或选择多个实现类</li>
-       </ul>
-       <p>
-        <b>2.0.7</b>
-       <ul>
-         <li> 1、添加 <a href="https://github.com/threefish/nutz-sqltpl">Nutz-sqltpl</a> xml中的SQL模板中sql语言的动态高亮和提示</li>
-         <li> 2、添加 <a href="https://github.com/threefish/nutz-sqltpl">Nutz-sqltpl</a> 支持xml与java文件互相跳转</li>
-         <li> 3、添加 <a href="https://github.com/threefish/nutz-sqltpl">Nutz-sqltpl</a> 为还未创建xml模板文件的@SqlsXml注解快速生成对应xml模板 </li>
-         <li> 4、fix bug https://github.com/nutzam/nutzboot/issues/157  </li>
        </ul>
        <p>
     ]]>
