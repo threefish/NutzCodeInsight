@@ -18,6 +18,7 @@ public class IntroductionWizardStep extends ModuleWizardStep {
     private JLabel doc2;
     private JLabel questionAndAnswer;
     private JLabel nutzWk;
+    private JLabel nutzFw;
 
     public IntroductionWizardStep() {
         SwingUtils.addMouseListenerAndSetUrl(authorLink, "https://github.com/threefish/NutzCodeInsight/");
@@ -27,6 +28,7 @@ public class IntroductionWizardStep extends ModuleWizardStep {
         SwingUtils.addMouseListenerAndSetUrl(doc2, "http://nutzam.com/core/boot/overview.html");
         SwingUtils.addMouseListenerAndSetUrl(questionAndAnswer, "https://nutz.cn");
         SwingUtils.addMouseListenerAndSetUrl(nutzWk, "https://gitee.com/wizzer/NutzWk");
+        SwingUtils.addMouseListenerAndSetUrl(nutzFw, "https://gitee.com/threefish/NutzFw");
     }
 
     @Override
