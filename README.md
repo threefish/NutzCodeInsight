@@ -17,6 +17,10 @@
 
 >idea插件仓库[https://plugins.jetbrains.com/plugin/10311-nutzcodeinsight](https://plugins.jetbrains.com/plugin/10311-nutzcodeinsight "真实项目")
 
+# Thanks
+
+Thanks for [JetBrains](https://www.jetbrains.com/?from=study_algo) for the wonderful IDE.
+
 ### 添加自定义配置
  - File >> Settings >> NutzCodeInsight
  - File >> Settings >> Other Settings >> NutzCodeInsight
