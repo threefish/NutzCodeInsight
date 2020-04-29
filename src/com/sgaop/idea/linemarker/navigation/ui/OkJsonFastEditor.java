@@ -168,7 +168,7 @@ public class OkJsonFastEditor extends JDialog {
         for (int i = 0, l = model.getRowCount(); i < l; i++) {
             String key = String.valueOf(model.getValueAt(i, 0));
             Object value = model.getValueAt(i, 1);
-            if (value != null && !String.valueOf(value).equals("")) {
+            if (value != null && !"".equals(String.valueOf(value))) {
                 hashMap.put(key, value);
             }
         }

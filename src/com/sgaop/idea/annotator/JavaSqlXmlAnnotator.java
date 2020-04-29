@@ -1,6 +1,8 @@
 package com.sgaop.idea.annotator;
 
+import com.intellij.lang.annotation.Annotation;
 import com.intellij.lang.annotation.AnnotationHolder;
+import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
@@ -16,7 +18,7 @@ import java.util.List;
  */
 public class JavaSqlXmlAnnotator extends AbstractSqlXmlAnnotator {
 
-    static final String errMsg = "模版文件未找到";
+    static final String ERR_MSG = "模版文件未找到";
 
     @Override
     public boolean isSqlsXml(@NotNull PsiElement psiElement) {
@@ -33,13 +35,14 @@ public class JavaSqlXmlAnnotator extends AbstractSqlXmlAnnotator {
     public void process(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
         List<VirtualFile> virtualFileList = SqlsXmlLineUtil.findTemplteFileList(psiElement);
         if (virtualFileList.size() == 0) {
+            TextRange textRange;
             if (psiElement.getNextSibling().getChildren().length == 0) {
-                annotationHolder.createErrorAnnotation(psiElement.getTextRange(), errMsg)
-                        .registerFix(new GenerateSqlXmlIntention());
+                textRange = psiElement.getTextRange();
             } else {
-                annotationHolder.createErrorAnnotation(new TextRange(psiElement.getTextRange().getStartOffset(), psiElement.getNextSibling().getTextRange().getEndOffset()), errMsg)
-                        .registerFix(new GenerateSqlXmlIntention());
+                textRange = new TextRange(psiElement.getTextRange().getStartOffset(), psiElement.getNextSibling().getTextRange().getEndOffset());
             }
+            Annotation annotation = new Annotation(textRange.getStartOffset(), textRange.getEndOffset(), HighlightSeverity.ERROR, ERR_MSG, null);
+            annotation.registerFix(new GenerateSqlXmlIntention());
         }
     }
 }

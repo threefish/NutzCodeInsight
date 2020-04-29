@@ -24,7 +24,7 @@ import java.awt.event.MouseEvent;
 public class OkJsonUpdateNavigationHandler implements GutterIconNavigationHandler {
 
     static final String JSON_PREFIX = "json:";
-    static final Gson gson = new Gson();
+    static final Gson GSON = new Gson();
     private String value;
 
 
@@ -37,7 +37,7 @@ public class OkJsonUpdateNavigationHandler implements GutterIconNavigationHandle
         JsonFormat jsonFormat = new JsonFormat();
         if (value.startsWith(JSON_PREFIX)) {
             try {
-                jsonFormat = gson.fromJson(value.substring(JSON_PREFIX.length()), JsonFormat.class);
+                jsonFormat = GSON.fromJson(value.substring(JSON_PREFIX.length()), JsonFormat.class);
             } catch (Exception e) {
                 Messages.showErrorDialog("json格式化信息书写错误！", "错误提示");
             }

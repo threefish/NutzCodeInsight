@@ -64,7 +64,7 @@ public class ToolConfigurable implements Configurable {
         model.addRow(new String[]{"btl:", vo.getTableData().getOrDefault("btl:", ".html"), "可编辑"});
         model.addRow(new String[]{"beetl:", vo.getTableData().getOrDefault("beetl:", ".html"), "可编辑"});
         for (Map.Entry<String, String> entry : vo.getTableData().entrySet()) {
-            if (entry.getKey().equals("jsp:") || entry.getKey().equals("btl:") || entry.getKey().equals("beetl:") || entry.getKey().equals("->:")) {
+            if ("jsp:".equals(entry.getKey()) || "btl:".equals(entry.getKey()) || "beetl:".equals(entry.getKey()) || "->:".equals(entry.getKey())) {
                 continue;
             }
             model.addRow(new String[]{entry.getKey(), entry.getValue()});

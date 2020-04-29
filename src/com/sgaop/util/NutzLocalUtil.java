@@ -24,7 +24,7 @@ import java.util.Properties;
  */
 public class NutzLocalUtil {
 
-    private static final List<String> localQualifiedNames = Arrays.asList(
+    private static final List<String> LOCAL_QUALIFIED_NAMES = Arrays.asList(
             "Mvcs.getMessage",
             "org.nutz.mvc.Mvcs.getMessage",
             "MvcI18n.message",
@@ -76,7 +76,7 @@ public class NutzLocalUtil {
                 return false;
             }
             String qualifiedName = methodCallExpression.getMethodExpression().getQualifiedName();
-            return localQualifiedNames.contains(qualifiedName);
+            return LOCAL_QUALIFIED_NAMES.contains(qualifiedName);
         }
         return false;
     }

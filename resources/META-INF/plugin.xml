@@ -2,10 +2,10 @@
 <idea-plugin url="https://github.com/threefish/NutzCodeInsight">
     <id>com.sgaop.idea.codeinsight.plugin</id>
     <name>NutzCodeInsight</name>
-    <version>2.1.1</version>
+    <version>2.1.2</version>
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-    <idea-version since-build="191.4212.41"/>
-    <vendor email="huchuc@vip.qq.com" url="https://github.com/threefish/NutzCodeInsight">threefish</vendor>
+    <idea-version since-build="201.*" until-build="*.*"/>
+    <vendor email="huchuc@vip.qq.com" url="https://gitee.com/threefish/NutzCodeInsight">threefish</vendor>
     <description><![CDATA[
       <h1>Intellij idea plugin for <a href="https://github.com/nutzam/nutz">Nutz</a></h1>
       <br/>
@@ -67,6 +67,18 @@
     ]]>
     </description>
     <change-notes><![CDATA[
+    <b>2.1.2</b>
+       <ul>
+         <li><h4>English</h4></li>
+         <li>1、Optimization: compatible with 2020.1 version idea </li>
+         <li>2、Remove: Message notification when opening project </li>
+       </ul>
+       <ul>
+         <li><h4>中文</h4></li>
+         <li>1、优化: 兼容 2020.1 版本 idea </li>
+         <li>2、移除: 打开项目时消息通知 </li>
+       </ul>
+       <p>
         <b>2.1.1</b>
        <ul>
           <li><h4>English</h4></li>
@@ -149,9 +161,4 @@
             <add-to-group group-id="GoToTargetEx" anchor="first"/>
         </action>
     </actions>
-    <project-components>
-        <component>
-            <implementation-class>com.sgaop.idea.project.component.AppStartProjectComponent</implementation-class>
-        </component>
-    </project-components>
 </idea-plugin>

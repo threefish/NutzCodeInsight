@@ -21,7 +21,7 @@ public class DomUtil {
             return false;
         }
         XmlTag rootTag = ((XmlFile) file).getRootTag();
-        return null != rootTag && rootTag.getName().equals("Sqls");
+        return null != rootTag && "Sqls".equals(rootTag.getName());
     }
 
     static boolean isXmlFile(@NotNull PsiFile file) {

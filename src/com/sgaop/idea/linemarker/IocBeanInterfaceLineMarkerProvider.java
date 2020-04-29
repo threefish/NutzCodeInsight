@@ -37,7 +37,7 @@ public class IocBeanInterfaceLineMarkerProvider extends LineMarkerProviderDescri
     static final int SENSITIVE_MAX = 3;
     static int sensitive = 0;
     static HashMap<String, List<PsiElement>> methodIocBeans = new HashMap<>();
-    Icon icon = AllIcons.Javaee.InterceptorClass;
+    Icon icon = AllIcons.FileTypes.JavaClass;
 
     @Nullable
     @Override

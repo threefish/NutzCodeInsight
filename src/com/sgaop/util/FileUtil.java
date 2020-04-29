@@ -15,7 +15,7 @@ import java.util.zip.ZipInputStream;
  */
 public class FileUtil {
 
-    final static Charset utf8 = StandardCharsets.UTF_8;
+    final static Charset UTF_8 = StandardCharsets.UTF_8;
 
     final static int BUFFER = 1024;
 
@@ -27,7 +27,7 @@ public class FileUtil {
      */
     public static String readStringByPlugin(String path) {
         StringBuilder results = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(FileUtil.class.getResourceAsStream(path), utf8))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(FileUtil.class.getResourceAsStream(path), UTF_8))) {
             reader.lines().forEach(s -> results.append(s).append("\n"));
         } catch (IOException e) {
             e.printStackTrace();
@@ -43,7 +43,7 @@ public class FileUtil {
      */
     public static String readStringByFile(File file) {
         StringBuilder results = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), utf8))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), UTF_8))) {
             reader.lines().forEach(s -> results.append(s).append("\n"));
         } catch (IOException e) {
             e.printStackTrace();
@@ -60,7 +60,7 @@ public class FileUtil {
      */
     public static void strToFile(String fileContent, File file) {
         try (FileOutputStream fos = new FileOutputStream(file);
-             OutputStreamWriter osw = new OutputStreamWriter(fos, utf8)) {
+             OutputStreamWriter osw = new OutputStreamWriter(fos, UTF_8)) {
             osw.write(fileContent);
             osw.flush();
         } catch (IOException e) {

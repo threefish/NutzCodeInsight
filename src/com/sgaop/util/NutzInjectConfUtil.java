@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 public class NutzInjectConfUtil {
 
     public static final Pattern PATTERN = Pattern.compile("java\\:\\$conf\\.get\\(\'(.*?)\'\\)");
-    private static final List<String> qualifiedNames = Arrays.asList("org.nutz.ioc.loader.annotation.Inject");
+    private static final List<String> QUALIFIED_NAMES = Arrays.asList("org.nutz.ioc.loader.annotation.Inject");
 
     public static List<String> findProperties(Project project, Collection<VirtualFile> virtualFiles, String key) {
         return PsiFileUtil.findProperties(project, virtualFiles, key);
@@ -59,7 +59,7 @@ public class NutzInjectConfUtil {
             return false;
         }
         String name = ((PsiAnnotationImpl) p3).getNameReferenceElement().getQualifiedName();
-        return qualifiedNames.contains(name);
+        return QUALIFIED_NAMES.contains(name);
     }
 
     public static String getKey(String value) {

@@ -51,12 +51,6 @@ public class AtMappingModel extends FilteringGotoByModel<FileType> implements Du
     }
 
     @Override
-    @Deprecated
-    public char getCheckBoxMnemonic() {
-        return 0;
-    }
-
-    @Override
     public boolean loadInitialCheckBoxState() {
         return false;
     }
