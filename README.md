@@ -37,10 +37,6 @@ Thanks for [JetBrains](https://www.jetbrains.com/?from=NutzCodeInsight) for the 
 
 ![NutzCodeInsight](image/NutzOkJson.gif)
 
-#### 如果觉得好用，开发效率提高了，欢迎捐赠，以资鼓励，我会增加更多强大的功能哦
-###### donation
-![NutzCodeInsight](image/donation.jpg)
-
 - 1 在 Nutz Action 中点击 @Ok 前面的模版图标即可快速打开或切换至已经打开的模版文件
 ```java
   //模式1  jsp模版（默认支持）
