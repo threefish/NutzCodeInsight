@@ -29,7 +29,6 @@ public class HtmlTemplateLineMarkerProvider extends LineMarkerProviderDescriptor
                         GutterIconRenderer.Alignment.LEFT);
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
         return null;
     }

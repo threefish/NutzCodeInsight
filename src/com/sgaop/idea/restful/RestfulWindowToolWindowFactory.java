@@ -8,11 +8,22 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.openapi.wm.ex.ToolWindowEx;
+import com.intellij.ui.content.Content;
+import com.intellij.ui.content.ContentFactory;
+import com.intellij.ui.content.ContentManager;
+import com.intellij.uiDesigner.core.GridLayoutManager;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.Enumeration;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
@@ -22,20 +33,84 @@ public class RestfulWindowToolWindowFactory implements ToolWindowFactory, DumbAw
 
     private static final String TOOL_WINDOW_ID = "RestfulWindow";
 
+    private Project project;
+
+    private ToolWindow toolWindow;
+
+
+    //定义tree 的根目录
+    DefaultMutableTreeNode root = new DefaultMutableTreeNode("京东集团");
+    //定义根节点下面的子节点
+    DefaultMutableTreeNode n1 = new DefaultMutableTreeNode("京东研发");
+    DefaultMutableTreeNode n2 = new DefaultMutableTreeNode("京东行政");
+    DefaultMutableTreeNode n3 = new DefaultMutableTreeNode("京东物流");
+    DefaultMutableTreeNode n4 = new DefaultMutableTreeNode("京东金融");
+    DefaultMutableTreeNode n5 = new DefaultMutableTreeNode("京东商城");
+    DefaultMutableTreeNode n6 = new DefaultMutableTreeNode("京东财务");
+
+
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
+        this.project = project;
+        this.toolWindow = toolWindow;
+        toolWindow.setTitle("Nutz 帮助工具");
 
+        JPanel mainPanel = new JPanel();
+        GridLayoutManager.
+        mainPanel.setLayout(GridLayoutManager.DEFAULT_HGAP);
+        root.add(n1);
+        root.add(n2);
+        root.add(n3);
+        root.add(n4);
+        root.add(n5);
+        root.add(n6);
+        //构造一个treeModel 对象，进行刷新树操作
+        DefaultTreeModel  dt = new DefaultTreeModel(root);
+        JTree   tree1 = new JTree(dt);
+//        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize(); //得到屏幕的尺寸
+        //设置主面板的大小
+//        mainPanel.setPreferredSize(new Dimension((int) screenSize.getWidth() - 50, (int) screenSize.getHeight() / 3 * 2));
+        //tree 设置大小
+//        tree1.setPreferredSize(new Dimension((int) screenSize.getWidth() - 50, (int) screenSize.getHeight() / 3 * 2));
+        ///构造一个 有滚动条的面板
+        JScrollPane  scrollPane = new JScrollPane();
+        //设置滚动条面板位置
+//        scrollPane.setPreferredSize(new Dimension((int) screenSize.getWidth() - 50, (int) screenSize.getHeight() / 3 * 2 - 50));
+        //将tree添加道滚动条面板上
+        scrollPane.setViewportView(tree1);
+        //将滚动条面板设置哼可见
+        scrollPane.setVisible(true);
+        //设置滚动条的滚动速度
+        scrollPane.getVerticalScrollBar().setUnitIncrement(15);
+        //解决闪烁问题
+        scrollPane.getVerticalScrollBar().setDoubleBuffered(true);
+        mainPanel.add(scrollPane);
+        tree1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON3) { //BUTTON3是鼠标右键
+                    //获取点击的tree节点
+                    DefaultMutableTreeNode note = (DefaultMutableTreeNode) tree1.getLastSelectedPathComponent();
+                    if (note != null) {
+                        System.out.println("xx");
+                    }
+                }
+            }
+        });
+
+        ContentManager contentManager = toolWindow.getContentManager();
+        contentManager.getComponent().add(mainPanel);
     }
 
     @Override
     public void init(@NotNull ToolWindow toolWindow) {
+        toolWindow.setTitle("Nutz 帮助工具");
         ((ToolWindowEx) toolWindow).setTitleActions(new RefreshAction("刷新", "重新加载URL", AllIcons.Actions.Refresh));
     }
 
+    private abstract class Action extends DumbAwareAction {
 
-    private abstract class WordBookAction extends DumbAwareAction {
-
-        public WordBookAction(@Nls(capitalization = Nls.Capitalization.Title) @Nullable String text, @Nls(capitalization = Nls.Capitalization.Sentence) @Nullable String description, @Nullable Icon icon) {
+        public Action(@Nls(capitalization = Nls.Capitalization.Title) @Nullable String text, @Nls(capitalization = Nls.Capitalization.Sentence) @Nullable String description, @Nullable Icon icon) {
             super(text, description, icon);
         }
 
@@ -46,8 +121,7 @@ public class RestfulWindowToolWindowFactory implements ToolWindowFactory, DumbAw
         }
     }
 
-
-    class RefreshAction extends WordBookAction {
+    class RefreshAction extends Action {
 
         public RefreshAction(@Nls(capitalization = Nls.Capitalization.Title) @Nullable String text, @Nls(capitalization = Nls.Capitalization.Sentence) @Nullable String description, @Nullable Icon icon) {
             super(text, description, icon);

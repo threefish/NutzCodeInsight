@@ -26,4 +26,6 @@ public class NutzCons {
     public static final Icon NUTZ = IconLoader.findIcon("/icons/nutz.png");
 
 
+    public static final String IDEA_VERSION="IU";
+
 }

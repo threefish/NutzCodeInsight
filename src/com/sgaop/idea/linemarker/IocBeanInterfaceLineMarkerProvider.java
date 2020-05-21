@@ -37,7 +37,7 @@ public class IocBeanInterfaceLineMarkerProvider extends LineMarkerProviderDescri
     static final int SENSITIVE_MAX = 3;
     static int sensitive = 0;
     static HashMap<String, List<PsiElement>> methodIocBeans = new HashMap<>();
-    Icon icon = AllIcons.FileTypes.JavaClass;
+    static Icon icon = AllIcons.FileTypes.Java;
 
     @Nullable
     @Override
@@ -59,7 +59,6 @@ public class IocBeanInterfaceLineMarkerProvider extends LineMarkerProviderDescri
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
         return null;
     }
@@ -80,8 +79,7 @@ public class IocBeanInterfaceLineMarkerProvider extends LineMarkerProviderDescri
 
     private PsiAnnotation getPsiAnnotation(PsiField psiField) {
         if (psiField != null) {
-            PsiAnnotation psiAnnotation = psiField.getAnnotation(INJECT_QUALI_FIED_NAME);
-            return psiAnnotation;
+            return psiField.getAnnotation(INJECT_QUALI_FIED_NAME);
         }
         return null;
     }
