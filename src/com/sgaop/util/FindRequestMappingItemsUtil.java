@@ -1,10 +1,12 @@
 package com.sgaop.util;
 
+import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.java.stubs.index.JavaAnnotationIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.sgaop.idea.NutzCons;
+import com.sgaop.idea.enums.NutzApiMethodType;
 import com.sgaop.idea.gotosymbol.AtMappingNavigationItem;
 import com.sgaop.idea.gotosymbol.FindAtMappingCache;
 
@@ -27,9 +29,20 @@ public class FindRequestMappingItemsUtil {
 
     public static FindAtMappingCache findAtMappingCache = new FindAtMappingCache();
 
+
+    public static List<AtMappingNavigationItem> findRequestMappingItems(Module module) {
+        return findRequestMappingItems(module.getProject(), module.getModuleScope());
+    }
+
     public static List<AtMappingNavigationItem> findRequestMappingItems(Project project) {
+
+        return findRequestMappingItems(project, GlobalSearchScope.projectScope(project));
+    }
+
+
+    private static List<AtMappingNavigationItem> findRequestMappingItems(Project project, GlobalSearchScope searchScope) {
         try {
-            Collection<PsiAnnotation> psiAnnotations = JavaAnnotationIndex.getInstance().get("At", project, GlobalSearchScope.projectScope(project));
+            Collection<PsiAnnotation> psiAnnotations = JavaAnnotationIndex.getInstance().get("At", project, searchScope);
             List<AtMappingNavigationItem> mappingAnnotation = new ArrayList<>();
             for (PsiAnnotation annotation : psiAnnotations) {
                 if (!NutzCons.AT.equals(annotation.getQualifiedName())) {
@@ -92,27 +105,23 @@ public class FindRequestMappingItemsUtil {
         return null;
     }
 
-    private static String getMethodType(PsiAnnotation[] psiAnnotations) {
-        StringBuilder sb = new StringBuilder();
+    private static NutzApiMethodType getMethodType(PsiAnnotation[] psiAnnotations) {
         for (PsiAnnotation annotation : psiAnnotations) {
             String qualifiedName = annotation.getQualifiedName();
             if (NutzCons.GET.equals(qualifiedName)) {
-                sb.append(" GET");
+                return NutzApiMethodType.GET;
             }
             if (NutzCons.POST.equals(qualifiedName)) {
-                sb.append(" POST");
+                return NutzApiMethodType.POST;
             }
             if (NutzCons.DELETE.equals(qualifiedName)) {
-                sb.append(" DELETE");
+                return NutzApiMethodType.DELETE;
             }
             if (NutzCons.PUT.equals(qualifiedName)) {
-                sb.append(" PUT");
+                return NutzApiMethodType.PUT;
             }
         }
-        if (sb.length() == 0) {
-            sb.append(" GET");
-        }
-        return sb.toString();
+        return NutzApiMethodType.GET;
     }
 
     private static String[] getTopAt(PsiElement at) {

@@ -3,6 +3,8 @@ package com.sgaop.idea.gotosymbol;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.xml.model.gotosymbol.GoToSymbolProvider;
 import com.sgaop.idea.NutzCons;
+import com.sgaop.idea.enums.NutzApiMethodType;
+import com.sgaop.util.AtMappingIconUtil;
 import org.jetbrains.annotations.Nullable;
 
 import java.text.MessageFormat;
@@ -15,9 +17,12 @@ public class AtMappingNavigationItem extends GoToSymbolProvider.BaseNavigationIt
 
     private String text;
 
-    public AtMappingNavigationItem(PsiElement annotation, String topReq, String requestPath, String methodType) {
-        super(annotation, MessageFormat.format("{0}{1} ({2})", topReq, requestPath, methodType.trim()), NutzCons.NUTZ);
+    private NutzApiMethodType apiType;
+
+    public AtMappingNavigationItem(PsiElement annotation, String topReq, String requestPath, NutzApiMethodType methodType) {
+        super(annotation, MessageFormat.format("{0}{1}", topReq, requestPath), AtMappingIconUtil.getIcon(methodType));
         this.text = getPresentableText();
+        this.apiType = methodType;
     }
 
     @Override
@@ -33,5 +38,9 @@ public class AtMappingNavigationItem extends GoToSymbolProvider.BaseNavigationIt
     @Override
     public String getText() {
         return text;
+    }
+
+    public NutzApiMethodType getApiType() {
+        return apiType;
     }
 }
