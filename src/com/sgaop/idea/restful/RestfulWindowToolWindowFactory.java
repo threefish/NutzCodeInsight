@@ -2,6 +2,8 @@ package com.sgaop.idea.restful;
 
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.ActionGroup;
+import com.intellij.openapi.actionSystem.ActionManager;
+import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.DumbAware;
 import com.intellij.openapi.project.Project;
@@ -21,16 +23,19 @@ import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
 
 /**
+ * ActionManager actionManager = ActionManager.getInstance();
+ * ((ToolWindowEx) toolWindow).setTitleActions(actionManager.getAction("MyAction"));
+ *
  * @author 黄川 huchuc@vip.qq.com
  * @date: 2020/5/16
  */
 public class RestfulWindowToolWindowFactory implements ToolWindowFactory, DumbAware {
 
-    private static final String TITLE = "Nutz Api 工具";
+    private static final String TITLE = "RestfulWindow";
     private RestfulTreePanel restfulTreePanel = new RestfulTreePanel();
     private Project project;
     private ToolWindowEx toolWindowEx;
-
+    ActionManager actionManager = ActionManager.getInstance();
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
         JTree apiTree = restfulTreePanel.getApiTree();
@@ -39,8 +44,12 @@ public class RestfulWindowToolWindowFactory implements ToolWindowFactory, DumbAw
         this.toolWindowEx = (ToolWindowEx) toolWindow;
         toolWindowEx.setStripeTitle(TITLE);
         toolWindowEx.setIcon(NutzCons.NUTZ);
-        toolWindowEx.setTitleActions(new RefreshAction("刷新", "重新加载URL", AllIcons.Actions.Refresh, toolWindowEx, restfulTreePanel.getApiTree()));
+        toolWindowEx.setTitle(TITLE);
+        toolWindowEx.setTitleActions(
+                new RefreshAction("刷新", "重新加载URL", AllIcons.Actions.Refresh, toolWindowEx, restfulTreePanel.getApiTree()),
+                actionManager.getAction("GoToRequestMapping"));
         apiTree.addMouseListener(new ApiTreeMouseAdapter(apiTree));
+        this.toolWindowEx.getComponent().setToolTipText("xxxx");
         this.toolWindowEx.getComponent().add(restfulTreePanel.getRootPanel());
     }
 

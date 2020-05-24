@@ -163,12 +163,12 @@
                     anchor="right"
                     secondary="true"
                     factoryClass="com.sgaop.idea.restful.RestfulWindowToolWindowFactory"/>
-
     </extensions>
     <actions>
         <!--快速定位至NutzAction-->
         <action id="GoToRequestMapping" class="com.sgaop.idea.actions.GoToNutzAtMappingAction"
-                text="Find Nutz @At Mapping Url" description="Find Nutz At Mapping Url">
+                text="Find Nutz @At Mapping Url" description="Find Nutz At Mapping Url"
+                icon="/icons/find.png">
             <add-to-group group-id="GoToTargetEx" anchor="first"/>
         </action>
     </actions>
