@@ -14,6 +14,7 @@
 - 13、<a href="https://github.com/threefish/nutz-sqltpl">Nutz-sqltpl</a> 为还未创建xml模板文件的@SqlsXml注解快速生成对应xml模板 （快捷键：Alt+insert）
 - 14、为@Inject字段注入接口提供快速跳转至实现类或选择多个实现类
 - 15、为@OK("json")提供GUI并快速修改json格式化信息
+- 15、提供restful api 工具窗口，加载全部restful api 并能快速跳转
 
 >idea插件仓库[https://plugins.jetbrains.com/plugin/10311-nutzcodeinsight](https://plugins.jetbrains.com/plugin/10311-nutzcodeinsight "真实项目")
 
@@ -36,6 +37,8 @@ Thanks for [JetBrains](https://www.jetbrains.com/?from=NutzCodeInsight) for the 
 ![NutzCodeInsight](image/NutzServiceIocBean.gif)
 
 ![NutzCodeInsight](image/NutzOkJson.gif)
+
+![NutzCodeInsight](image/api_tool.png)
 
 - 1 在 Nutz Action 中点击 @Ok 前面的模版图标即可快速打开或切换至已经打开的模版文件
 ```java

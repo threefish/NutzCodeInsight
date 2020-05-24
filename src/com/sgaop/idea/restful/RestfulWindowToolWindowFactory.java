@@ -4,8 +4,11 @@ import com.intellij.icons.AllIcons;
 import com.intellij.openapi.actionSystem.ActionGroup;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.AnAction;
+import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.components.ServiceManager;
 import com.intellij.openapi.project.DumbAware;
+import com.intellij.openapi.project.DumbAwareAction;
+import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
@@ -14,6 +17,7 @@ import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
 import com.intellij.ui.content.ContentManager;
 import com.sgaop.idea.NutzCons;
+import com.sgaop.idea.project.ui.SwingUtils;
 import com.sgaop.idea.restful.ui.RestfulTreePanel;
 import com.sgaop.idea.restful.window.tool.ApiTreeMouseAdapter;
 import com.sgaop.idea.restful.window.tool.RefreshAction;
@@ -41,16 +45,25 @@ public class RestfulWindowToolWindowFactory implements ToolWindowFactory, DumbAw
         JTree apiTree = restfulTreePanel.getApiTree();
         apiTree.setModel(null);
         this.toolWindowEx = (ToolWindowEx) toolWindow;
-        toolWindowEx.setStripeTitle(TITLE);
-        toolWindowEx.setIcon(NutzCons.NUTZ);
-        toolWindowEx.setTitle(TITLE);
-        toolWindowEx.setTitleActions(
-                new RefreshAction("刷新", "重新加载URL", AllIcons.Actions.Refresh, toolWindowEx, restfulTreePanel.getApiTree()),
-                actionManager.getAction("GoToRequestMapping"));
+        RefreshAction refreshAction = new RefreshAction("刷新", "重新加载URL", AllIcons.Actions.Refresh, toolWindowEx, restfulTreePanel.getApiTree());
+        toolWindowEx.setTitleActions(refreshAction, actionManager.getAction("GoToRequestMapping"));
         apiTree.addMouseListener(new ApiTreeMouseAdapter(apiTree));
         ContentManager contentManager = toolWindow.getContentManager();
         Content content = contentManager.getFactory().createContent(restfulTreePanel.getRootPanel(), null, false);
         contentManager.addContent(content);
         contentManager.setSelectedContent(content);
+        if (project.isInitialized()) {
+            refreshAction.loadTree(project);
+        }
     }
+
+
+    @Override
+    public void init(@NotNull ToolWindow toolWindow) {
+        this.toolWindowEx = (ToolWindowEx) toolWindow;
+        toolWindowEx.setStripeTitle(TITLE);
+        toolWindowEx.setIcon(NutzCons.NUTZ);
+        toolWindowEx.setTitle(TITLE);
+    }
+
 }

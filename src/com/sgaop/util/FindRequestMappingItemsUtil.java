@@ -100,6 +100,7 @@ public class FindRequestMappingItemsUtil {
             }
             return mappingAnnotation;
         } catch (Exception ex) {
+            ex.printStackTrace();
             //过滤异常不提示
         }
         return null;
