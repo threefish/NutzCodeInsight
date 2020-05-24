@@ -31,16 +31,15 @@ import javax.swing.tree.DefaultTreeModel;
  */
 public class RestfulWindowToolWindowFactory implements ToolWindowFactory, DumbAware {
 
-    private static final String TITLE = "RestfulWindow";
+    private static final String TITLE = "Nutz Api Tool";
     private RestfulTreePanel restfulTreePanel = new RestfulTreePanel();
-    private Project project;
     private ToolWindowEx toolWindowEx;
     ActionManager actionManager = ActionManager.getInstance();
+
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
         JTree apiTree = restfulTreePanel.getApiTree();
         apiTree.setModel(null);
-        this.project = project;
         this.toolWindowEx = (ToolWindowEx) toolWindow;
         toolWindowEx.setStripeTitle(TITLE);
         toolWindowEx.setIcon(NutzCons.NUTZ);
@@ -49,15 +48,9 @@ public class RestfulWindowToolWindowFactory implements ToolWindowFactory, DumbAw
                 new RefreshAction("刷新", "重新加载URL", AllIcons.Actions.Refresh, toolWindowEx, restfulTreePanel.getApiTree()),
                 actionManager.getAction("GoToRequestMapping"));
         apiTree.addMouseListener(new ApiTreeMouseAdapter(apiTree));
-        this.toolWindowEx.getComponent().setToolTipText("xxxx");
-        this.toolWindowEx.getComponent().add(restfulTreePanel.getRootPanel());
+        ContentManager contentManager = toolWindow.getContentManager();
+        Content content = contentManager.getFactory().createContent(restfulTreePanel.getRootPanel(), null, false);
+        contentManager.addContent(content);
+        contentManager.setSelectedContent(content);
     }
-
-
-    @Override
-    public void init(@NotNull ToolWindow toolWindow) {
-
-    }
-
-
 }
