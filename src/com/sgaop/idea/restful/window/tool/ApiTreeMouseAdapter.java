@@ -5,7 +5,6 @@ import com.sgaop.idea.restful.tree.ApiMutableTreeNode;
 import com.sgaop.idea.restful.tree.TreeObjectType;
 
 import javax.swing.*;
-import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -17,7 +16,7 @@ import java.util.Objects;
  */
 public class ApiTreeMouseAdapter extends MouseAdapter {
 
-    private JTree apiTree;
+    private final JTree apiTree;
 
     public ApiTreeMouseAdapter(JTree apiTree) {
         this.apiTree = apiTree;

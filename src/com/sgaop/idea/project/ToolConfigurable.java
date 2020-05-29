@@ -20,9 +20,9 @@ import java.util.Map;
  */
 public class ToolConfigurable implements Configurable {
 
-    private ToolCfiguration configuration = ToolCfiguration.getInstance();
+    private final ToolCfiguration configuration = ToolCfiguration.getInstance();
 
-    private SettingConfigUi ui = new SettingConfigUi();
+    private final SettingConfigUi ui = new SettingConfigUi();
 
     @Nls
     @Override

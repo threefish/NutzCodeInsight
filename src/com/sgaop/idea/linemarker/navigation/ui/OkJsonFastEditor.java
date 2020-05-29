@@ -151,7 +151,7 @@ public class OkJsonFastEditor extends JDialog {
             Object value = entry.getValue();
             builder.append(key + ":");
             if (value instanceof String) {
-                builder.append("\'" + value + "\'");
+                builder.append("'" + value + "'");
             } else {
                 builder.append(value);
             }

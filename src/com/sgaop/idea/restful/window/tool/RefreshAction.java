@@ -5,14 +5,12 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.module.ModuleManager;
 import com.intellij.openapi.progress.ProgressIndicator;
-import com.intellij.openapi.progress.ProgressIndicatorProvider;
 import com.intellij.openapi.progress.ProgressManager;
 import com.intellij.openapi.progress.Task;
 import com.intellij.openapi.progress.impl.BackgroundableProcessIndicator;
 import com.intellij.openapi.project.DumbAwareAction;
 import com.intellij.openapi.project.DumbService;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.util.Computable;
 import com.intellij.openapi.wm.ex.ToolWindowEx;
 import com.sgaop.idea.gotosymbol.AtMappingNavigationItem;
 import com.sgaop.idea.restful.tree.ApiMutableTreeNode;
@@ -33,9 +31,9 @@ import java.util.List;
 public class RefreshAction extends DumbAwareAction {
 
 
-    private ToolWindowEx toolWindowEx;
+    private final ToolWindowEx toolWindowEx;
 
-    private JTree apiTree;
+    private final JTree apiTree;
 
     public RefreshAction(String text, String description, Icon icon, ToolWindowEx toolWindowEx, JTree apiTree) {
         super(text, description, icon);

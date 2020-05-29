@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 public class BeetlHtmlLineUtil {
 
     private static final Pattern FUN_PATTERN = Pattern.compile("(\"|')(.*?)(\"|')");
-    private static ToolCfiguration cfiguration = ToolCfiguration.getInstance();
+    private static final ToolCfiguration cfiguration = ToolCfiguration.getInstance();
 
     public static List<FoldingDescriptor> showNutzLocalization(Project project, PsiElement root) {
         List<FoldingDescriptor> descriptors = new ArrayList<>();

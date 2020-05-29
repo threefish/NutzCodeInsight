@@ -16,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public class NutzLocalizationFoldingDescriptor extends FoldingDescriptor {
 
-    private String value;
+    private final String value;
 
     public NutzLocalizationFoldingDescriptor(@NotNull ASTNode node, @NotNull TextRange range, String value) {
         super(node, range, FoldingGroup.newGroup("Nutz"));

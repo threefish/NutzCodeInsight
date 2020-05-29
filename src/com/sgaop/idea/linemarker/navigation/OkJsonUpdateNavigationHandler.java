@@ -25,7 +25,7 @@ public class OkJsonUpdateNavigationHandler implements GutterIconNavigationHandle
 
     static final String JSON_PREFIX = "json:";
     static final Gson GSON = new Gson();
-    private String value;
+    private final String value;
 
 
     public OkJsonUpdateNavigationHandler(String value) {

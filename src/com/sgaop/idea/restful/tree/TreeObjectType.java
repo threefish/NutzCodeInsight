@@ -11,5 +11,5 @@ public enum TreeObjectType {
     POST,
     DELETE,
     PUT,
-    GET;
+    GET
 }

@@ -14,12 +14,12 @@ import javax.swing.*;
 public class AtMappingIconUtil {
 
 
-    private static Icon root = IconLoader.findIcon("/icons/nutz.png");
-    private static Icon module = AllIcons.Nodes.ModuleGroup;
-    private static Icon post = IconLoader.findIcon("/icons/restful/POST.png");
-    private static Icon get = IconLoader.findIcon("/icons/restful/GET.png");
-    private static Icon put = IconLoader.findIcon("/icons/restful/PUT.png");
-    private static Icon delect = IconLoader.findIcon("/icons/restful/DELETE.png");
+    private static final Icon root = IconLoader.findIcon("/icons/nutz.png");
+    private static final Icon module = AllIcons.Nodes.ModuleGroup;
+    private static final Icon post = IconLoader.findIcon("/icons/restful/POST.png");
+    private static final Icon get = IconLoader.findIcon("/icons/restful/GET.png");
+    private static final Icon put = IconLoader.findIcon("/icons/restful/PUT.png");
+    private static final Icon delect = IconLoader.findIcon("/icons/restful/DELETE.png");
 
     public static Icon getIcon(NutzApiMethodType methodType) {
         Icon icon = null;

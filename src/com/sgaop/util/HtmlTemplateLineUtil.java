@@ -19,8 +19,8 @@ import java.util.*;
  */
 public class HtmlTemplateLineUtil {
 
-    private static List<String> resNames = Arrays.asList(".js", ".gzjs", ".json", ".css", ".png", ".jpg", ".gif", ".html");
-    private static List<String> resTag = Arrays.asList("src", "href", "img");
+    private static final List<String> resNames = Arrays.asList(".js", ".gzjs", ".json", ".css", ".png", ".jpg", ".gif", ".html");
+    private static final List<String> resTag = Arrays.asList("src", "href", "img");
 
     /**
      * 判断是否是资源文件

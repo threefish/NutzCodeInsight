@@ -39,11 +39,7 @@ public class EnableGroupAction implements ActionListener {
         }
         //控制显示隐藏
         if (uiCatch != null) {
-            if (checkBox.isSelected()) {
-                uiCatch.getjPanel().setVisible(true);
-            } else {
-                uiCatch.getjPanel().setVisible(false);
-            }
+            uiCatch.getjPanel().setVisible(checkBox.isSelected());
         }
     }
 }

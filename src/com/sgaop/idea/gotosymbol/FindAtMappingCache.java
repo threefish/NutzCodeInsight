@@ -18,7 +18,7 @@ public class FindAtMappingCache {
     /**
      * 按项目进行缓存
      */
-    private static ConcurrentHashMap<String, List<AtMappingNavigationItem>> data = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, List<AtMappingNavigationItem>> data = new ConcurrentHashMap<>();
 
     private synchronized void findAllAt(Project project) {
         synchronized (this) {

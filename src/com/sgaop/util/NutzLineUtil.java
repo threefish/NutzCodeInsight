@@ -20,7 +20,7 @@ import java.util.List;
  * @date 2017/12/29  15:51
  */
 public class NutzLineUtil {
-    private static ToolCfiguration configuration = ToolCfiguration.getInstance();
+    private static final ToolCfiguration configuration = ToolCfiguration.getInstance();
 
 
     /**

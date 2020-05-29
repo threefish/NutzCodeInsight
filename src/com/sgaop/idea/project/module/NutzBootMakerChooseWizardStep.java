@@ -43,14 +43,14 @@ public class NutzBootMakerChooseWizardStep extends ModuleWizardStep {
     private JScrollPane scrollPanel;
     private JTextField makerUrl;
     private JButton reloadButton;
-    private Vector<UiCatch> uiCatches = new Vector<>();
+    private final Vector<UiCatch> uiCatches = new Vector<>();
     private String downLoadKey;
 
-    private NutzBootModuleBuilder moduleBuilder;
+    private final NutzBootModuleBuilder moduleBuilder;
 
     private boolean loadingCompleted = false;
 
-    private Gson gson = new Gson();
+    private final Gson gson = new Gson();
 
     public NutzBootMakerChooseWizardStep(NutzBootModuleBuilder moduleBuilder, WizardContext wizardContext) {
         this.moduleBuilder = moduleBuilder;

@@ -1,12 +1,11 @@
 package com.sgaop.idea.restful.tree;
 
-import com.intellij.icons.AllIcons;
-import com.intellij.openapi.util.IconLoader;
 import com.sgaop.util.AtMappingIconUtil;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import java.awt.*;
+
 /**
  * @author 黄川 huchuc@vip.qq.com
  * @date: 2020/5/22

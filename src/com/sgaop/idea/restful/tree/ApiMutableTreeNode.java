@@ -11,11 +11,9 @@ import javax.swing.tree.DefaultMutableTreeNode;
  */
 public class ApiMutableTreeNode extends DefaultMutableTreeNode {
 
-    private TreeObjectType treeObjectType;
-
-    private String name;
-
     AtMappingNavigationItem atMappingNavigationItem;
+    private final TreeObjectType treeObjectType;
+    private String name;
 
     public ApiMutableTreeNode(TreeObjectType treeObjectType, String name) {
         super(name);
@@ -43,11 +41,6 @@ public class ApiMutableTreeNode extends DefaultMutableTreeNode {
         }
     }
 
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     @Override
     public String toString() {
         return name;
@@ -63,6 +56,10 @@ public class ApiMutableTreeNode extends DefaultMutableTreeNode {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 }
