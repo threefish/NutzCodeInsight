@@ -132,6 +132,9 @@
         <!--@SqlXml快速跳转sql模版文件-->
         <codeInsight.lineMarkerProvider language="JAVA"
                                         implementationClass="com.sgaop.idea.linemarker.JavaSqlsXmlLineMarkerProvider"/>
+        <!--JAVA跳转XML-->
+        <psi.referenceContributor
+                implementation="com.sgaop.idea.reference.Java2XmlReferenceContributor"/>
         <!--受Ioc控制的bean接口文件快速跳转至实现类-->
         <codeInsight.lineMarkerProvider language="JAVA"
                                         implementationClass="com.sgaop.idea.linemarker.IocBeanInterfaceLineMarkerProvider"/>

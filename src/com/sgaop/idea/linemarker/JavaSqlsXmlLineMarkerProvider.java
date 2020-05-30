@@ -6,7 +6,7 @@ import com.intellij.icons.AllIcons;
 import com.intellij.openapi.editor.markup.GutterIconRenderer;
 import com.intellij.psi.PsiElement;
 import com.sgaop.idea.linemarker.navigation.SqlsXmlNavigationHandler;
-import com.sgaop.util.SqlsXmlLineUtil;
+import com.sgaop.util.SqlsXmlUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -30,7 +30,7 @@ public class JavaSqlsXmlLineMarkerProvider extends LineMarkerProviderDescriptor 
     @Override
     public LineMarkerInfo getLineMarkerInfo(@NotNull PsiElement psiElement) {
         try {
-            if (SqlsXmlLineUtil.isSqlsXml(psiElement)) {
+            if (SqlsXmlUtil.isSqlsXml(psiElement)) {
                 Icon icon = AllIcons.FileTypes.Xml;
                 return new LineMarkerInfo<>(psiElement, psiElement.getTextRange(), icon,
                         new FunctionTooltip(), new SqlsXmlNavigationHandler(),

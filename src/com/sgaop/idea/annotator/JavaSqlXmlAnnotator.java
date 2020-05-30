@@ -7,7 +7,7 @@ import com.intellij.openapi.util.TextRange;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiElement;
 import com.sgaop.idea.intention.GenerateSqlXmlIntention;
-import com.sgaop.util.SqlsXmlLineUtil;
+import com.sgaop.util.SqlsXmlUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class JavaSqlXmlAnnotator extends AbstractSqlXmlAnnotator {
 
     @Override
     public boolean isSqlsXml(@NotNull PsiElement psiElement) {
-        return SqlsXmlLineUtil.isSqlsXml(psiElement);
+        return SqlsXmlUtil.isSqlsXml(psiElement);
     }
 
     /**
@@ -33,7 +33,7 @@ public class JavaSqlXmlAnnotator extends AbstractSqlXmlAnnotator {
      */
     @Override
     public void process(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
-        List<VirtualFile> virtualFileList = SqlsXmlLineUtil.findTemplteFileList(psiElement);
+        List<VirtualFile> virtualFileList = SqlsXmlUtil.findTemplteFileList(psiElement);
         if (virtualFileList.size() == 0) {
             TextRange textRange;
             if (psiElement.getNextSibling().getChildren().length == 0) {

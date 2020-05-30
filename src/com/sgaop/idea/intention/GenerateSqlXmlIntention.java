@@ -11,7 +11,7 @@ import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
 import com.sgaop.idea.template.SqlTplFileTemplateGroupFactory;
-import com.sgaop.util.SqlsXmlLineUtil;
+import com.sgaop.util.SqlsXmlUtil;
 import com.sgaop.util.TemplateFileUtil;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
@@ -52,8 +52,8 @@ public class GenerateSqlXmlIntention implements IntentionAction {
                 if (psiAnnotations != null) {
                     for (PsiAnnotation annotation : psiAnnotations) {
                         PsiJavaCodeReferenceElement element = annotation.getNameReferenceElement();
-                        if (SqlsXmlLineUtil.isSqlsXml(element) && SqlsXmlLineUtil.findTemplteFileList(element).size() == 0) {
-                            templateFileName = String.valueOf(SqlsXmlLineUtil.getTemplteFileName(element));
+                        if (SqlsXmlUtil.isSqlsXml(element) && SqlsXmlUtil.findTemplteFileList(element).size() == 0) {
+                            templateFileName = String.valueOf(SqlsXmlUtil.getTemplteFileName(element));
                             clazz = psiClass.getQualifiedName();
                             return true;
                         }
