@@ -33,7 +33,7 @@ public class SqlsXmlUtil {
 
 
     private static final String TPL_HOLDER = "com.github.threefish.nutz.sqltpl.SqlsTplHolder";
-    private static final String ANNOTATION_SQLS_XML = "com.github.threefish.nutz.sqltpl.annotation.SqlsXml";
+    private static final String ANNOTATION_SQLS_XML = NutzCons.SQLS_XML;
     private static final String SERVICE_ISQL_DAO_EXECUTE_SERVICE = "com.github.threefish.nutz.sqltpl.service.ISqlDaoExecuteService";
     private static List<String> SERVICE_METHOD_List = new ArrayList<>();
 
@@ -50,6 +50,24 @@ public class SqlsXmlUtil {
         }
         return false;
     }
+
+    /**
+     * 判断是sqltoyxml
+     *
+     * @param bindingElement
+     * @return
+     */
+    public static boolean isSqsXmlFile(PsiElement bindingElement) {
+        if (bindingElement.getContainingFile().getName().endsWith(".xml") && bindingElement instanceof XmlTag) {
+            XmlTag xmlTag = (XmlTag) bindingElement;
+            XmlAttribute id = xmlTag.getAttribute("id");
+            if (xmlTag.getName().equals("sql") && Objects.nonNull(id)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     public static Object getTemplteFileName(PsiElement psiAnnotationParamList) {
         Object value = null;
@@ -120,7 +138,7 @@ public class SqlsXmlUtil {
             PsiJavaCodeReferenceElement innermostComponentReferenceElement = typeElement.getInnermostComponentReferenceElement();
             if (Objects.nonNull(innermostComponentReferenceElement)) {
                 String canonicalText = innermostComponentReferenceElement.getCanonicalText();
-                if (ANNOTATION_SQLS_XML.equals(canonicalText)) {
+                if (TPL_HOLDER.equals(canonicalText)) {
                     return true;
                 }
             }
@@ -147,10 +165,7 @@ public class SqlsXmlUtil {
             return false;
         }
         String text = p2.getText();
-        return fields.stream().filter(s ->
-                (text.startsWith(s + ".") || text.startsWith("super." + s + ".") || text.startsWith("this." + s + "."))
-                        || (text.startsWith(s) || text.startsWith("super." + s) || text.startsWith("this." + s))
-        ).findAny().isPresent();
+        return fields.stream().filter(s -> (text.startsWith(s) || text.startsWith("super." + s) || text.startsWith("this." + s))).findAny().isPresent();
     }
 
     public static boolean hasExecuteService(PsiClass psiClass) {
@@ -248,5 +263,83 @@ public class SqlsXmlUtil {
             }
         }
         return "xml";
+    }
+
+    public static List<PsiElement> findJavaPsiElement(PsiClass psiClass, String id) {
+        List<PsiElement> result = new ArrayList<>();
+        List<String> keys = new ArrayList<>();
+        List<PsiField> childrenOfAnyType = PsiTreeUtil.getChildrenOfAnyType(psiClass, PsiField.class);
+        childrenOfAnyType.addAll(getExtendsClassFields(psiClass));
+        for (PsiField field : childrenOfAnyType) {
+            if (isSqlTplField(field)) {
+                keys.add(field.getName() + ".");
+            }
+        }
+        if (CollectionUtils.isNotEmpty(keys)) {
+            List<PsiMethod> psiMethods = PsiTreeUtil.getChildrenOfAnyType(psiClass, PsiMethod.class);
+            List<PsiMethodCallExpression> psiMethodCallExpressions = new ArrayList<>();
+            for (PsiMethod psiMethod : psiMethods) {
+                List<PsiCodeBlock> psiCodeBlocks = PsiTreeUtil.getChildrenOfAnyType(psiMethod, PsiCodeBlock.class);
+                for (PsiCodeBlock psiCodeBlock : psiCodeBlocks) {
+                    List<PsiDeclarationStatement> psiDeclarationStatements = PsiTreeUtil.getChildrenOfAnyType(psiCodeBlock, PsiDeclarationStatement.class);
+                    for (PsiDeclarationStatement psiDeclarationStatement : psiDeclarationStatements) {
+                        List<PsiLocalVariable> psiLocalVariables = PsiTreeUtil.getChildrenOfAnyType(psiDeclarationStatement, PsiLocalVariable.class);
+                        for (PsiLocalVariable psiLocalVariable : psiLocalVariables) {
+                            psiMethodCallExpressions.addAll(PsiTreeUtil.getChildrenOfAnyType(psiLocalVariable, PsiMethodCallExpression.class));
+                        }
+                    }
+                    List<PsiExpressionStatement> psiExpressionStatements = PsiTreeUtil.getChildrenOfAnyType(psiCodeBlock, PsiExpressionStatement.class);
+                    for (PsiExpressionStatement psiExpressionStatement : psiExpressionStatements) {
+                        psiMethodCallExpressions.addAll(PsiTreeUtil.getChildrenOfAnyType(psiExpressionStatement, PsiMethodCallExpression.class));
+                    }
+                    List<PsiReturnStatement> psiReturnStatements = PsiTreeUtil.getChildrenOfAnyType(psiCodeBlock, PsiReturnStatement.class);
+                    for (PsiReturnStatement psiExpressionStatement : psiReturnStatements) {
+                        psiMethodCallExpressions.addAll(PsiTreeUtil.getChildrenOfAnyType(psiExpressionStatement, PsiMethodCallExpression.class));
+                    }
+                }
+            }
+            if (SqlsXmlUtil.hasExecuteService(psiClass)) {
+                //如果是父类实现了这个service暂时不支持跳转
+                keys.addAll(SqlsXmlUtil.addExecuteService(psiClass.getProject()));
+            }
+            keys.add("getSqlsTplHolder()");
+            for (PsiMethodCallExpression psiMethodCallExpression : psiMethodCallExpressions) {
+                PsiElement xmlIdBindPsiElement = getXmlIdBindPsiElement(psiMethodCallExpression, keys, id);
+                if (Objects.nonNull(xmlIdBindPsiElement)) {
+                    result.add(xmlIdBindPsiElement);
+                }
+            }
+            if (CollectionUtils.isEmpty(result)) {
+                //简单保底处理
+                for (PsiMethod psiMethod : psiMethods) {
+                    if (psiMethod.getText().indexOf(id) > -1) {
+                        result.add(psiMethod);
+                    }
+                }
+
+            }
+        }
+        return result;
+    }
+
+
+    public static PsiElement getXmlIdBindPsiElement(PsiMethodCallExpression psiMethodCallExpression, List<String> keys, String id) {
+        for (String key : keys) {
+            String text = psiMethodCallExpression.getText();
+            if (text.startsWith(key)
+                    || text.startsWith("super." + key)
+                    || text.startsWith("this." + key)) {
+                PsiExpressionList psiExpressionList = PsiTreeUtil.getChildOfAnyType(psiMethodCallExpression, PsiExpressionList.class);
+                if (Objects.nonNull(psiExpressionList)) {
+                    List<PsiLiteralExpression> psiLiteralExpressions = PsiTreeUtil.getChildrenOfAnyType(psiExpressionList, PsiLiteralExpression.class);
+                    for (PsiLiteralExpression psiLiteralExpression : psiLiteralExpressions) {
+                        if (!psiLiteralExpression.getText().contains(" ") && id.equals(((PsiLiteralExpressionImpl) psiLiteralExpression).getInnerText())) {
+                            return psiLiteralExpression;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
     }
 }

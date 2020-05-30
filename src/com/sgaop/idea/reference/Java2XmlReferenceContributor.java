@@ -44,7 +44,7 @@ public class Java2XmlReferenceContributor extends PsiReferenceContributor {
                 extendsClassFields.addAll(Arrays.asList(fields));
                 for (PsiField field : extendsClassFields) {
                     if (SqlsXmlUtil.isSqlTplField(field)) {
-                        fieldStrings.add(field.getName());
+                        fieldStrings.add(field.getName() + ".");
                     }
                 }
                 if (CollectionUtils.isNotEmpty(fieldStrings)) {

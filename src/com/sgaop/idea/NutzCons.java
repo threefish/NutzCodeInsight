@@ -20,7 +20,7 @@ public class NutzCons {
     public static final String POST = "org.nutz.mvc.annotation.POST";
     public static final String DELETE = "org.nutz.mvc.annotation.DELETE";
     public static final String PUT = "org.nutz.mvc.annotation.PUT";
-    public static final String SQLS_XML = "com.github.threefish.nutz.sqltpl.SqlsXml";
+    public static final String SQLS_XML = "com.github.threefish.nutz.sqltpl.annotation.SqlsXml";
     public static final List<String> SQLS = Arrays.asList("org.nutz.dao.entity.annotation.SQL");
 
     public static final Icon NUTZ = IconLoader.findIcon("/icons/nutz.png");
