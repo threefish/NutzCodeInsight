@@ -24,6 +24,13 @@ public class AtMappingNavigationItem extends GoToSymbolProvider.BaseNavigationIt
         this.apiType = methodType;
     }
 
+    public AtMappingNavigationItem(PsiElement annotation, String requestPath, NutzApiMethodType methodType) {
+        super(annotation, requestPath, AtMappingIconUtil.getIcon(methodType));
+        this.text = getPresentableText();
+        this.apiType = methodType;
+    }
+
+
     @Override
     public boolean equals(Object object) {
         if (object instanceof AtMappingNavigationItem) {

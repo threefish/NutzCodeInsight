@@ -9,13 +9,14 @@ import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.openapi.wm.ex.ToolWindowEx;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentManager;
+import com.intellij.ui.treeStructure.SimpleTree;
 import com.sgaop.idea.NutzCons;
-import com.sgaop.idea.restful.ui.RestfulTreePanel;
+import com.sgaop.idea.restful.ui.RestServicesNavigatorPanel;
 import com.sgaop.idea.restful.window.tool.ApiTreeMouseAdapter;
 import com.sgaop.idea.restful.window.tool.RefreshAction;
 import org.jetbrains.annotations.NotNull;
 
-import javax.swing.*;
+import javax.swing.tree.TreeSelectionModel;
 
 /**
  * ActionManager actionManager = ActionManager.getInstance();
@@ -28,19 +29,18 @@ public class RestfulWindowToolWindowFactory implements ToolWindowFactory, DumbAw
 
     private static final String TITLE = "Nutz Api Tool";
     private final ActionManager actionManager = ActionManager.getInstance();
-    private final RestfulTreePanel restfulTreePanel = new RestfulTreePanel();
     private ToolWindowEx toolWindowEx;
 
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
-        JTree apiTree = restfulTreePanel.getApiTree();
-        apiTree.setModel(null);
+        final SimpleTree apiTree = new SimpleTree();
+        apiTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         this.toolWindowEx = (ToolWindowEx) toolWindow;
-        RefreshAction refreshAction = new RefreshAction("刷新", "重新加载URL", AllIcons.Actions.Refresh, toolWindowEx, restfulTreePanel.getApiTree());
+        RefreshAction refreshAction = new RefreshAction("刷新", "重新加载URL", AllIcons.Actions.Refresh, toolWindowEx, apiTree);
         toolWindowEx.setTitleActions(refreshAction, actionManager.getAction("GoToRequestMapping"));
         apiTree.addMouseListener(new ApiTreeMouseAdapter(apiTree));
         ContentManager contentManager = toolWindow.getContentManager();
-        Content content = contentManager.getFactory().createContent(restfulTreePanel.getRootPanel(), null, false);
+        Content content = contentManager.getFactory().createContent(new RestServicesNavigatorPanel(apiTree), null, false);
         contentManager.addContent(content);
         contentManager.setSelectedContent(content);
         if (project.isInitialized()) {

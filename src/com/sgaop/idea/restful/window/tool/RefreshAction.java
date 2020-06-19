@@ -14,15 +14,15 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ex.ToolWindowEx;
 import com.sgaop.idea.gotosymbol.AtMappingNavigationItem;
 import com.sgaop.idea.restful.tree.ApiMutableTreeNode;
-import com.sgaop.idea.restful.tree.TreeObjectType;
-import com.sgaop.idea.restful.tree.TreeRenderer;
+import com.sgaop.idea.restful.tree.TreeNodeObject;
+import com.sgaop.idea.restful.tree.TreeObjectTypeEnum;
 import com.sgaop.util.FindRequestMappingItemsUtil;
-import org.apache.commons.collections.CollectionUtils;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
-import java.util.List;
+import java.text.Collator;
+import java.util.*;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
@@ -31,8 +31,8 @@ import java.util.List;
 public class RefreshAction extends DumbAwareAction {
 
 
+    private final static Comparator COMPARATOR = Collator.getInstance(Locale.ENGLISH);
     private final ToolWindowEx toolWindowEx;
-
     private final JTree apiTree;
 
     public RefreshAction(String text, String description, Icon icon, ToolWindowEx toolWindowEx, JTree apiTree) {
@@ -48,30 +48,37 @@ public class RefreshAction extends DumbAwareAction {
 
 
     public void loadTree(Project project) {
+        Module[] modules = ModuleManager.getInstance(toolWindowEx.getProject()).getModules();
         DumbService.getInstance(toolWindowEx.getProject()).smartInvokeLater(() -> {
-            Module[] modules = ModuleManager.getInstance(toolWindowEx.getProject()).getModules();
             Task.Backgroundable backgroundable = new Task.Backgroundable(project, "Nutz Api 扫描中...") {
                 @Override
                 public void run(@NotNull ProgressIndicator progressIndicator) {
                     ApplicationManager.getApplication().runReadAction(() -> {
+                        Set<String> repeat = new HashSet<>();
                         //定义tree 的根目录
                         int size = 0;
-                        ApiMutableTreeNode root = new ApiMutableTreeNode(TreeObjectType.ROOT, "Found 0 api");
+                        ApiMutableTreeNode root = new ApiMutableTreeNode();
                         for (Module module : modules) {
-                            ApiMutableTreeNode apiMutableTreeNode = new ApiMutableTreeNode(TreeObjectType.MODULE, module.getName());
                             List<AtMappingNavigationItem> requestMappingItems = FindRequestMappingItemsUtil.findRequestMappingItems(module);
-                            if (CollectionUtils.isNotEmpty(requestMappingItems)) {
-                                size = size + requestMappingItems.size();
-                                for (AtMappingNavigationItem requestMappingItem : requestMappingItems) {
-                                    progressIndicator.setText(requestMappingItem.getText());
-                                    apiMutableTreeNode.add(new ApiMutableTreeNode(requestMappingItem));
-                                }
+                            ApiMutableTreeNode apiMutableTreeNode = new ApiMutableTreeNode(new TreeNodeObject(project, TreeObjectTypeEnum.MODULE, module.getName()));
+                            List<ApiMutableTreeNode> list = new ArrayList<>();
+                            for (AtMappingNavigationItem atMappingNavigationItem : requestMappingItems) {
+                                //是这个模块的api
+                                size = size + 1;
+                                progressIndicator.setText(atMappingNavigationItem.getText());
+                                repeat.add(atMappingNavigationItem.getText());
+                                TreeNodeObject treeNodeObject = new TreeNodeObject(project, atMappingNavigationItem);
+                                list.add(new ApiMutableTreeNode(treeNodeObject));
                             }
-                            root.add(apiMutableTreeNode);
+                            if (list.size() > 0) {
+                                Collections.sort(list, (o1, o2) -> COMPARATOR.compare(o1.toString(), o2.toString()));
+                                list.forEach(mutableTreeNode -> apiMutableTreeNode.add(mutableTreeNode));
+                            }
+                            if (apiMutableTreeNode.getChildCount() > 0) {
+                                root.add(apiMutableTreeNode);
+                            }
                         }
-                        root.setName("Found " + size + " api");
-                        //设置该JTree使用自定义的节点绘制器
-                        apiTree.setCellRenderer(new TreeRenderer());
+                        root.setUserObject(new TreeNodeObject(project, TreeObjectTypeEnum.ROOT, "Found " + size + " api"));
                         apiTree.setModel(new DefaultTreeModel(root));
                     });
                 }

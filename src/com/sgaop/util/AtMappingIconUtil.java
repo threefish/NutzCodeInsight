@@ -3,7 +3,7 @@ package com.sgaop.util;
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.util.IconLoader;
 import com.sgaop.idea.enums.NutzApiMethodType;
-import com.sgaop.idea.restful.tree.TreeObjectType;
+import com.sgaop.idea.restful.tree.TreeObjectTypeEnum;
 
 import javax.swing.*;
 
@@ -42,7 +42,7 @@ public class AtMappingIconUtil {
         return icon;
     }
 
-    public static Icon getIcon(TreeObjectType treeObjectType) {
+    public static Icon getIcon(TreeObjectTypeEnum treeObjectType) {
         Icon icon = null;
         switch (treeObjectType) {
             case ROOT:

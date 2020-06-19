@@ -1,8 +1,6 @@
 package com.sgaop.idea.restful.tree;
 
 
-import com.sgaop.idea.gotosymbol.AtMappingNavigationItem;
-
 import javax.swing.tree.DefaultMutableTreeNode;
 
 /**
@@ -11,55 +9,21 @@ import javax.swing.tree.DefaultMutableTreeNode;
  */
 public class ApiMutableTreeNode extends DefaultMutableTreeNode {
 
-    AtMappingNavigationItem atMappingNavigationItem;
-    private final TreeObjectType treeObjectType;
-    private String name;
-
-    public ApiMutableTreeNode(TreeObjectType treeObjectType, String name) {
-        super(name);
-        this.treeObjectType = treeObjectType;
-        this.name = name;
+    public ApiMutableTreeNode() {
     }
 
-    public ApiMutableTreeNode(AtMappingNavigationItem atMappingNavigationItem) {
-        super(atMappingNavigationItem.getText());
-        this.name = atMappingNavigationItem.getText();
-        this.atMappingNavigationItem = atMappingNavigationItem;
-        switch (atMappingNavigationItem.getApiType()) {
-            case POST:
-                this.treeObjectType = TreeObjectType.POST;
-                break;
-            case DELETE:
-                this.treeObjectType = TreeObjectType.DELETE;
-                break;
-            case PUT:
-                this.treeObjectType = TreeObjectType.PUT;
-                break;
-            default:
-                this.treeObjectType = TreeObjectType.GET;
-                break;
-        }
+    public ApiMutableTreeNode(TreeNodeObject nodeObjectNodeDescriptor) {
+        this.userObject = nodeObjectNodeDescriptor;
+    }
+
+
+    @Override
+    public Object getUserObject() {
+        return this.userObject;
     }
 
     @Override
     public String toString() {
-        return name;
+        return this.userObject.toString();
     }
-
-    public AtMappingNavigationItem getAtMappingNavigationItem() {
-        return atMappingNavigationItem;
-    }
-
-    public TreeObjectType getTreeObjectType() {
-        return treeObjectType;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
 }
