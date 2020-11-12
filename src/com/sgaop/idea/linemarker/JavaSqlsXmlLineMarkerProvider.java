@@ -42,8 +42,4 @@ public class JavaSqlsXmlLineMarkerProvider extends LineMarkerProviderDescriptor 
         return null;
     }
 
-    @Override
-    public void collectSlowLineMarkers(@NotNull List<PsiElement> list, @NotNull Collection<LineMarkerInfo> collection) {
-
-    }
 }

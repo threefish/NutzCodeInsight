@@ -43,8 +43,5 @@ public class JavaNutzLineMarkerProvider extends LineMarkerProviderDescriptor {
         return "Nutz Ok navigate";
     }
 
-    @Override
-    public void collectSlowLineMarkers(@NotNull List<PsiElement> elements, @NotNull Collection<LineMarkerInfo> result) {
-    }
 
 }

@@ -14,6 +14,7 @@ import com.intellij.psi.impl.source.tree.java.PsiNameValuePairImpl;
 import com.intellij.psi.impl.source.xml.XmlFileImpl;
 import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
+import com.intellij.psi.util.PsiLiteralUtil;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlAttribute;
 import com.intellij.psi.xml.XmlTag;
@@ -114,7 +115,7 @@ public class SqlsXmlUtil {
 
     public static List<PsiField> getExtendsClassFields(PsiClass psiClass) {
         List<PsiField> psiFields = new ArrayList<>();
-        List<PsiReferenceList> childrenOfAnyType = PsiTreeUtil.getChildrenOfAnyType(psiClass, PsiReferenceList.class);
+        List<PsiReferenceList> childrenOfAnyType = new ArrayList<>(PsiTreeUtil.getChildrenOfAnyType(psiClass, PsiReferenceList.class));
         for (PsiReferenceList psiReferenceList : childrenOfAnyType) {
             PsiJavaCodeReferenceElement[] referenceElements = psiReferenceList.getReferenceElements();
             for (PsiJavaCodeReferenceElement referenceElement : referenceElements) {
@@ -169,9 +170,9 @@ public class SqlsXmlUtil {
     }
 
     public static boolean hasExecuteService(PsiClass psiClass) {
-        List<PsiReferenceList> childrenOfAnyType = PsiTreeUtil.getChildrenOfAnyType(psiClass, PsiReferenceList.class);
+        List<PsiReferenceList> childrenOfAnyType = new ArrayList<>(PsiTreeUtil.getChildrenOfAnyType(psiClass, PsiReferenceList.class));
         for (PsiReferenceList psiReferenceList : childrenOfAnyType) {
-            List<PsiJavaCodeReferenceElement> referenceElements = PsiTreeUtil.getChildrenOfAnyType(psiReferenceList, PsiJavaCodeReferenceElement.class);
+            List<PsiJavaCodeReferenceElement> referenceElements = new ArrayList<>(PsiTreeUtil.getChildrenOfAnyType(psiReferenceList, PsiJavaCodeReferenceElement.class));
             for (PsiJavaCodeReferenceElement referenceElement : referenceElements) {
                 if (SERVICE_ISQL_DAO_EXECUTE_SERVICE.equals(referenceElement.getQualifiedName())) {
                     return true;
@@ -197,7 +198,7 @@ public class SqlsXmlUtil {
                                 if (Objects.nonNull(child1)) {
                                     PsiElement[] psiElements = child1.getChildren();
                                     if (Objects.nonNull(psiElements) && psiElements.length > 0) {
-                                        List<XmlTag> xmlTags = PsiTreeUtil.getChildrenOfAnyType(child1, XmlTag.class);
+                                        List<XmlTag> xmlTags = new ArrayList<>(PsiTreeUtil.getChildrenOfAnyType(child1, XmlTag.class));
                                         for (XmlTag xmlTag : xmlTags) {
                                             if ("sql".equals(xmlTag.getName())) {
                                                 XmlAttribute xmlAttribute = xmlTag.getAttribute("id");
@@ -230,7 +231,7 @@ public class SqlsXmlUtil {
             Collection<PsiClass> iSqlDaoExecuteService = JavaShortClassNameIndex.getInstance().get("ISqlDaoExecuteService", project, GlobalSearchScope.everythingScope(project));
             for (PsiClass psiClass : iSqlDaoExecuteService) {
                 if (SERVICE_ISQL_DAO_EXECUTE_SERVICE.equals(psiClass.getQualifiedName())) {
-                    List<PsiMethod> methods = PsiTreeUtil.getChildrenOfAnyType(psiClass, PsiMethod.class);
+                    List<PsiMethod> methods = new ArrayList<>(PsiTreeUtil.getChildrenOfAnyType(psiClass, PsiMethod.class));
                     for (PsiMethod method : methods) {
                         arry.add(method.getName() + "(");
                     }
@@ -242,9 +243,9 @@ public class SqlsXmlUtil {
     }
 
     public static String findXmlFileName(PsiClass psiClass) {
-        List<PsiModifierList> modifierLists = PsiTreeUtil.getChildrenOfAnyType(psiClass, PsiModifierList.class);
+        List<PsiModifierList> modifierLists = new ArrayList<>(PsiTreeUtil.getChildrenOfAnyType(psiClass, PsiModifierList.class));
         if (CollectionUtils.isNotEmpty(modifierLists)) {
-            List<PsiAnnotation> annotations = PsiTreeUtil.getChildrenOfAnyType(modifierLists.get(0), PsiAnnotation.class);
+            List<PsiAnnotation> annotations = new ArrayList<>(PsiTreeUtil.getChildrenOfAnyType(modifierLists.get(0), PsiAnnotation.class));
             for (PsiAnnotation annotation : annotations) {
                 if (ANNOTATION_SQLS_XML.equals(annotation.getQualifiedName())) {
                     List<JvmAnnotationAttribute> attributes = annotation.getAttributes();
@@ -268,7 +269,7 @@ public class SqlsXmlUtil {
     public static List<PsiElement> findJavaPsiElement(PsiClass psiClass, String id) {
         List<PsiElement> result = new ArrayList<>();
         List<String> keys = new ArrayList<>();
-        List<PsiField> childrenOfAnyType = PsiTreeUtil.getChildrenOfAnyType(psiClass, PsiField.class);
+        List<PsiField> childrenOfAnyType = new ArrayList<>(PsiTreeUtil.getChildrenOfAnyType(psiClass, PsiField.class));
         childrenOfAnyType.addAll(getExtendsClassFields(psiClass));
         for (PsiField field : childrenOfAnyType) {
             if (isSqlTplField(field)) {
@@ -276,23 +277,23 @@ public class SqlsXmlUtil {
             }
         }
         if (CollectionUtils.isNotEmpty(keys)) {
-            List<PsiMethod> psiMethods = PsiTreeUtil.getChildrenOfAnyType(psiClass, PsiMethod.class);
+            List<PsiMethod> psiMethods = new ArrayList<>(PsiTreeUtil.getChildrenOfAnyType(psiClass, PsiMethod.class));
             List<PsiMethodCallExpression> psiMethodCallExpressions = new ArrayList<>();
             for (PsiMethod psiMethod : psiMethods) {
-                List<PsiCodeBlock> psiCodeBlocks = PsiTreeUtil.getChildrenOfAnyType(psiMethod, PsiCodeBlock.class);
+                List<PsiCodeBlock> psiCodeBlocks = new ArrayList<>(PsiTreeUtil.getChildrenOfAnyType(psiMethod, PsiCodeBlock.class));
                 for (PsiCodeBlock psiCodeBlock : psiCodeBlocks) {
-                    List<PsiDeclarationStatement> psiDeclarationStatements = PsiTreeUtil.getChildrenOfAnyType(psiCodeBlock, PsiDeclarationStatement.class);
+                    List<PsiDeclarationStatement> psiDeclarationStatements = new ArrayList<>(PsiTreeUtil.getChildrenOfAnyType(psiCodeBlock, PsiDeclarationStatement.class));
                     for (PsiDeclarationStatement psiDeclarationStatement : psiDeclarationStatements) {
-                        List<PsiLocalVariable> psiLocalVariables = PsiTreeUtil.getChildrenOfAnyType(psiDeclarationStatement, PsiLocalVariable.class);
+                        List<PsiLocalVariable> psiLocalVariables = new ArrayList<>(PsiTreeUtil.getChildrenOfAnyType(psiDeclarationStatement, PsiLocalVariable.class));
                         for (PsiLocalVariable psiLocalVariable : psiLocalVariables) {
                             psiMethodCallExpressions.addAll(PsiTreeUtil.getChildrenOfAnyType(psiLocalVariable, PsiMethodCallExpression.class));
                         }
                     }
-                    List<PsiExpressionStatement> psiExpressionStatements = PsiTreeUtil.getChildrenOfAnyType(psiCodeBlock, PsiExpressionStatement.class);
+                    List<PsiExpressionStatement> psiExpressionStatements = new ArrayList<>(PsiTreeUtil.getChildrenOfAnyType(psiCodeBlock, PsiExpressionStatement.class));
                     for (PsiExpressionStatement psiExpressionStatement : psiExpressionStatements) {
                         psiMethodCallExpressions.addAll(PsiTreeUtil.getChildrenOfAnyType(psiExpressionStatement, PsiMethodCallExpression.class));
                     }
-                    List<PsiReturnStatement> psiReturnStatements = PsiTreeUtil.getChildrenOfAnyType(psiCodeBlock, PsiReturnStatement.class);
+                    List<PsiReturnStatement> psiReturnStatements = new ArrayList<>(PsiTreeUtil.getChildrenOfAnyType(psiCodeBlock, PsiReturnStatement.class));
                     for (PsiReturnStatement psiExpressionStatement : psiReturnStatements) {
                         psiMethodCallExpressions.addAll(PsiTreeUtil.getChildrenOfAnyType(psiExpressionStatement, PsiMethodCallExpression.class));
                     }
@@ -331,9 +332,9 @@ public class SqlsXmlUtil {
                     || text.startsWith("this." + key)) {
                 PsiExpressionList psiExpressionList = PsiTreeUtil.getChildOfAnyType(psiMethodCallExpression, PsiExpressionList.class);
                 if (Objects.nonNull(psiExpressionList)) {
-                    List<PsiLiteralExpression> psiLiteralExpressions = PsiTreeUtil.getChildrenOfAnyType(psiExpressionList, PsiLiteralExpression.class);
+                    List<PsiLiteralExpression> psiLiteralExpressions = new ArrayList<>(PsiTreeUtil.getChildrenOfAnyType(psiExpressionList, PsiLiteralExpression.class));
                     for (PsiLiteralExpression psiLiteralExpression : psiLiteralExpressions) {
-                        if (!psiLiteralExpression.getText().contains(" ") && id.equals(((PsiLiteralExpressionImpl) psiLiteralExpression).getInnerText())) {
+                        if (!psiLiteralExpression.getText().contains(" ") && id.equals(PsiLiteralUtil.getStringLiteralContent(psiLiteralExpression))) {
                             return psiLiteralExpression;
                         }
                     }

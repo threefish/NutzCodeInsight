@@ -39,8 +39,5 @@ public class HtmlTemplateLineMarkerProvider extends LineMarkerProviderDescriptor
         return "Template File navigate";
     }
 
-    @Override
-    public void collectSlowLineMarkers(@NotNull List<PsiElement> elements, @NotNull Collection<LineMarkerInfo> result) {
-    }
 
 }

@@ -2,7 +2,7 @@
 <idea-plugin url="https://github.com/threefish/NutzCodeInsight">
     <id>com.sgaop.idea.codeinsight.plugin</id>
     <name>NutzCodeInsight</name>
-    <version>2.1.4</version>
+    <version>2.1.5</version>
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
     <idea-version since-build="201"/>
     <vendor email="huchuc@vip.qq.com" url="https://gitee.com/threefish/NutzCodeInsight">threefish</vendor>
@@ -71,6 +71,15 @@
     ]]>
     </description>
     <change-notes><![CDATA[
+        <b>2.1.5</b>
+         <ul>
+         <li><h4>English</h4></li>
+            <li>fix：Use 'PsiTreeUtil.getChildrenOfAnyType' Will return AbstractList， The problem for Throw UnsupportedOperationException</li>
+         </ul>
+        <ul>
+         <li><h4>中文</h4></li>
+         <li>修复：使用 PsiTreeUtil.getChildrenOfAnyType 会返回AbstractList，抛出UnsupportedOperationException的问题</li>
+       </ul>
         <b>2.1.4</b>
          <ul>
          <li><h4>English</h4></li>
