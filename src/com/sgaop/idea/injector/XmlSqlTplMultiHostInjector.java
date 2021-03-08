@@ -4,6 +4,7 @@ import com.intellij.lang.Language;
 import com.intellij.lang.injection.MultiHostInjector;
 import com.intellij.lang.injection.MultiHostRegistrar;
 import com.intellij.openapi.application.ApplicationInfo;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.psi.ElementManipulators;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiLanguageInjectionHost;
@@ -24,25 +25,29 @@ public class XmlSqlTplMultiHostInjector implements MultiHostInjector {
     //    static final String EXP_TAG = "exp";
 
     static final String SQL_TAG = "sql";
-
     static final ApplicationInfo INSTANCE = ApplicationInfo.getInstance();
+    private static final Logger LOG = Logger.getInstance(XmlSqlTplMultiHostInjector.class);
 
     @Override
     public void getLanguagesToInject(@NotNull MultiHostRegistrar registrar, @NotNull PsiElement psiElement) {
-        String productCode = INSTANCE.getBuild().getProductCode();
-        if (NutzCons.IDEA_VERSION.equals(productCode)) {
-            final Language SQL_LANGUAGE = Language.findLanguageByID("SQL");
-            if (DomUtil.isNutzSqlFile(psiElement.getContainingFile())) {
-                if (psiElement instanceof XmlTag) {
-                    XmlTag tag = (XmlTag) psiElement;
-                    if (SQL_TAG.equals(tag.getName())) {
-                        registrarInjecting(SQL_LANGUAGE, registrar, DomUtil.findXmlTexts(psiElement.getChildren()), null, null);
-                    }
+        try {
+            String productCode = INSTANCE.getBuild().getProductCode();
+            if (NutzCons.IDEA_VERSION.equals(productCode)) {
+                final Language SQL_LANGUAGE = Language.findLanguageByID("SQL");
+                if (DomUtil.isNutzSqlFile(psiElement.getContainingFile())) {
+                    if (psiElement instanceof XmlTag) {
+                        XmlTag tag = (XmlTag) psiElement;
+                        if (SQL_TAG.equals(tag.getName())) {
+                            registrarInjecting(SQL_LANGUAGE, registrar, DomUtil.findXmlTexts(psiElement.getChildren()), null, null);
+                        }
 //                else if (EXP_TAG.equals(tag.getName())) {
 //                    registrarInjecting(XMLLanguage.INSTANCE, registrar, DomUtil.findXmlTexts(psiElement.getChildren()), "<!--", "-->");
 //                }
+                    }
                 }
             }
+        } catch (Exception e) {
+            LOG.warn(e);
         }
     }
 
