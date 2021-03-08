@@ -46,9 +46,7 @@ public class FindAtMappingCache {
 
     public AtMappingNavigationItem[] getItemsByName(String name, String pattern, Project project) {
         List<AtMappingNavigationItem> atMappingNavigationItems = new ArrayList<>();
-        data.getOrDefault(project.getLocationHash(), new ArrayList<>()).stream().filter(it -> matche(it.getText(), pattern)).forEach(atMappingItem -> {
-            atMappingNavigationItems.add(atMappingItem);
-        });
+        data.getOrDefault(project.getLocationHash(), new ArrayList<>()).stream().filter(it -> matche(it.getText(), pattern)).forEach(atMappingItem -> atMappingNavigationItems.add(atMappingItem));
         return atMappingNavigationItems.toArray(new AtMappingNavigationItem[0]);
     }
 

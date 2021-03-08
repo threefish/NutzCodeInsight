@@ -136,9 +136,6 @@
 
     <depends>com.intellij.modules.java</depends>
     <depends>com.intellij.properties</depends>
-<!--    <depends>com.intellij.spring</depends>-->
-    <depends>com.intellij.spring.mvc</depends>
-
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
