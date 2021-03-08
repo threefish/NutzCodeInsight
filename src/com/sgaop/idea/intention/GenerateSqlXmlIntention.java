@@ -5,6 +5,7 @@ import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.codeInsight.navigation.NavigationUtil;
 import com.intellij.lang.Language;
 import com.intellij.openapi.command.WriteCommandAction;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
@@ -25,6 +26,7 @@ import java.util.Properties;
 public class GenerateSqlXmlIntention implements IntentionAction {
 
     static final Language JAVA = Language.findLanguageByID("JAVA");
+    private static final Logger LOG = Logger.getInstance(GenerateSqlXmlIntention.class);
     private String templateFileName;
     private String clazz;
 
@@ -44,22 +46,26 @@ public class GenerateSqlXmlIntention implements IntentionAction {
 
     @Override
     public boolean isAvailable(@NotNull Project project, Editor editor, PsiFile psiFile) {
-        if (psiFile.getLanguage() == JAVA) {
-            PsiElement psiElement = psiFile.findElementAt(editor.getCaretModel().getOffset());
-            PsiClass psiClass = PsiTreeUtil.getParentOfType(psiElement, PsiClass.class);
-            if (psiClass != null) {
-                PsiAnnotation[] psiAnnotations = psiClass.getAnnotations();
-                if (psiAnnotations != null) {
-                    for (PsiAnnotation annotation : psiAnnotations) {
-                        PsiJavaCodeReferenceElement element = annotation.getNameReferenceElement();
-                        if (SqlsXmlUtil.isSqlsXml(element) && SqlsXmlUtil.findTemplteFileList(element).size() == 0) {
-                            templateFileName = String.valueOf(SqlsXmlUtil.getTemplteFileName(element));
-                            clazz = psiClass.getQualifiedName();
-                            return true;
+        try {
+            if (psiFile.getLanguage() == JAVA) {
+                PsiElement psiElement = psiFile.findElementAt(editor.getCaretModel().getOffset());
+                PsiClass psiClass = PsiTreeUtil.getParentOfType(psiElement, PsiClass.class);
+                if (psiClass != null) {
+                    PsiAnnotation[] psiAnnotations = psiClass.getAnnotations();
+                    if (psiAnnotations != null) {
+                        for (PsiAnnotation annotation : psiAnnotations) {
+                            PsiJavaCodeReferenceElement element = annotation.getNameReferenceElement();
+                            if (SqlsXmlUtil.isSqlsXml(element) && SqlsXmlUtil.findTemplteFileList(element).size() == 0) {
+                                templateFileName = String.valueOf(SqlsXmlUtil.getTemplteFileName(element));
+                                clazz = psiClass.getQualifiedName();
+                                return true;
+                            }
                         }
                     }
                 }
             }
+        } catch (Exception e) {
+            LOG.warn(e);
         }
         return false;
     }
