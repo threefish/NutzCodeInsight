@@ -3,6 +3,7 @@ package com.sgaop.idea.linemarker;
 import com.intellij.codeInsight.daemon.LineMarkerInfo;
 import com.intellij.codeInsight.daemon.LineMarkerProviderDescriptor;
 import com.intellij.icons.AllIcons;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.markup.GutterIconRenderer;
 import com.intellij.openapi.module.impl.scopes.ModuleWithDependenciesScope;
 import com.intellij.openapi.project.Project;
@@ -35,6 +36,7 @@ public class IocBeanInterfaceLineMarkerProvider extends LineMarkerProviderDescri
     static final String INJECT_QUALI_FIED_NAME = "org.nutz.ioc.loader.annotation.Inject";
     static final String IOCBEAN_QUALI_FIED_NAME = "org.nutz.ioc.loader.annotation.IocBean";
     static final int SENSITIVE_MAX = 3;
+    private static final Logger LOG = Logger.getInstance(IocBeanInterfaceLineMarkerProvider.class);
     static int sensitive = 0;
     static HashMap<String, List<PsiElement>> methodIocBeans = new HashMap<>();
     static Icon icon = AllIcons.FileTypes.Java;
@@ -55,10 +57,11 @@ public class IocBeanInterfaceLineMarkerProvider extends LineMarkerProviderDescri
                     return new LineMarkerInfo<>(psiTypeElement, psiTypeElement.getTextRange(), icon,
                             new FunctionTooltip(MessageFormat.format("快速跳转至 {0} 的 @IocBean 实现类", name)),
                             new IocBeanInterfaceNavigationHandler(name, list),
-                            GutterIconRenderer.Alignment.LEFT);
+                            GutterIconRenderer.Alignment.LEFT, this::getName);
                 }
             }
         } catch (Exception e) {
+            LOG.warn(e);
         }
         return null;
     }
