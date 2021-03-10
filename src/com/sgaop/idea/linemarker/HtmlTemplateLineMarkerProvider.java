@@ -2,15 +2,13 @@ package com.sgaop.idea.linemarker;
 
 import com.intellij.codeInsight.daemon.LineMarkerInfo;
 import com.intellij.codeInsight.daemon.LineMarkerProviderDescriptor;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.markup.GutterIconRenderer;
 import com.intellij.psi.PsiElement;
 import com.sgaop.idea.linemarker.navigation.HtmlTemplateNavigationHandler;
 import com.sgaop.util.HtmlTemplateLineUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Collection;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,15 +18,18 @@ import java.util.List;
  */
 public class HtmlTemplateLineMarkerProvider extends LineMarkerProviderDescriptor {
 
+    private static final Logger LOG = Logger.getInstance(HtmlTemplateLineMarkerProvider.class);
+
     @Override
     public LineMarkerInfo getLineMarkerInfo(@NotNull PsiElement bindingElement) {
         try {
             if (HtmlTemplateLineUtil.isRes(bindingElement)) {
                 return new LineMarkerInfo<>(bindingElement, bindingElement.getTextRange(), HtmlTemplateLineUtil.getTemplateIcon(bindingElement),
                         new FunctionTooltip(), new HtmlTemplateNavigationHandler(),
-                        GutterIconRenderer.Alignment.LEFT);
+                        GutterIconRenderer.Alignment.LEFT,this::getName);
             }
         } catch (Exception e) {
+            LOG.warn(e);
         }
         return null;
     }
