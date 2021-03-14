@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.intellij.ide.util.projectWizard.ModuleWizardStep;
 import com.intellij.ide.util.projectWizard.WizardContext;
 import com.intellij.ide.wizard.CommitStepException;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.openapi.ui.Messages;
 import com.sgaop.idea.project.module.vo.NutzBootGroupVO;
@@ -22,6 +23,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Vector;
@@ -32,6 +34,10 @@ import java.util.Vector;
  */
 public class NutzBootMakerChooseWizardStep extends ModuleWizardStep {
 
+    private static final Logger LOG = Logger.getInstance(NutzBootMakerChooseWizardStep.class);
+    private final Vector<UiCatch> uiCatches = new Vector<>();
+    private final NutzBootModuleBuilder moduleBuilder;
+    private final Gson gson = new Gson();
     protected WizardContext wizardContext;
     private JPanel root;
     private JTextField packageName;
@@ -43,14 +49,8 @@ public class NutzBootMakerChooseWizardStep extends ModuleWizardStep {
     private JScrollPane scrollPanel;
     private JTextField makerUrl;
     private JButton reloadButton;
-    private final Vector<UiCatch> uiCatches = new Vector<>();
     private String downLoadKey;
-
-    private final NutzBootModuleBuilder moduleBuilder;
-
     private boolean loadingCompleted = false;
-
-    private final Gson gson = new Gson();
 
     public NutzBootMakerChooseWizardStep(NutzBootModuleBuilder moduleBuilder, WizardContext wizardContext) {
         this.moduleBuilder = moduleBuilder;
@@ -60,6 +60,7 @@ public class NutzBootMakerChooseWizardStep extends ModuleWizardStep {
             try {
                 refresh(HttpUtil.get(makerUrl.getText() + "/maker.json"));
             } catch (Exception e) {
+                LOG.warn(e);
                 Messages.showErrorDialog("网络异常！请稍候尝试!" + e.getMessage(), "错误提示");
             }
         }));
@@ -106,8 +107,13 @@ public class NutzBootMakerChooseWizardStep extends ModuleWizardStep {
                 return false;
             }
             BasicHttpEntity entity = new BasicHttpEntity();
-            entity.setContent(new ByteArrayInputStream(gson.toJson(getPostData()).getBytes()));
+            String requestJson = gson.toJson(getPostData());
+            entity.setContent(new ByteArrayInputStream(gson.toJson(requestJson).getBytes(StandardCharsets.UTF_8)));
             String json = HttpUtil.post(makerUrl.getText() + "/maker/make", entity);
+            if (Strings.isNullOrEmpty(Strings.nullToEmpty(json))) {
+                LOG.warn("/maker/make requestJson参数：" + requestJson);
+                throw new ConfigurationException(makerUrl.getText() + "/maker/make 返回空数据");
+            }
             HashMap redata = gson.fromJson(json, HashMap.class);
             boolean ok = Boolean.parseBoolean(String.valueOf(redata.getOrDefault("ok", "false")));
             if (ok) {
@@ -120,7 +126,8 @@ public class NutzBootMakerChooseWizardStep extends ModuleWizardStep {
                 return false;
             }
         } catch (Exception e) {
-            throw new ConfigurationException("构筑中心发生未知异常! " + e.getMessage());
+            LOG.warn(e);
+            throw new ConfigurationException("构筑中心服务内部发生异常! " + e.getMessage());
         }
     }
 

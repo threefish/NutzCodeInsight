@@ -17,6 +17,7 @@ import com.sgaop.idea.restful.window.tool.RefreshAction;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.tree.TreeSelectionModel;
+import java.util.Arrays;
 
 /**
  * ActionManager actionManager = ActionManager.getInstance();
@@ -37,7 +38,7 @@ public class RestfulWindowToolWindowFactory implements ToolWindowFactory, DumbAw
         apiTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         this.toolWindowEx = (ToolWindowEx) toolWindow;
         RefreshAction refreshAction = new RefreshAction("刷新", "重新加载URL", AllIcons.Actions.Refresh, toolWindowEx, apiTree);
-        toolWindowEx.setTitleActions(refreshAction, actionManager.getAction("GoToRequestMapping"));
+        toolWindowEx.setTitleActions(Arrays.asList(refreshAction, actionManager.getAction("GoToRequestMapping")));
         apiTree.addMouseListener(new ApiTreeMouseAdapter(apiTree));
         ContentManager contentManager = toolWindow.getContentManager();
         Content content = contentManager.getFactory().createContent(new RestServicesNavigatorPanel(apiTree), null, false);
