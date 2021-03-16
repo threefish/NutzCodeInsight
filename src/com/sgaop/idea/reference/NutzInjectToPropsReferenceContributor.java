@@ -1,5 +1,6 @@
 package com.sgaop.idea.reference;
 
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.module.Module;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectRootManager;
@@ -22,6 +23,8 @@ import java.util.List;
  */
 public class NutzInjectToPropsReferenceContributor extends PsiReferenceContributor {
 
+    private static final Logger LOG = Logger.getInstance(NutzInjectToPropsReferenceContributor.class);
+
     @Override
     public void registerReferenceProviders(@NotNull PsiReferenceRegistrar psiReferenceRegistrar) {
         psiReferenceRegistrar.registerReferenceProvider(PlatformPatterns.psiElement(PsiLiteralExpression.class), new NutzInjectPsiReferenceProvider());
@@ -31,19 +34,22 @@ public class NutzInjectToPropsReferenceContributor extends PsiReferenceContribut
         @NotNull
         @Override
         public PsiReference[] getReferencesByElement(@NotNull PsiElement element, @NotNull ProcessingContext processingContext) {
-            PsiLiteralExpression literalExpression = (PsiLiteralExpression) element;
-            String value = literalExpression.getValue() instanceof String ? (String) literalExpression.getValue() : null;
-            String key = NutzInjectConfUtil.getKey(value);
-            if (NutzInjectConfUtil.isInjectConf(literalExpression) && key != null) {
-                Project project = element.getProject();
-                final Collection<VirtualFile> propertiesFiles = FilenameIndex.getAllFilesByExt(project, "properties", getSearchScope(project, element));
-                final List<PsiElement> properties = NutzInjectConfUtil.findPropertiesPsiElement(project, propertiesFiles, key);
-                List<PsiReference> psiReferences = new ArrayList<>();
-                properties.forEach(psiElement -> psiReferences.add(new PsiJavaInjectReference(element, psiElement)));
-                return psiReferences.toArray(new PsiReference[0]);
-            } else {
-                return PsiReference.EMPTY_ARRAY;
+            try {
+                PsiLiteralExpression literalExpression = (PsiLiteralExpression) element;
+                String value = literalExpression.getValue() instanceof String ? (String) literalExpression.getValue() : null;
+                String key = NutzInjectConfUtil.getKey(value);
+                if (NutzInjectConfUtil.isInjectConf(literalExpression) && key != null) {
+                    Project project = element.getProject();
+                    final Collection<VirtualFile> propertiesFiles = FilenameIndex.getAllFilesByExt(project, "properties", getSearchScope(project, element));
+                    final List<PsiElement> properties = NutzInjectConfUtil.findPropertiesPsiElement(project, propertiesFiles, key);
+                    List<PsiReference> psiReferences = new ArrayList<>();
+                    properties.forEach(psiElement -> psiReferences.add(new PsiJavaInjectReference(element, psiElement)));
+                    return psiReferences.toArray(new PsiReference[0]);
+                }
+            } catch (Exception e) {
+                LOG.warn(e);
             }
+            return PsiReference.EMPTY_ARRAY;
         }
 
         private GlobalSearchScope getSearchScope(Project project, @NotNull PsiElement element) {
