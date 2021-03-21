@@ -2,6 +2,7 @@ package com.sgaop.idea.linemarker;
 
 import com.intellij.codeInsight.daemon.LineMarkerInfo;
 import com.intellij.codeInsight.daemon.LineMarkerProviderDescriptor;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.markup.GutterIconRenderer;
 import com.intellij.psi.PsiElement;
 import com.sgaop.idea.linemarker.navigation.NutzNavigationHandler;
@@ -11,8 +12,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -22,17 +21,20 @@ import java.util.List;
  */
 public class JavaNutzLineMarkerProvider extends LineMarkerProviderDescriptor {
 
+    private static final Logger LOG = Logger.getInstance(JavaNutzLineMarkerProvider.class);
+
     @Override
     public LineMarkerInfo getLineMarkerInfo(@NotNull PsiElement bindingElement) {
         try {
             if (NutzLineUtil.isAtOk(bindingElement)) {
                 JavaNutzTemplateVO vo = NutzLineUtil.getTemplateFilePathAndName(bindingElement);
                 Icon icon = NutzLineUtil.getTemplateIcon(vo.getFileExtension().split(";")[0]);
-                return new LineMarkerInfo<>(bindingElement, bindingElement.getTextRange(), icon,
-                        new FunctionTooltip(), new NutzNavigationHandler(), GutterIconRenderer.Alignment.LEFT);
+                return new LineMarkerInfo<PsiElement>(bindingElement, bindingElement.getTextRange(), icon,
+                        new FunctionTooltip(), new NutzNavigationHandler(), GutterIconRenderer.Alignment.LEFT,
+                        this::getName);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.warn(e);
         }
         return null;
     }
