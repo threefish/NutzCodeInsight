@@ -16,7 +16,7 @@ import java.util.*;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
- * @date: 2020/5/29
+ * date: 2020/5/29
  */
 public class Java2XmlReferenceContributor extends PsiReferenceContributor {
     private static final Logger LOG = Logger.getInstance(Java2XmlReferenceContributor.class);

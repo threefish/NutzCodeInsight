@@ -10,7 +10,7 @@ import java.util.Properties;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
- * @date: 2019/4/2
+ * date: 2019/4/2
  */
 public class TemplateFileUtil {
     /**

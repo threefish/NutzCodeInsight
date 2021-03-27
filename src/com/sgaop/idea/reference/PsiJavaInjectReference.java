@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
- * @date: 2018/9/30
+ * date: 2018/9/30
  */
 public class PsiJavaInjectReference implements PsiReference {
 

@@ -14,7 +14,7 @@ import java.util.Iterator;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
- * @date: 2019/5/25
+ * date: 2019/5/25
  */
 public class OkJsonFastEditor extends JDialog {
     private JPanel contentPane;

@@ -15,7 +15,7 @@ import javax.swing.*;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
- * @date: 2019/4/2
+ * date: 2019/4/2
  */
 public class JavaSqlsXmlLineMarkerProvider extends LineMarkerProviderDescriptor {
 

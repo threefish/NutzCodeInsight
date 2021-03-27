@@ -16,7 +16,7 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
- * @date: 2019/5/24
+ * date: 2019/5/24
  */
 public class OkJsonUpdateLineMarkerProvider implements LineMarkerProvider {
 

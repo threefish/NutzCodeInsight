@@ -29,7 +29,7 @@ import java.util.List;
 
 /**
  * @author huchuc@vip.qq.com
- * @date: 2019/5/23
+ * date: 2019/5/23
  */
 public class IocBeanInterfaceLineMarkerProvider extends LineMarkerProviderDescriptor {
 

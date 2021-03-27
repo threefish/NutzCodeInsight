@@ -7,7 +7,7 @@ import com.sgaop.util.AtMappingIconUtil;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
- * @date: 2020/6/5
+ * date: 2020/6/5
  */
 public class TreeNodeObject extends NodeDescriptor {
 

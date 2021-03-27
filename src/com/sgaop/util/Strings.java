@@ -4,7 +4,7 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
- * @date: 2019/1/20 0020
+ * date: 2019/1/20 0020
  */
 public class Strings {
 

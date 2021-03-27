@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
- * @date: 2018/8/31
+ * date: 2018/8/31
  */
 public class NutzBootVO {
 

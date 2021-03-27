@@ -7,7 +7,7 @@ import com.sgaop.idea.NutzCons;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
- * @date: 2019/4/2
+ * date: 2019/4/2
  */
 public class SqlTplFileTemplateGroupFactory implements FileTemplateGroupDescriptorFactory {
     public static final String NUTZ_SQL_TPL_XML = "NutzSqlTpl.xml";

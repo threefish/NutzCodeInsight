@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 /**
  * @author huchuc@vip.qq.com
- * @date: 2019/8/11
+ * date: 2019/8/11
  */
 public class AtMappingGotoSymbolProvider extends GoToSymbolProvider {
 

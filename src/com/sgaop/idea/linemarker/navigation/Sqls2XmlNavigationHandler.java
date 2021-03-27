@@ -16,7 +16,7 @@ import java.util.Objects;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
- * @date: 2020/5/30
+ * date: 2020/5/30
  */
 public class Sqls2XmlNavigationHandler extends AbstractPsiElementNavigationHandler {
     @Override

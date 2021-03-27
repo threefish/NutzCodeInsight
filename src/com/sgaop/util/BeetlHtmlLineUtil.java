@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
- * @date: 2018/3/26
+ * date: 2018/3/26
  */
 public class BeetlHtmlLineUtil {
 

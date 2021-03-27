@@ -10,7 +10,7 @@ import java.awt.*;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
- * @date: 2020/6/4
+ * date: 2020/6/4
  */
 public class RestServicesNavigatorPanel extends SimpleToolWindowPanel {
 

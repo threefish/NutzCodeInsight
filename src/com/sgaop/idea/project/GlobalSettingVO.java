@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
- * @date: 2018/9/4
+ * date: 2018/9/4
  */
 public class GlobalSettingVO {
 

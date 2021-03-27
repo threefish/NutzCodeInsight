@@ -14,7 +14,7 @@ import java.util.Objects;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
- * @date: 2020/5/22
+ * date: 2020/5/22
  */
 public class ApiTreeMouseAdapter extends MouseAdapter {
 

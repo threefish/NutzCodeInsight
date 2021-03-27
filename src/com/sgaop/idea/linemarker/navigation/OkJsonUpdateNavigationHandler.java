@@ -19,7 +19,7 @@ import java.awt.event.MouseEvent;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
- * @date: 2019/5/25
+ * date: 2019/5/25
  */
 public class OkJsonUpdateNavigationHandler implements GutterIconNavigationHandler {
 

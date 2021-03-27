@@ -14,7 +14,7 @@ import java.util.Properties;
 
 /**
  * @author huchuc@vip.qq.com
- * @date: 2019/5/23
+ * date: 2019/5/23
  */
 public class PsiFileUtil {
 

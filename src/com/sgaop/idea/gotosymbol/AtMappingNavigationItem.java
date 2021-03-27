@@ -10,7 +10,7 @@ import java.text.MessageFormat;
 
 /**
  * @author huchuc@vip.qq.com
- * @date: 2019/8/11
+ * date: 2019/8/11
  */
 public class AtMappingNavigationItem extends GoToSymbolProvider.BaseNavigationItem {
 

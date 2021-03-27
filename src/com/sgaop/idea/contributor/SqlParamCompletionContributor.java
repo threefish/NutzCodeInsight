@@ -11,7 +11,7 @@
 //
 ///**
 // * @author 黄川 huchuc@vip.qq.com
-// * @date: 2019/4/1
+// * date: 2019/4/1
 // * SQL中进行代码提示
 // */
 //public class SqlParamCompletionContributor extends CompletionContributor {

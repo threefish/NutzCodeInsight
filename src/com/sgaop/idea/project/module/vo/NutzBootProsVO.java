@@ -2,7 +2,7 @@ package com.sgaop.idea.project.module.vo;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
- * @date: 2018/8/30
+ * date: 2018/8/30
  */
 public class NutzBootProsVO {
     private String name;

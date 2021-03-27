@@ -24,7 +24,7 @@ import java.util.Arrays;
  * ((ToolWindowEx) toolWindow).setTitleActions(actionManager.getAction("MyAction"));
  *
  * @author 黄川 huchuc@vip.qq.com
- * @date: 2020/5/16
+ * date: 2020/5/16
  */
 public class RestfulWindowToolWindowFactory implements ToolWindowFactory, DumbAware {
 
