@@ -2,6 +2,7 @@ package com.sgaop.idea.linemarker;
 
 import com.intellij.codeInsight.daemon.LineMarkerInfo;
 import com.intellij.codeInsight.daemon.LineMarkerProvider;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.markup.GutterIconRenderer;
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiElement;
@@ -13,9 +14,6 @@ import com.sgaop.idea.linemarker.navigation.OkJsonUpdateNavigationHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collection;
-import java.util.List;
-
 /**
  * @author 黄川 huchuc@vip.qq.com
  * @date: 2019/5/24
@@ -23,6 +21,7 @@ import java.util.List;
 public class OkJsonUpdateLineMarkerProvider implements LineMarkerProvider {
 
     static final String JSON_PREFIX = "json";
+    private static final Logger LOG = Logger.getInstance(OkJsonUpdateLineMarkerProvider.class);
 
     @Nullable
     @Override
@@ -33,14 +32,14 @@ public class OkJsonUpdateLineMarkerProvider implements LineMarkerProvider {
                 PsiLiteralExpression literalExpression = (PsiLiteralExpression) psiAnnotation.findAttributeValue("value");
                 String value = String.valueOf(literalExpression.getValue());
                 if (value.startsWith(JSON_PREFIX)) {
-                    return new LineMarkerInfo<>(psiAnnotation, psiAnnotation.getTextRange(), NutzCons.NUTZ,
+                    return new LineMarkerInfo<PsiElement>(psiAnnotation, psiAnnotation.getTextRange(), NutzCons.NUTZ,
                             new FunctionTooltip("快速配置"),
                             new OkJsonUpdateNavigationHandler(value),
-                            GutterIconRenderer.Alignment.LEFT);
+                            GutterIconRenderer.Alignment.LEFT, () -> "json");
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.warn(e);
         }
         return null;
     }
@@ -54,5 +53,6 @@ public class OkJsonUpdateLineMarkerProvider implements LineMarkerProvider {
         }
         return null;
     }
+
 
 }

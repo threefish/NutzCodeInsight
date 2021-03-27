@@ -3,6 +3,7 @@ package com.sgaop.idea.linemarker;
 import com.intellij.codeInsight.daemon.LineMarkerInfo;
 import com.intellij.codeInsight.daemon.LineMarkerProviderDescriptor;
 import com.intellij.icons.AllIcons;
+import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.editor.markup.GutterIconRenderer;
 import com.intellij.psi.PsiElement;
 import com.sgaop.idea.linemarker.navigation.SqlsXmlNavigationHandler;
@@ -11,14 +12,14 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * @author 黄川 huchuc@vip.qq.com
  * @date: 2019/4/2
  */
 public class JavaSqlsXmlLineMarkerProvider extends LineMarkerProviderDescriptor {
+
+    private static final Logger LOG = Logger.getInstance(JavaSqlsXmlLineMarkerProvider.class);
 
     @Nullable("null means disabled")
     @Override
@@ -34,10 +35,10 @@ public class JavaSqlsXmlLineMarkerProvider extends LineMarkerProviderDescriptor 
                 Icon icon = AllIcons.FileTypes.Xml;
                 return new LineMarkerInfo<>(psiElement, psiElement.getTextRange(), icon,
                         new FunctionTooltip(), new SqlsXmlNavigationHandler(),
-                        GutterIconRenderer.Alignment.LEFT);
+                        GutterIconRenderer.Alignment.LEFT, this::getName);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.warn(e);
         }
         return null;
     }
