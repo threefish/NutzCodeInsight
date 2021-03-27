@@ -74,10 +74,12 @@
         <b>2.1.5</b>
          <ul>
          <li><h4>English</h4></li>
+            <li>update：Remove the old incompatible api,Adapt to idea 2020.3.3</li>
             <li>fix：Use 'PsiTreeUtil.getChildrenOfAnyType' Will return AbstractList， The problem for Throw UnsupportedOperationException</li>
          </ul>
         <ul>
          <li><h4>中文</h4></li>
+         <li>更新：移除旧的不兼容api适配idea2020.3.3</li>
          <li>修复：使用 PsiTreeUtil.getChildrenOfAnyType 会返回AbstractList，抛出UnsupportedOperationException的问题</li>
        </ul>
         <b>2.1.4</b>
@@ -131,7 +133,6 @@
     <!-- uncomment to enable plugin in all products
     <depends>com.intellij.modules.lang</depends>
     -->
-
 
 
     <depends>com.intellij.modules.java</depends>
