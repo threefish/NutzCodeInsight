@@ -1,6 +1,6 @@
 package com.sgaop.idea.annotator;
 
-import com.intellij.lang.annotation.Annotation;
+import com.intellij.lang.annotation.AnnotationBuilder;
 import com.intellij.lang.annotation.AnnotationHolder;
 import com.intellij.lang.annotation.HighlightSeverity;
 import com.intellij.openapi.util.TextRange;
@@ -33,16 +33,22 @@ public class JavaSqlXmlAnnotator extends AbstractSqlXmlAnnotator {
      */
     @Override
     public void process(@NotNull PsiElement psiElement, @NotNull AnnotationHolder annotationHolder) {
-        List<VirtualFile> virtualFileList = SqlsXmlUtil.findTemplteFileList(psiElement);
-        if (virtualFileList.size() == 0) {
-            TextRange textRange;
-            if (psiElement.getNextSibling().getChildren().length == 0) {
-                textRange = psiElement.getTextRange();
-            } else {
-                textRange = new TextRange(psiElement.getTextRange().getStartOffset(), psiElement.getNextSibling().getTextRange().getEndOffset());
+        try {
+            List<VirtualFile> virtualFileList = SqlsXmlUtil.findTemplteFileList(psiElement);
+            if (virtualFileList.size() == 0) {
+                TextRange textRange;
+                if (psiElement.getNextSibling().getChildren().length == 0) {
+                    textRange = psiElement.getTextRange();
+                } else {
+                    textRange = new TextRange(psiElement.getTextRange().getStartOffset(), psiElement.getNextSibling().getTextRange().getEndOffset());
+                }
+                AnnotationBuilder annotationBuilder = annotationHolder.newAnnotation(HighlightSeverity.ERROR, ERR_MSG);
+                annotationBuilder.range(textRange);
+                AnnotationBuilder.FixBuilder fixBuilder = annotationBuilder.newFix(new GenerateSqlXmlIntention());
+                fixBuilder.registerFix();
+                annotationBuilder.create();
             }
-            Annotation annotation = new Annotation(textRange.getStartOffset(), textRange.getEndOffset(), HighlightSeverity.ERROR, ERR_MSG, null);
-            annotation.registerFix(new GenerateSqlXmlIntention());
+        } catch (Exception e) {
         }
     }
 }

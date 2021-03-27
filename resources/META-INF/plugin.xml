@@ -4,7 +4,7 @@
     <name>NutzCodeInsight</name>
     <version>2.1.5</version>
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
-    <idea-version since-build="201"/>
+    <idea-version since-build="203"/>
     <vendor email="huchuc@vip.qq.com" url="https://gitee.com/threefish/NutzCodeInsight">threefish</vendor>
     <description><![CDATA[
       <h1>Intellij idea plugin for <a href="https://github.com/nutzam/nutz">Nutz</a></h1>

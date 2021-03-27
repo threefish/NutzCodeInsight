@@ -137,21 +137,24 @@ public class IocBeanInterfaceLineMarkerProvider extends LineMarkerProviderDescri
 
     private HashMap<String, List<PsiElement>> getMethodIocBeans(Project project, GlobalSearchScope moduleScope) {
         HashMap<String, List<PsiElement>> elementHashMap = new HashMap<>(1);
-        Collection<PsiAnnotation> psiAnnotationCollection = JavaAnnotationIndex.getInstance().get("IocBean", project, moduleScope);
-        for (PsiAnnotation psiAnnotation : psiAnnotationCollection) {
-            if (psiAnnotation.getParent() instanceof PsiModifierList) {
-                if (psiAnnotation.getParent().getParent() instanceof PsiMethod) {
-                    PsiMethod method = (PsiMethod) psiAnnotation.getParent().getParent();
-                    String returnQualifiedName = method.getReturnType().getCanonicalText();
-                    if (elementHashMap.containsKey(returnQualifiedName)) {
-                        elementHashMap.get(returnQualifiedName).add(method);
-                    } else {
-                        List<PsiElement> arr = new ArrayList<>();
-                        arr.add(method);
-                        elementHashMap.put(returnQualifiedName, arr);
+        try {
+            Collection<PsiAnnotation> psiAnnotationCollection = JavaAnnotationIndex.getInstance().get("IocBean", project, moduleScope);
+            for (PsiAnnotation psiAnnotation : psiAnnotationCollection) {
+                if (psiAnnotation.getParent() instanceof PsiModifierList) {
+                    if (psiAnnotation.getParent().getParent() instanceof PsiMethod) {
+                        PsiMethod method = (PsiMethod) psiAnnotation.getParent().getParent();
+                        String returnQualifiedName = method.getReturnType().getCanonicalText();
+                        if (elementHashMap.containsKey(returnQualifiedName)) {
+                            elementHashMap.get(returnQualifiedName).add(method);
+                        } else {
+                            List<PsiElement> arr = new ArrayList<>();
+                            arr.add(method);
+                            elementHashMap.put(returnQualifiedName, arr);
+                        }
                     }
                 }
             }
+        } catch (Exception e) {
         }
         return elementHashMap;
     }
