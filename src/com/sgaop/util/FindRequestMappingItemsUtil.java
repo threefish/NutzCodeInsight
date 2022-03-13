@@ -5,10 +5,10 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.impl.java.stubs.index.JavaAnnotationIndex;
 import com.intellij.psi.search.GlobalSearchScope;
-import com.sgaop.idea.NutzCons;
-import com.sgaop.idea.enums.NutzApiMethodType;
-import com.sgaop.idea.gotosymbol.AtMappingNavigationItem;
-import com.sgaop.idea.gotosymbol.FindAtMappingCache;
+import io.github.threefish.idea.NutzCons;
+import io.github.threefish.idea.enums.NutzApiMethodType;
+import io.github.threefish.idea.gotosymbol.AtMappingNavigationItem;
+import io.github.threefish.idea.gotosymbol.FindAtMappingCache;
 
 import java.util.ArrayList;
 import java.util.Collection;

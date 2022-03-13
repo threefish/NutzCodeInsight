@@ -6,7 +6,7 @@ import com.intellij.psi.*;
 import com.intellij.psi.impl.java.stubs.index.JavaAnnotationIndex;
 import com.intellij.psi.impl.source.tree.java.PsiAnnotationParamListImpl;
 import com.intellij.psi.search.GlobalSearchScope;
-import com.sgaop.idea.NutzCons;
+import io.github.threefish.idea.NutzCons;
 
 import java.io.IOException;
 import java.io.StringReader;

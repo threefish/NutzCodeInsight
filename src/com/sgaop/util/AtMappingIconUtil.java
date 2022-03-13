@@ -2,8 +2,8 @@ package com.sgaop.util;
 
 import com.intellij.icons.AllIcons;
 import com.intellij.openapi.util.IconLoader;
-import com.sgaop.idea.enums.NutzApiMethodType;
-import com.sgaop.idea.restful.tree.TreeObjectTypeEnum;
+import io.github.threefish.idea.enums.NutzApiMethodType;
+import io.github.threefish.idea.restful.tree.TreeObjectTypeEnum;
 
 import javax.swing.*;
 

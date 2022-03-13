@@ -140,71 +140,71 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
-        <applicationConfigurable instance="com.sgaop.idea.project.ToolConfigurable"/>
-        <applicationService serviceInterface="com.sgaop.idea.project.ToolCfiguration"
-                            serviceImplementation="com.sgaop.idea.project.ToolCfiguration"/>
+        <applicationConfigurable instance="io.github.threefish.idea.project.ToolConfigurable"/>
+        <applicationService serviceInterface="io.github.threefish.idea.project.ToolCfiguration"
+                            serviceImplementation="io.github.threefish.idea.project.ToolCfiguration"/>
         <!--NutzAction快速跳转模版文件-->
         <codeInsight.lineMarkerProvider language="JAVA"
-                                        implementationClass="com.sgaop.idea.linemarker.JavaNutzLineMarkerProvider"/>
+                                        implementationClass="io.github.threefish.idea.linemarker.JavaNutzLineMarkerProvider"/>
         <!--模版文件快速跳转资源文件-->
         <codeInsight.lineMarkerProvider language="HTML"
-                                        implementationClass="com.sgaop.idea.linemarker.HtmlTemplateLineMarkerProvider"/>
+                                        implementationClass="io.github.threefish.idea.linemarker.HtmlTemplateLineMarkerProvider"/>
         <!--@SqlXml快速跳转sql模版文件-->
         <codeInsight.lineMarkerProvider language="JAVA"
-                                        implementationClass="com.sgaop.idea.linemarker.JavaSqlsXmlLineMarkerProvider"/>
+                                        implementationClass="io.github.threefish.idea.linemarker.JavaSqlsXmlLineMarkerProvider"/>
         <!--JAVA跳转XML-->
         <psi.referenceContributor
-                implementation="com.sgaop.idea.reference.Java2XmlReferenceContributor"/>
+                implementation="io.github.threefish.idea.reference.Java2XmlReferenceContributor"/>
         <!--SQLS XML跳转java&-->
         <codeInsight.lineMarkerProvider language="XML"
-                                        implementationClass="com.sgaop.idea.linemarker.SqlsXml2JavaLineMarkerProvider"/>
+                                        implementationClass="io.github.threefish.idea.linemarker.SqlsXml2JavaLineMarkerProvider"/>
 
         <!--受Ioc控制的bean接口文件快速跳转至实现类-->
         <codeInsight.lineMarkerProvider language="JAVA"
-                                        implementationClass="com.sgaop.idea.linemarker.IocBeanInterfaceLineMarkerProvider"/>
+                                        implementationClass="io.github.threefish.idea.linemarker.IocBeanInterfaceLineMarkerProvider"/>
         <!--受Ioc控制的bean接口文件快速跳转至实现类-->
         <codeInsight.lineMarkerProvider language="JAVA"
-                                        implementationClass="com.sgaop.idea.linemarker.OkJsonUpdateLineMarkerProvider"/>
+                                        implementationClass="io.github.threefish.idea.linemarker.OkJsonUpdateLineMarkerProvider"/>
         <!--代码折叠生成器-->
         <!--国际化语言折叠-开始-->
         <lang.foldingBuilder language="JAVA"
-                             implementationClass="com.sgaop.idea.folding.NutzLocalizationFoldingBuilder"/>
+                             implementationClass="io.github.threefish.idea.folding.NutzLocalizationFoldingBuilder"/>
         <lang.foldingBuilder language="HTML"
-                             implementationClass="com.sgaop.idea.folding.BeetlLocalizationFoldingBuilder"/>
+                             implementationClass="io.github.threefish.idea.folding.BeetlLocalizationFoldingBuilder"/>
         <!--国际化语言折叠-结束-->
         <!--配置文件注入折叠-开始-->
         <lang.foldingBuilder language="JAVA"
-                             implementationClass="com.sgaop.idea.folding.NutzInjectConfFoldingBuilder"/>
+                             implementationClass="io.github.threefish.idea.folding.NutzInjectConfFoldingBuilder"/>
         <!--配置文件引用-->
         <psi.referenceContributor
-                implementation="com.sgaop.idea.reference.NutzInjectToPropsReferenceContributor"/>
+                implementation="io.github.threefish.idea.reference.NutzInjectToPropsReferenceContributor"/>
         <!--配置文件折叠-结束-->
         <!--语言中代码提示-->
         <!--<completion.contributor language="SQL" implementationClass="com.sgaop.idea.contributor.SqlParamCompletionContributor"-->
         <!--order="first"/>-->
         <!--语言注入-->
-        <multiHostInjector implementation="com.sgaop.idea.injector.NutzJavaSqlMultiHostInjector"/>
-        <multiHostInjector implementation="com.sgaop.idea.injector.XmlSqlTplMultiHostInjector"/>
+        <multiHostInjector implementation="io.github.threefish.idea.injector.NutzJavaSqlMultiHostInjector"/>
+        <multiHostInjector implementation="io.github.threefish.idea.injector.XmlSqlTplMultiHostInjector"/>
         <!--语言扩展点-注解者 -->
-        <annotator language="JAVA" implementationClass="com.sgaop.idea.annotator.JavaSqlXmlAnnotator"/>
+        <annotator language="JAVA" implementationClass="io.github.threefish.idea.annotator.JavaSqlXmlAnnotator"/>
         <!--创建NutzBoot项目-->
-        <moduleBuilder builderClass="com.sgaop.idea.project.module.NutzBootModuleBuilder"/>
+        <moduleBuilder builderClass="io.github.threefish.idea.project.module.NutzBootModuleBuilder"/>
         <!--快速定位至NutzAction-->
-        <gotoClassContributor implementation="com.sgaop.idea.gotosymbol.AtMappingGotoSymbolProvider"/>
+        <gotoClassContributor implementation="io.github.threefish.idea.gotosymbol.AtMappingGotoSymbolProvider"/>
         <!--意图行动-->
         <!--<intentionAction order="first">-->
-        <!--<className>com.sgaop.idea.intention.GenerateSqlXmlIntention</className>-->
+        <!--<className>GenerateSqlXmlIntention</className>-->
         <!--</intentionAction>-->
-        <fileTemplateGroup id="NutzSqlTpl" implementation="com.sgaop.idea.template.SqlTplFileTemplateGroupFactory"/>
+        <fileTemplateGroup id="NutzSqlTpl" implementation="io.github.threefish.idea.template.SqlTplFileTemplateGroupFactory"/>
         <!--  restful api 工具窗口 -->
         <toolWindow id="RestfulWindow"
                     anchor="right"
                     secondary="true"
-                    factoryClass="com.sgaop.idea.restful.RestfulWindowToolWindowFactory"/>
+                    factoryClass="io.github.threefish.idea.restful.RestfulWindowToolWindowFactory"/>
     </extensions>
     <actions>
         <!--快速定位至NutzAction-->
-        <action id="GoToRequestMapping" class="com.sgaop.idea.actions.GoToNutzAtMappingAction"
+        <action id="GoToRequestMapping" class="io.github.threefish.idea.actions.GoToNutzAtMappingAction"
                 text="Find Nutz @At Mapping Url" description="Find Nutz At Mapping Url"
                 icon="/icons/find.png">
             <add-to-group group-id="GoToTargetEx" anchor="first"/>

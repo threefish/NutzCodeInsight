@@ -10,8 +10,8 @@ import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.xml.XmlToken;
-import com.sgaop.idea.folding.NutzLocalizationFoldingDescriptor;
-import com.sgaop.idea.project.ToolCfiguration;
+import io.github.threefish.idea.folding.NutzLocalizationFoldingDescriptor;
+import io.github.threefish.idea.project.ToolCfiguration;
 
 import java.util.ArrayList;
 import java.util.Collection;

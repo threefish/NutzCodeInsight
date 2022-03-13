@@ -4,9 +4,9 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.*;
 import com.intellij.psi.search.FilenameIndex;
 import com.intellij.psi.search.GlobalSearchScope;
-import com.sgaop.idea.NutzCons;
-import com.sgaop.idea.linemarker.vo.JavaNutzTemplateVO;
-import com.sgaop.idea.project.ToolCfiguration;
+import io.github.threefish.idea.NutzCons;
+import io.github.threefish.idea.linemarker.vo.JavaNutzTemplateVO;
+import io.github.threefish.idea.project.ToolCfiguration;
 
 import javax.swing.*;
 import java.util.ArrayList;
