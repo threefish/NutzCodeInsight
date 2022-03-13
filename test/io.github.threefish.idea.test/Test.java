@@ -1,4 +1,4 @@
-package com.sgaop;
+package io.github.threefish.idea.test;
 
 import com.google.gson.Gson;
 import com.intellij.openapi.util.text.DelimitedListProcessor;

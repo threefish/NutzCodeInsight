@@ -1,4 +1,4 @@
-package com.sgaop;
+package io.github.threefish.idea.test;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
